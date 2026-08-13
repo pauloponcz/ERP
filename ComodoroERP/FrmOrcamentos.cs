@@ -26,6 +26,9 @@ namespace ComodoroERP
             cmbFiltroStatus.Items.Add("Concluído");
             cmbFiltroStatus.Items.Add("Cancelado");
             cmbFiltroStatus.SelectedIndex = 0;
+
+            dtpDataInicial.Checked = false;
+            dtpDataFinal.Checked = false;
         }
 
         private void ConfigurarGrid()
@@ -49,7 +52,25 @@ namespace ComodoroERP
                 statusFiltro = cmbFiltroStatus.Text;
             }
 
-            DataTable tabela = _orcamentoService.ListarOrcamentos(clienteFiltro, statusFiltro);
+            DateTime? dataInicial = null;
+            DateTime? dataFinal = null;
+
+            if (dtpDataInicial.Checked)
+            {
+                dataInicial = dtpDataInicial.Value.Date;
+            }
+
+            if (dtpDataFinal.Checked)
+            {
+                dataFinal = dtpDataFinal.Value.Date;
+            }
+
+            DataTable tabela = _orcamentoService.ListarOrcamentos(
+                clienteFiltro,
+                statusFiltro,
+                dataInicial,
+                dataFinal
+            );
 
             dgvOrcamentos.DataSource = tabela;
 
@@ -116,6 +137,10 @@ namespace ComodoroERP
         {
             txtFiltroCliente.Clear();
             cmbFiltroStatus.SelectedIndex = 0;
+
+            dtpDataInicial.Checked = false;
+            dtpDataFinal.Checked = false;
+
             CarregarOrcamentos();
         }
 

@@ -36,7 +36,6 @@
             dtpDataInicial = new DateTimePicker();
             label3 = new Label();
             dtpDataFinal = new DateTimePicker();
-            chkUsarFiltroData = new CheckBox();
             dgvOrcamentos = new DataGridView();
             btnFiltrar = new Button();
             btnLimparFiltros = new Button();
@@ -95,15 +94,17 @@
             // 
             // dtpDataInicial
             // 
-            dtpDataInicial.Location = new Point(405, 9);
+            dtpDataInicial.Format = DateTimePickerFormat.Short;
+            dtpDataInicial.Location = new Point(382, 8);
             dtpDataInicial.Name = "dtpDataInicial";
-            dtpDataInicial.Size = new Size(248, 23);
+            dtpDataInicial.ShowCheckBox = true;
+            dtpDataInicial.Size = new Size(139, 23);
             dtpDataInicial.TabIndex = 17;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(659, 14);
+            label3.Location = new Point(527, 12);
             label3.Name = "label3";
             label3.Size = new Size(25, 15);
             label3.TabIndex = 18;
@@ -112,19 +113,12 @@
             // 
             // dtpDataFinal
             // 
-            dtpDataFinal.Location = new Point(690, 9);
+            dtpDataFinal.Format = DateTimePickerFormat.Short;
+            dtpDataFinal.Location = new Point(558, 8);
             dtpDataFinal.Name = "dtpDataFinal";
-            dtpDataFinal.Size = new Size(248, 23);
+            dtpDataFinal.ShowCheckBox = true;
+            dtpDataFinal.Size = new Size(139, 23);
             dtpDataFinal.TabIndex = 19;
-            // 
-            // chkUsarFiltroData
-            // 
-            chkUsarFiltroData.AutoSize = true;
-            chkUsarFiltroData.Location = new Point(384, 13);
-            chkUsarFiltroData.Name = "chkUsarFiltroData";
-            chkUsarFiltroData.Size = new Size(15, 14);
-            chkUsarFiltroData.TabIndex = 20;
-            chkUsarFiltroData.UseVisualStyleBackColor = true;
             // 
             // dgvOrcamentos
             // 
@@ -223,7 +217,6 @@
             Controls.Add(btnLimparFiltros);
             Controls.Add(btnFiltrar);
             Controls.Add(dgvOrcamentos);
-            Controls.Add(chkUsarFiltroData);
             Controls.Add(dtpDataFinal);
             Controls.Add(label3);
             Controls.Add(dtpDataInicial);
@@ -249,7 +242,6 @@
         private DateTimePicker dtpDataInicial;
         private Label label3;
         private DateTimePicker dtpDataFinal;
-        private CheckBox chkUsarFiltroData;
         private DataGridView dgvOrcamentos;
         private Button btnFiltrar;
         private Button btnLimparFiltros;

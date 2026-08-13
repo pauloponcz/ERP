@@ -178,7 +178,9 @@ namespace ComodoroERP.Services
 
         public DataTable ListarOrcamentos(
             string clienteFiltro = "",
-            string statusFiltro = "")
+            string statusFiltro = "",
+            DateTime? dataInicial = null,
+            DateTime? dataFinal = null)
         {
             using var connection = new SqliteConnection(Database.ConnectionString);
             connection.Open();
@@ -186,38 +188,44 @@ namespace ComodoroERP.Services
             using var command = connection.CreateCommand();
 
             command.CommandText = @"
-                SELECT
-                    O.Id,
-                    O.DataOrcamento AS Data,
-                    C.Nome AS Cliente,
-                    C.Cnpj,
-                    O.Titulo,
-                    O.Status,
-                    IFNULL(SUM(I.ValorTotal), 0) AS ValorOriginal,
-                    IFNULL(SUM(I.ValorTotal), 0) AS ValorNota1,
-                    IFNULL(SUM(I.ValorTotal * (1 + (O.VariacaoNota2 / 100))), 0) AS ValorNota2,
-                    IFNULL(SUM(I.ValorTotal * (1 + (O.VariacaoNota3 / 100))), 0) AS ValorNota3
-                FROM Orcamentos O
-                INNER JOIN Clientes C ON C.Id = O.ClienteId
-                LEFT JOIN OrcamentoItens I ON I.OrcamentoId = O.Id
-                WHERE
-                    (@ClienteFiltro = '' OR C.Nome LIKE '%' || @ClienteFiltro || '%')
-                    AND
-                    (@StatusFiltro = '' OR O.Status = @StatusFiltro)
-                GROUP BY
-                    O.Id,
-                    O.DataOrcamento,
-                    C.Nome,
-                    C.Cnpj,
-                    O.Titulo,
-                    O.Status,
-                    O.VariacaoNota2,
-                    O.VariacaoNota3
-                ORDER BY O.Id DESC;
-            ";
+        SELECT
+            O.Id,
+            O.DataOrcamento AS Data,
+            C.Nome AS Cliente,
+            C.Cnpj,
+            O.Titulo,
+            O.Status,
+            IFNULL(SUM(I.ValorTotal), 0) AS ValorOriginal,
+            IFNULL(SUM(I.ValorTotal), 0) AS ValorNota1,
+            IFNULL(SUM(I.ValorTotal * (1 + (O.VariacaoNota2 / 100))), 0) AS ValorNota2,
+            IFNULL(SUM(I.ValorTotal * (1 + (O.VariacaoNota3 / 100))), 0) AS ValorNota3
+        FROM Orcamentos O
+        INNER JOIN Clientes C ON C.Id = O.ClienteId
+        LEFT JOIN OrcamentoItens I ON I.OrcamentoId = O.Id
+        WHERE
+            (@ClienteFiltro = '' OR C.Nome LIKE '%' || @ClienteFiltro || '%')
+            AND
+            (@StatusFiltro = '' OR O.Status = @StatusFiltro)
+            AND
+            (@DataInicial = '' OR O.DataOrcamento >= @DataInicial)
+            AND
+            (@DataFinal = '' OR O.DataOrcamento <= @DataFinal)
+        GROUP BY
+            O.Id,
+            O.DataOrcamento,
+            C.Nome,
+            C.Cnpj,
+            O.Titulo,
+            O.Status,
+            O.VariacaoNota2,
+            O.VariacaoNota3
+        ORDER BY O.Id DESC;
+    ";
 
             command.Parameters.AddWithValue("@ClienteFiltro", clienteFiltro);
             command.Parameters.AddWithValue("@StatusFiltro", statusFiltro);
+            command.Parameters.AddWithValue("@DataInicial", dataInicial.HasValue ? dataInicial.Value.ToString("yyyy-MM-dd") : "");
+            command.Parameters.AddWithValue("@DataFinal", dataFinal.HasValue ? dataFinal.Value.ToString("yyyy-MM-dd") : "");
 
             using var reader = command.ExecuteReader();
 
