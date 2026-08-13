@@ -2,6 +2,7 @@
 using ComodoroERP.Models;
 using Microsoft.Data.Sqlite;
 using System.Data;
+using System.IO;
 
 namespace ComodoroERP.Services
 {
@@ -541,6 +542,103 @@ namespace ComodoroERP.Services
             command.Parameters.AddWithValue("@Observacao", item.Observacao);
 
             command.ExecuteNonQuery();
+        }
+
+
+        public void ExcluirOrcamento(int orcamentoId)
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var transaction = connection.BeginTransaction();
+
+            try
+            {
+                List<string> caminhosPdf = new();
+
+                using (var commandListarPdfs = connection.CreateCommand())
+                {
+                    commandListarPdfs.Transaction = transaction;
+
+                    commandListarPdfs.CommandText = @"
+                SELECT CaminhoPdf
+                FROM NotasGeradas
+                WHERE OrcamentoId = @OrcamentoId
+                  AND CaminhoPdf IS NOT NULL
+                  AND CaminhoPdf <> '';
+            ";
+
+                    commandListarPdfs.Parameters.AddWithValue("@OrcamentoId", orcamentoId);
+
+                    using var reader = commandListarPdfs.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        caminhosPdf.Add(reader.GetString(0));
+                    }
+                }
+
+                using (var commandNotas = connection.CreateCommand())
+                {
+                    commandNotas.Transaction = transaction;
+
+                    commandNotas.CommandText = @"
+                DELETE FROM NotasGeradas
+                WHERE OrcamentoId = @OrcamentoId;
+            ";
+
+                    commandNotas.Parameters.AddWithValue("@OrcamentoId", orcamentoId);
+                    commandNotas.ExecuteNonQuery();
+                }
+
+                using (var commandItens = connection.CreateCommand())
+                {
+                    commandItens.Transaction = transaction;
+
+                    commandItens.CommandText = @"
+                DELETE FROM OrcamentoItens
+                WHERE OrcamentoId = @OrcamentoId;
+            ";
+
+                    commandItens.Parameters.AddWithValue("@OrcamentoId", orcamentoId);
+                    commandItens.ExecuteNonQuery();
+                }
+
+                using (var commandOrcamento = connection.CreateCommand())
+                {
+                    commandOrcamento.Transaction = transaction;
+
+                    commandOrcamento.CommandText = @"
+                DELETE FROM Orcamentos
+                WHERE Id = @OrcamentoId;
+            ";
+
+                    commandOrcamento.Parameters.AddWithValue("@OrcamentoId", orcamentoId);
+                    commandOrcamento.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+
+                foreach (string caminhoPdf in caminhosPdf)
+                {
+                    try
+                    {
+                        if (File.Exists(caminhoPdf))
+                        {
+                            File.Delete(caminhoPdf);
+                        }
+                    }
+                    catch
+                    {
+                        // Se não conseguir apagar o PDF, não quebra a exclusão do orçamento.
+                    }
+                }
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
 
 

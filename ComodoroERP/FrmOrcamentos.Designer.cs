@@ -44,6 +44,7 @@
             btnAlterarStatus = new Button();
             btnFechar = new Button();
             btnAbrirOrcamento = new Button();
+            btnExcluirOrcamento = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvOrcamentos).BeginInit();
             SuspendLayout();
             // 
@@ -161,7 +162,7 @@
             // 
             // btnGerarPdfs
             // 
-            btnGerarPdfs.Location = new Point(120, 377);
+            btnGerarPdfs.Location = new Point(225, 377);
             btnGerarPdfs.Name = "btnGerarPdfs";
             btnGerarPdfs.Size = new Size(99, 23);
             btnGerarPdfs.TabIndex = 25;
@@ -171,7 +172,7 @@
             // 
             // btnAlterarStatus
             // 
-            btnAlterarStatus.Location = new Point(15, 377);
+            btnAlterarStatus.Location = new Point(120, 377);
             btnAlterarStatus.Name = "btnAlterarStatus";
             btnAlterarStatus.Size = new Size(99, 23);
             btnAlterarStatus.TabIndex = 24;
@@ -181,7 +182,7 @@
             // 
             // btnFechar
             // 
-            btnFechar.Location = new Point(330, 377);
+            btnFechar.Location = new Point(839, 412);
             btnFechar.Name = "btnFechar";
             btnFechar.Size = new Size(99, 23);
             btnFechar.TabIndex = 27;
@@ -191,7 +192,7 @@
             // 
             // btnAbrirOrcamento
             // 
-            btnAbrirOrcamento.Location = new Point(225, 377);
+            btnAbrirOrcamento.Location = new Point(15, 377);
             btnAbrirOrcamento.Name = "btnAbrirOrcamento";
             btnAbrirOrcamento.Size = new Size(99, 23);
             btnAbrirOrcamento.TabIndex = 26;
@@ -199,11 +200,22 @@
             btnAbrirOrcamento.UseVisualStyleBackColor = true;
             btnAbrirOrcamento.Click += btnAbrirOrcamento_Click;
             // 
+            // btnExcluirOrcamento
+            // 
+            btnExcluirOrcamento.Location = new Point(374, 377);
+            btnExcluirOrcamento.Name = "btnExcluirOrcamento";
+            btnExcluirOrcamento.Size = new Size(99, 23);
+            btnExcluirOrcamento.TabIndex = 28;
+            btnExcluirOrcamento.Text = "Excluir Orçamento";
+            btnExcluirOrcamento.UseVisualStyleBackColor = true;
+            btnExcluirOrcamento.Click += btnExcluirOrcamento_Click;
+            // 
             // FrmOrcamentos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(963, 572);
+            ClientSize = new Size(963, 447);
+            Controls.Add(btnExcluirOrcamento);
             Controls.Add(btnFechar);
             Controls.Add(btnAbrirOrcamento);
             Controls.Add(btnGerarPdfs);
@@ -245,5 +257,6 @@
         private Button btnAlterarStatus;
         private Button btnFechar;
         private Button btnAbrirOrcamento;
+        private Button btnExcluirOrcamento;
     }
 }

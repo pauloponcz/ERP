@@ -177,6 +177,40 @@ namespace ComodoroERP
             CarregarOrcamentos();
         }
 
+        private void btnExcluirOrcamento_Click(object sender, EventArgs e)
+        {
+            int idOrcamento = ObterIdOrcamentoSelecionado();
+
+            if (idOrcamento == 0)
+            {
+                MessageBox.Show("Selecione um orçamento para excluir.");
+                return;
+            }
+
+            DialogResult resposta = MessageBox.Show(
+                $"Deseja realmente excluir o orçamento {idOrcamento}?\n\nEssa ação irá apagar os itens e PDFs gerados.",
+                "Confirmar exclusão",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (resposta != DialogResult.Yes)
+                return;
+
+            try
+            {
+                _orcamentoService.ExcluirOrcamento(idOrcamento);
+
+                MessageBox.Show("Orçamento excluído com sucesso.");
+
+                CarregarOrcamentos();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao excluir orçamento: " + ex.Message);
+            }
+        }
+
         private void btnFechar_Click(object sender, EventArgs e)
         {
             Close();
