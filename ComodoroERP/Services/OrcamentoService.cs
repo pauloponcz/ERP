@@ -445,5 +445,70 @@ namespace ComodoroERP.Services
             command.ExecuteNonQuery();
         }
 
+        public void RemoverItemOrcamento(int itemId)
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+        DELETE FROM OrcamentoItens
+        WHERE Id = @Id;
+    ";
+
+            command.Parameters.AddWithValue("@Id", itemId);
+
+            command.ExecuteNonQuery();
+        }
+
+        public void AdicionarItemOrcamento(int orcamentoId, OrcamentoItem item)
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+        INSERT INTO OrcamentoItens
+        (
+            OrcamentoId,
+            Categoria,
+            ServicoPermitido,
+            DescricaoOrcamento,
+            Quantidade,
+            ValorUnitario,
+            Cortesia,
+            ValorTotal,
+            Observacao
+        )
+        VALUES
+        (
+            @OrcamentoId,
+            @Categoria,
+            @ServicoPermitido,
+            @DescricaoOrcamento,
+            @Quantidade,
+            @ValorUnitario,
+            @Cortesia,
+            @ValorTotal,
+            @Observacao
+        );
+    ";
+
+            command.Parameters.AddWithValue("@OrcamentoId", orcamentoId);
+            command.Parameters.AddWithValue("@Categoria", item.Categoria);
+            command.Parameters.AddWithValue("@ServicoPermitido", item.ServicoPermitido);
+            command.Parameters.AddWithValue("@DescricaoOrcamento", item.DescricaoOrcamento);
+            command.Parameters.AddWithValue("@Quantidade", item.Quantidade);
+            command.Parameters.AddWithValue("@ValorUnitario", item.ValorUnitario);
+            command.Parameters.AddWithValue("@Cortesia", item.Cortesia ? 1 : 0);
+            command.Parameters.AddWithValue("@ValorTotal", item.ValorTotal);
+            command.Parameters.AddWithValue("@Observacao", item.Observacao);
+
+            command.ExecuteNonQuery();
+        }
+
     }
+
 }

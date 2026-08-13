@@ -201,5 +201,64 @@ namespace ComodoroERP
                 CarregarDados();
             }
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAdicionarItem_Click(object sender, EventArgs e)
+        {
+            using var tela = new FrmAdicionarItemOrcamento(_orcamentoId);
+
+            if (tela.ShowDialog() == DialogResult.OK)
+            {
+                CarregarDados();
+            }
+        }
+
+        private void btnRemoverItem_Click(object sender, EventArgs e)
+        {
+            if (dgvItens.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Selecione um item para remover.");
+                return;
+            }
+
+            object valorId = dgvItens.SelectedRows[0].Cells["Id"].Value;
+
+            if (valorId == null)
+            {
+                MessageBox.Show("Não foi possível identificar o item selecionado.");
+                return;
+            }
+
+            int itemId = Convert.ToInt32(valorId);
+
+            DialogResult resposta = MessageBox.Show(
+                "Deseja realmente remover este item?",
+                "Confirmação",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (resposta != DialogResult.Yes)
+                return;
+
+            try
+            {
+                _orcamentoService.RemoverItemOrcamento(itemId);
+
+                MessageBox.Show("Item removido com sucesso.");
+
+                CarregarDados();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao remover item: " + ex.Message);
+            }
+        }
+
+
     }
 }

@@ -45,6 +45,8 @@
             btnFechar = new Button();
             btnAbrirPastaPdfs = new Button();
             btnEditarOrcamento = new Button();
+            btnAdicionarItem = new Button();
+            btnRemoverItem = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvItens).BeginInit();
@@ -64,10 +66,11 @@
             groupBox1.Controls.Add(lblId);
             groupBox1.Location = new Point(16, 5);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(613, 204);
+            groupBox1.Size = new Size(690, 204);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "DETALHES DO ORÇAMENTO";
+            groupBox1.Enter += groupBox1_Enter;
             // 
             // lblValorNota3
             // 
@@ -164,7 +167,7 @@
             groupBox2.Controls.Add(dgvItens);
             groupBox2.Location = new Point(16, 215);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(613, 187);
+            groupBox2.Size = new Size(690, 187);
             groupBox2.TabIndex = 10;
             groupBox2.TabStop = false;
             groupBox2.Text = "ITENS DO ORÇAMENTO";
@@ -174,7 +177,7 @@
             dgvItens.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvItens.Location = new Point(6, 22);
             dgvItens.Name = "dgvItens";
-            dgvItens.Size = new Size(597, 154);
+            dgvItens.Size = new Size(678, 154);
             dgvItens.TabIndex = 0;
             // 
             // btnGerarPdfs
@@ -189,7 +192,7 @@
             // 
             // btnFechar
             // 
-            btnFechar.Location = new Point(358, 408);
+            btnFechar.Location = new Point(616, 408);
             btnFechar.Name = "btnFechar";
             btnFechar.Size = new Size(90, 26);
             btnFechar.TabIndex = 12;
@@ -217,11 +220,33 @@
             btnEditarOrcamento.UseVisualStyleBackColor = true;
             btnEditarOrcamento.Click += btnEditarOrcamento_Click;
             // 
+            // btnAdicionarItem
+            // 
+            btnAdicionarItem.Location = new Point(358, 408);
+            btnAdicionarItem.Name = "btnAdicionarItem";
+            btnAdicionarItem.Size = new Size(101, 26);
+            btnAdicionarItem.TabIndex = 15;
+            btnAdicionarItem.Text = "Adicionar Item";
+            btnAdicionarItem.UseVisualStyleBackColor = true;
+            btnAdicionarItem.Click += btnAdicionarItem_Click;
+            // 
+            // btnRemoverItem
+            // 
+            btnRemoverItem.Location = new Point(465, 408);
+            btnRemoverItem.Name = "btnRemoverItem";
+            btnRemoverItem.Size = new Size(100, 26);
+            btnRemoverItem.TabIndex = 16;
+            btnRemoverItem.Text = "Remover Item";
+            btnRemoverItem.UseVisualStyleBackColor = true;
+            btnRemoverItem.Click += btnRemoverItem_Click;
+            // 
             // FrmDetalhesOrcamento
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 458);
+            Controls.Add(btnRemoverItem);
+            Controls.Add(btnAdicionarItem);
             Controls.Add(btnEditarOrcamento);
             Controls.Add(btnAbrirPastaPdfs);
             Controls.Add(btnFechar);
@@ -256,5 +281,7 @@
         private Button btnFechar;
         private Button btnAbrirPastaPdfs;
         private Button btnEditarOrcamento;
+        private Button btnAdicionarItem;
+        private Button btnRemoverItem;
     }
 }
