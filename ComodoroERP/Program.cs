@@ -1,5 +1,6 @@
 using ComodoroERP.Data;
 using QuestPDF.Infrastructure;
+using ComodoroERP.Services;
 
 namespace ComodoroERP
 {
@@ -13,6 +14,8 @@ namespace ComodoroERP
             QuestPDF.Settings.License = LicenseType.Community;
 
             Database.Inicializar();
+
+            new BackupService().CriarBackupAutomatico();
 
             Application.Run(new FrmMenu());
         }
