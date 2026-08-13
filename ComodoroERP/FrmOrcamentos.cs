@@ -174,11 +174,11 @@ namespace ComodoroERP
 
             try
             {
-                var pdfService = new PdfService();
+                var service = new ExcelModeloPdfService();
 
-                pdfService.GerarPdfsOrcamento(idOrcamento);
+                var arquivosPdf = service.GerarPdfsPorModeloExcel(idOrcamento);
 
-                MessageBox.Show("PDFs gerados com sucesso na pasta 'pdfs' do sistema.");
+                MessageBox.Show($"PDFs gerados com sucesso: {arquivosPdf.Count}");
             }
             catch (Exception ex)
             {

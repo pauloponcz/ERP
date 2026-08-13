@@ -185,7 +185,7 @@
             // 
             // btnGerarPdfs
             // 
-            btnGerarPdfs.Location = new Point(237, 449);
+            btnGerarPdfs.Location = new Point(276, 443);
             btnGerarPdfs.Name = "btnGerarPdfs";
             btnGerarPdfs.Size = new Size(90, 26);
             btnGerarPdfs.TabIndex = 11;
@@ -205,7 +205,7 @@
             // 
             // btnAbrirPastaPdfs
             // 
-            btnAbrirPastaPdfs.Location = new Point(333, 449);
+            btnAbrirPastaPdfs.Location = new Point(372, 443);
             btnAbrirPastaPdfs.Name = "btnAbrirPastaPdfs";
             btnAbrirPastaPdfs.Size = new Size(117, 26);
             btnAbrirPastaPdfs.TabIndex = 13;
@@ -215,7 +215,7 @@
             // 
             // btnEditarOrcamento
             // 
-            btnEditarOrcamento.Location = new Point(114, 449);
+            btnEditarOrcamento.Location = new Point(153, 443);
             btnEditarOrcamento.Name = "btnEditarOrcamento";
             btnEditarOrcamento.Size = new Size(117, 26);
             btnEditarOrcamento.TabIndex = 14;
@@ -225,7 +225,7 @@
             // 
             // btnAdicionarItem
             // 
-            btnAdicionarItem.Location = new Point(114, 408);
+            btnAdicionarItem.Location = new Point(153, 408);
             btnAdicionarItem.Name = "btnAdicionarItem";
             btnAdicionarItem.Size = new Size(101, 26);
             btnAdicionarItem.TabIndex = 15;
@@ -235,7 +235,7 @@
             // 
             // btnRemoverItem
             // 
-            btnRemoverItem.Location = new Point(221, 408);
+            btnRemoverItem.Location = new Point(260, 408);
             btnRemoverItem.Name = "btnRemoverItem";
             btnRemoverItem.Size = new Size(100, 26);
             btnRemoverItem.TabIndex = 16;
@@ -257,13 +257,13 @@
             label2.AutoSize = true;
             label2.Location = new Point(16, 449);
             label2.Name = "label2";
-            label2.Size = new Size(92, 15);
+            label2.Size = new Size(130, 15);
             label2.TabIndex = 18;
-            label2.Text = "Ações dos itens:";
+            label2.Text = "Ações dos orçamentos:";
             // 
             // btnEditarItem
             // 
-            btnEditarItem.Location = new Point(327, 408);
+            btnEditarItem.Location = new Point(366, 408);
             btnEditarItem.Name = "btnEditarItem";
             btnEditarItem.Size = new Size(100, 26);
             btnEditarItem.TabIndex = 19;

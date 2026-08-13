@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            btnSelecionarModeloNotas = new Button();
+            txtModeloNotas = new TextBox();
+            label2 = new Label();
             btnSelecionarPastaBackups = new Button();
             btnSelecionarPastaPdfs = new Button();
             txtPastaPdfs = new TextBox();
@@ -42,6 +45,9 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(btnSelecionarModeloNotas);
+            groupBox1.Controls.Add(txtModeloNotas);
+            groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(btnSelecionarPastaBackups);
             groupBox1.Controls.Add(btnSelecionarPastaPdfs);
             groupBox1.Controls.Add(txtPastaPdfs);
@@ -50,10 +56,36 @@
             groupBox1.Controls.Add(label3);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(449, 146);
+            groupBox1.Size = new Size(449, 202);
             groupBox1.TabIndex = 16;
             groupBox1.TabStop = false;
             groupBox1.Text = "CONFIGURAÇÕES";
+            // 
+            // btnSelecionarModeloNotas
+            // 
+            btnSelecionarModeloNotas.Location = new Point(397, 155);
+            btnSelecionarModeloNotas.Name = "btnSelecionarModeloNotas";
+            btnSelecionarModeloNotas.Size = new Size(45, 23);
+            btnSelecionarModeloNotas.TabIndex = 22;
+            btnSelecionarModeloNotas.Text = "...";
+            btnSelecionarModeloNotas.UseVisualStyleBackColor = true;
+            btnSelecionarModeloNotas.Click += btnSelecionarModeloNotas_Click;
+            // 
+            // txtModeloNotas
+            // 
+            txtModeloNotas.Location = new Point(21, 155);
+            txtModeloNotas.Name = "txtModeloNotas";
+            txtModeloNotas.Size = new Size(370, 23);
+            txtModeloNotas.TabIndex = 21;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(20, 134);
+            label2.Name = "label2";
+            label2.Size = new Size(101, 15);
+            label2.TabIndex = 20;
+            label2.Text = "Modelo de Notas:";
             // 
             // btnSelecionarPastaBackups
             // 
@@ -109,7 +141,7 @@
             // 
             // btnSalvar
             // 
-            btnSalvar.Location = new Point(274, 164);
+            btnSalvar.Location = new Point(274, 220);
             btnSalvar.Name = "btnSalvar";
             btnSalvar.Size = new Size(88, 23);
             btnSalvar.TabIndex = 18;
@@ -119,7 +151,7 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(374, 164);
+            btnCancelar.Location = new Point(374, 220);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(88, 23);
             btnCancelar.TabIndex = 19;
@@ -131,12 +163,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(477, 206);
+            ClientSize = new Size(477, 262);
             Controls.Add(btnSalvar);
             Controls.Add(btnCancelar);
             Controls.Add(groupBox1);
             Name = "FrmConfiguracoes";
             Text = "FrmConfiguracoes";
+            Load += FrmConfiguracoes_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
@@ -153,5 +186,8 @@
         private Button btnSelecionarPastaPdfs;
         private Button btnSalvar;
         private Button btnCancelar;
+        private Button btnSelecionarModeloNotas;
+        private TextBox txtModeloNotas;
+        private Label label2;
     }
 }

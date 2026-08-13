@@ -69,5 +69,14 @@ namespace ComodoroERP.Services
 
             return ObterValor("PastaBackups", pastaPadrao);
         }
+
+        public string ObterModeloNotas()
+        {
+            string pastaPadrao = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modelos");
+            string modeloPadrao = Path.Combine(pastaPadrao, "modelo_notas.xlsx");
+
+            return ObterValor("ModeloNotas", modeloPadrao);
+        }
+
     }
 }

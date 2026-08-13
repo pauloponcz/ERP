@@ -152,11 +152,11 @@ namespace ComodoroERP
         {
             try
             {
-                var pdfService = new PdfService();
+                var service = new ExcelModeloPdfService();
 
-                pdfService.GerarPdfsOrcamento(_orcamentoId);
+                var arquivosPdf = service.GerarPdfsPorModeloExcel(_orcamentoId);
 
-                MessageBox.Show("PDFs gerados com sucesso.");
+                MessageBox.Show($"PDFs gerados com sucesso: {arquivosPdf.Count}");
 
                 CarregarDados();
             }

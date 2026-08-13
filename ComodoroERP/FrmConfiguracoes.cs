@@ -17,6 +17,7 @@ namespace ComodoroERP
         {
             txtPastaPdfs.Text = _configuracaoService.ObterPastaPdfs();
             txtPastaBackups.Text = _configuracaoService.ObterPastaBackups();
+            txtModeloNotas.Text = _configuracaoService.ObterModeloNotas();
         }
 
         private void btnSelecionarPastaPdfs_Click(object sender, EventArgs e)
@@ -43,6 +44,20 @@ namespace ComodoroERP
             }
         }
 
+        private void btnSelecionarModeloNotas_Click(object sender, EventArgs e)
+        {
+            using OpenFileDialog dialog = new OpenFileDialog();
+
+            dialog.Title = "Selecione o modelo de notas em Excel";
+            dialog.Filter = "Arquivos Excel (*.xlsx)|*.xlsx";
+            dialog.Multiselect = false;
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                txtModeloNotas.Text = dialog.FileName;
+            }
+        }
+
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtPastaPdfs.Text))
@@ -66,6 +81,7 @@ namespace ComodoroERP
 
                 _configuracaoService.SalvarValor("PastaPdfs", txtPastaPdfs.Text);
                 _configuracaoService.SalvarValor("PastaBackups", txtPastaBackups.Text);
+                _configuracaoService.SalvarValor("ModeloNotas", txtModeloNotas.Text);
 
                 MessageBox.Show("Configurações salvas com sucesso.");
 
@@ -82,6 +98,11 @@ namespace ComodoroERP
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void FrmConfiguracoes_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
