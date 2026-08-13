@@ -40,6 +40,10 @@
             btnFiltrar = new Button();
             dgvItens = new DataGridView();
             btnFechar = new Button();
+            dtpDataFinal = new DateTimePicker();
+            label2 = new Label();
+            dtpDataInicial = new DateTimePicker();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvItens).BeginInit();
             SuspendLayout();
             // 
@@ -120,7 +124,7 @@
             // 
             // btnLimparFiltros
             // 
-            btnLimparFiltros.Location = new Point(112, 43);
+            btnLimparFiltros.Location = new Point(112, 82);
             btnLimparFiltros.Name = "btnLimparFiltros";
             btnLimparFiltros.Size = new Size(99, 23);
             btnLimparFiltros.TabIndex = 32;
@@ -130,7 +134,7 @@
             // 
             // btnFiltrar
             // 
-            btnFiltrar.Location = new Point(7, 43);
+            btnFiltrar.Location = new Point(7, 82);
             btnFiltrar.Name = "btnFiltrar";
             btnFiltrar.Size = new Size(99, 23);
             btnFiltrar.TabIndex = 31;
@@ -144,7 +148,7 @@
             dgvItens.AllowUserToDeleteRows = false;
             dgvItens.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvItens.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvItens.Location = new Point(7, 72);
+            dgvItens.Location = new Point(7, 111);
             dgvItens.MultiSelect = false;
             dgvItens.Name = "dgvItens";
             dgvItens.ReadOnly = true;
@@ -154,7 +158,7 @@
             // 
             // btnFechar
             // 
-            btnFechar.Location = new Point(7, 374);
+            btnFechar.Location = new Point(663, 415);
             btnFechar.Name = "btnFechar";
             btnFechar.Size = new Size(99, 23);
             btnFechar.TabIndex = 34;
@@ -162,11 +166,51 @@
             btnFechar.UseVisualStyleBackColor = true;
             btnFechar.Click += btnFechar_Click;
             // 
+            // dtpDataFinal
+            // 
+            dtpDataFinal.Format = DateTimePickerFormat.Short;
+            dtpDataFinal.Location = new Point(299, 53);
+            dtpDataFinal.Name = "dtpDataFinal";
+            dtpDataFinal.ShowCheckBox = true;
+            dtpDataFinal.Size = new Size(139, 23);
+            dtpDataFinal.TabIndex = 38;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(231, 57);
+            label2.Name = "label2";
+            label2.Size = new Size(62, 15);
+            label2.TabIndex = 37;
+            label2.Text = "Data Final:";
+            // 
+            // dtpDataInicial
+            // 
+            dtpDataInicial.Format = DateTimePickerFormat.Short;
+            dtpDataInicial.Location = new Point(86, 53);
+            dtpDataInicial.Name = "dtpDataInicial";
+            dtpDataInicial.ShowCheckBox = true;
+            dtpDataInicial.Size = new Size(139, 23);
+            dtpDataInicial.TabIndex = 36;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(12, 57);
+            label5.Name = "label5";
+            label5.Size = new Size(68, 15);
+            label5.TabIndex = 35;
+            label5.Text = "Data Inicial:";
+            // 
             // FrmItens
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(796, 450);
+            Controls.Add(dtpDataFinal);
+            Controls.Add(label2);
+            Controls.Add(dtpDataInicial);
+            Controls.Add(label5);
             Controls.Add(btnFechar);
             Controls.Add(dgvItens);
             Controls.Add(btnLimparFiltros);
@@ -200,5 +244,9 @@
         private Button btnFiltrar;
         private DataGridView dgvItens;
         private Button btnFechar;
+        private DateTimePicker dtpDataFinal;
+        private Label label2;
+        private DateTimePicker dtpDataInicial;
+        private Label label5;
     }
 }

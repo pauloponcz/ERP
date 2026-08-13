@@ -36,6 +36,9 @@ namespace ComodoroERP
             cmbFiltroCategoria.Items.Add("SERVIÇO DE MARCENARIA E MAN. DE MOBILIÁRIO EM GERAL E ESCOLAR");
             cmbFiltroCategoria.Items.Add("SERVIÇO DE MANUTENÇÃO E CONSERVAÇÃO DO IMÓVEL EM GERAL");
             cmbFiltroCategoria.SelectedIndex = 0;
+
+            dtpDataInicial.Checked = false;
+            dtpDataFinal.Checked = false;
         }
 
         private void ConfigurarGrid()
@@ -65,11 +68,26 @@ namespace ComodoroERP
                 statusFiltro = cmbFiltroStatus.Text;
             }
 
+            DateTime? dataInicial = null;
+            DateTime? dataFinal = null;
+
+            if (dtpDataInicial.Checked)
+            {
+                dataInicial = dtpDataInicial.Value.Date;
+            }
+
+            if (dtpDataFinal.Checked)
+            {
+                dataFinal = dtpDataFinal.Value.Date;
+            }
+
             DataTable tabela = _orcamentoService.ListarItens(
                 clienteFiltro,
                 categoriaFiltro,
                 servicoFiltro,
-                statusFiltro
+                statusFiltro,
+                dataInicial,
+                dataFinal
             );
 
             dgvItens.DataSource = tabela;
@@ -135,6 +153,9 @@ namespace ComodoroERP
             cmbFiltroCategoria.SelectedIndex = 0;
             cmbFiltroStatus.SelectedIndex = 0;
 
+            dtpDataInicial.Checked = false;
+            dtpDataFinal.Checked = false;
+
             CarregarItens();
         }
 
@@ -158,5 +179,6 @@ namespace ComodoroERP
         private void label4_Click(object sender, EventArgs e)
         {
         }
+
     }
 }

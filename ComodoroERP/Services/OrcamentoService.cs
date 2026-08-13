@@ -239,7 +239,9 @@ namespace ComodoroERP.Services
             string clienteFiltro = "",
             string categoriaFiltro = "",
             string servicoFiltro = "",
-            string statusFiltro = "")
+            string statusFiltro = "",
+            DateTime? dataInicial = null,
+            DateTime? dataFinal = null)
         {
             using var connection = new SqliteConnection(Database.ConnectionString);
             connection.Open();
@@ -247,39 +249,45 @@ namespace ComodoroERP.Services
             using var command = connection.CreateCommand();
 
             command.CommandText = @"
-                SELECT
-                    O.Id AS OrcamentoId,
-                    O.DataOrcamento AS Data,
-                    C.Nome AS Cliente,
-                    O.Status,
-                    I.Categoria,
-                    I.ServicoPermitido,
-                    I.DescricaoOrcamento,
-                    I.Quantidade,
-                    I.ValorUnitario,
-                    I.ValorTotal,
-                    CASE 
-                        WHEN I.Cortesia = 1 THEN 'Sim'
-                        ELSE 'Não'
-                    END AS Cortesia
-                FROM OrcamentoItens I
-                INNER JOIN Orcamentos O ON O.Id = I.OrcamentoId
-                INNER JOIN Clientes C ON C.Id = O.ClienteId
-                WHERE
-                    (@ClienteFiltro = '' OR C.Nome LIKE '%' || @ClienteFiltro || '%')
-                    AND
-                    (@CategoriaFiltro = '' OR I.Categoria = @CategoriaFiltro)
-                    AND
-                    (@ServicoFiltro = '' OR I.ServicoPermitido LIKE '%' || @ServicoFiltro || '%' OR I.DescricaoOrcamento LIKE '%' || @ServicoFiltro || '%')
-                    AND
-                    (@StatusFiltro = '' OR O.Status = @StatusFiltro)
-                ORDER BY O.Id DESC, I.Id ASC;
-            ";
+        SELECT
+            O.Id AS OrcamentoId,
+            O.DataOrcamento AS Data,
+            C.Nome AS Cliente,
+            O.Status,
+            I.Categoria,
+            I.ServicoPermitido,
+            I.DescricaoOrcamento,
+            I.Quantidade,
+            I.ValorUnitario,
+            I.ValorTotal,
+            CASE 
+                WHEN I.Cortesia = 1 THEN 'Sim'
+                ELSE 'Não'
+            END AS Cortesia
+        FROM OrcamentoItens I
+        INNER JOIN Orcamentos O ON O.Id = I.OrcamentoId
+        INNER JOIN Clientes C ON C.Id = O.ClienteId
+        WHERE
+            (@ClienteFiltro = '' OR C.Nome LIKE '%' || @ClienteFiltro || '%')
+            AND
+            (@CategoriaFiltro = '' OR I.Categoria = @CategoriaFiltro)
+            AND
+            (@ServicoFiltro = '' OR I.ServicoPermitido LIKE '%' || @ServicoFiltro || '%' OR I.DescricaoOrcamento LIKE '%' || @ServicoFiltro || '%')
+            AND
+            (@StatusFiltro = '' OR O.Status = @StatusFiltro)
+            AND
+            (@DataInicial = '' OR O.DataOrcamento >= @DataInicial)
+            AND
+            (@DataFinal = '' OR O.DataOrcamento <= @DataFinal)
+        ORDER BY O.Id DESC, I.Id ASC;
+    ";
 
             command.Parameters.AddWithValue("@ClienteFiltro", clienteFiltro);
             command.Parameters.AddWithValue("@CategoriaFiltro", categoriaFiltro);
             command.Parameters.AddWithValue("@ServicoFiltro", servicoFiltro);
             command.Parameters.AddWithValue("@StatusFiltro", statusFiltro);
+            command.Parameters.AddWithValue("@DataInicial", dataInicial.HasValue ? dataInicial.Value.ToString("yyyy-MM-dd") : "");
+            command.Parameters.AddWithValue("@DataFinal", dataFinal.HasValue ? dataFinal.Value.ToString("yyyy-MM-dd") : "");
 
             using var reader = command.ExecuteReader();
 
