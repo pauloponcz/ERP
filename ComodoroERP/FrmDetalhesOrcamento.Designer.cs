@@ -47,6 +47,9 @@
             btnEditarOrcamento = new Button();
             btnAdicionarItem = new Button();
             btnRemoverItem = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            btnEditarItem = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvItens).BeginInit();
@@ -182,7 +185,7 @@
             // 
             // btnGerarPdfs
             // 
-            btnGerarPdfs.Location = new Point(16, 408);
+            btnGerarPdfs.Location = new Point(237, 449);
             btnGerarPdfs.Name = "btnGerarPdfs";
             btnGerarPdfs.Size = new Size(90, 26);
             btnGerarPdfs.TabIndex = 11;
@@ -192,7 +195,7 @@
             // 
             // btnFechar
             // 
-            btnFechar.Location = new Point(616, 408);
+            btnFechar.Location = new Point(616, 475);
             btnFechar.Name = "btnFechar";
             btnFechar.Size = new Size(90, 26);
             btnFechar.TabIndex = 12;
@@ -202,7 +205,7 @@
             // 
             // btnAbrirPastaPdfs
             // 
-            btnAbrirPastaPdfs.Location = new Point(112, 408);
+            btnAbrirPastaPdfs.Location = new Point(333, 449);
             btnAbrirPastaPdfs.Name = "btnAbrirPastaPdfs";
             btnAbrirPastaPdfs.Size = new Size(117, 26);
             btnAbrirPastaPdfs.TabIndex = 13;
@@ -212,7 +215,7 @@
             // 
             // btnEditarOrcamento
             // 
-            btnEditarOrcamento.Location = new Point(235, 408);
+            btnEditarOrcamento.Location = new Point(114, 449);
             btnEditarOrcamento.Name = "btnEditarOrcamento";
             btnEditarOrcamento.Size = new Size(117, 26);
             btnEditarOrcamento.TabIndex = 14;
@@ -222,7 +225,7 @@
             // 
             // btnAdicionarItem
             // 
-            btnAdicionarItem.Location = new Point(358, 408);
+            btnAdicionarItem.Location = new Point(114, 408);
             btnAdicionarItem.Name = "btnAdicionarItem";
             btnAdicionarItem.Size = new Size(101, 26);
             btnAdicionarItem.TabIndex = 15;
@@ -232,7 +235,7 @@
             // 
             // btnRemoverItem
             // 
-            btnRemoverItem.Location = new Point(465, 408);
+            btnRemoverItem.Location = new Point(221, 408);
             btnRemoverItem.Name = "btnRemoverItem";
             btnRemoverItem.Size = new Size(100, 26);
             btnRemoverItem.TabIndex = 16;
@@ -240,11 +243,42 @@
             btnRemoverItem.UseVisualStyleBackColor = true;
             btnRemoverItem.Click += btnRemoverItem_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(16, 414);
+            label1.Name = "label1";
+            label1.Size = new Size(92, 15);
+            label1.TabIndex = 17;
+            label1.Text = "Ações dos itens:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(16, 449);
+            label2.Name = "label2";
+            label2.Size = new Size(92, 15);
+            label2.TabIndex = 18;
+            label2.Text = "Ações dos itens:";
+            // 
+            // btnEditarItem
+            // 
+            btnEditarItem.Location = new Point(327, 408);
+            btnEditarItem.Name = "btnEditarItem";
+            btnEditarItem.Size = new Size(100, 26);
+            btnEditarItem.TabIndex = 19;
+            btnEditarItem.Text = "Editar Item";
+            btnEditarItem.UseVisualStyleBackColor = true;
+            btnEditarItem.Click += btnEditarItem_Click;
+            // 
             // FrmDetalhesOrcamento
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 458);
+            ClientSize = new Size(721, 513);
+            Controls.Add(btnEditarItem);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(btnRemoverItem);
             Controls.Add(btnAdicionarItem);
             Controls.Add(btnEditarOrcamento);
@@ -260,6 +294,7 @@
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvItens).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -283,5 +318,8 @@
         private Button btnEditarOrcamento;
         private Button btnAdicionarItem;
         private Button btnRemoverItem;
+        private Label label1;
+        private Label label2;
+        private Button btnEditarItem;
     }
 }

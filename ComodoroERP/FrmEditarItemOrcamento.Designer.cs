@@ -1,6 +1,6 @@
 ﻿namespace ComodoroERP
 {
-    partial class FrmAdicionarItemOrcamento
+    partial class FrmEditarItemOrcamento
     {
         /// <summary>
         /// Required designer variable.
@@ -51,20 +51,20 @@
             // 
             // btnSalvar
             // 
-            btnSalvar.Location = new Point(21, 420);
+            btnSalvar.Location = new Point(282, 374);
             btnSalvar.Name = "btnSalvar";
             btnSalvar.Size = new Size(88, 23);
-            btnSalvar.TabIndex = 13;
+            btnSalvar.TabIndex = 16;
             btnSalvar.Text = "Salvar";
             btnSalvar.UseVisualStyleBackColor = true;
             btnSalvar.Click += btnSalvar_Click;
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(373, 420);
+            btnCancelar.Location = new Point(382, 374);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(88, 23);
-            btnCancelar.TabIndex = 14;
+            btnCancelar.TabIndex = 17;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
             btnCancelar.Click += btnCancelar_Click;
@@ -86,10 +86,10 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(458, 403);
-            groupBox1.TabIndex = 12;
+            groupBox1.Size = new Size(458, 356);
+            groupBox1.TabIndex = 15;
             groupBox1.TabStop = false;
-            groupBox1.Text = "ADICIONAR ITEM AO ORÇAMENTO";
+            groupBox1.Text = "EDITAR ITEM DO ORÇAMENTO";
             // 
             // txtDescricaoServico
             // 
@@ -101,7 +101,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(25, 135);
+            label3.Location = new Point(22, 132);
             label3.Name = "label3";
             label3.Size = new Size(158, 15);
             label3.TabIndex = 14;
@@ -110,17 +110,17 @@
             // numValorUnitario
             // 
             numValorUnitario.DecimalPlaces = 2;
-            numValorUnitario.Location = new Point(23, 251);
+            numValorUnitario.Location = new Point(234, 200);
             numValorUnitario.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numValorUnitario.Name = "numValorUnitario";
-            numValorUnitario.Size = new Size(405, 23);
+            numValorUnitario.Size = new Size(194, 23);
             numValorUnitario.TabIndex = 13;
             numValorUnitario.Value = new decimal(new int[] { 1000000, 0, 0, 0 });
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(23, 230);
+            label6.Location = new Point(234, 179);
             label6.Name = "label6";
             label6.Size = new Size(81, 15);
             label6.TabIndex = 12;
@@ -129,7 +129,7 @@
             // chkCortesia
             // 
             chkCortesia.AutoSize = true;
-            chkCortesia.Location = new Point(25, 279);
+            chkCortesia.Location = new Point(22, 231);
             chkCortesia.Name = "chkCortesia";
             chkCortesia.Size = new Size(69, 19);
             chkCortesia.TabIndex = 11;
@@ -140,7 +140,7 @@
             // 
             cmbCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCategoria.FormattingEnabled = true;
-            cmbCategoria.Location = new Point(23, 58);
+            cmbCategoria.Location = new Point(22, 58);
             cmbCategoria.Name = "cmbCategoria";
             cmbCategoria.Size = new Size(405, 23);
             cmbCategoria.TabIndex = 10;
@@ -148,20 +148,22 @@
             // 
             // txtObservacaoServico
             // 
-            txtObservacaoServico.Location = new Point(23, 324);
+            txtObservacaoServico.Location = new Point(22, 276);
             txtObservacaoServico.Multiline = true;
             txtObservacaoServico.Name = "txtObservacaoServico";
             txtObservacaoServico.Size = new Size(405, 63);
             txtObservacaoServico.TabIndex = 9;
+            txtObservacaoServico.TextChanged += txtObservacaoServico_TextChanged;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(23, 306);
+            label5.Location = new Point(22, 258);
             label5.Name = "label5";
             label5.Size = new Size(72, 15);
             label5.TabIndex = 8;
             label5.Text = "Observação:";
+            label5.Click += label5_Click;
             // 
             // numQuantidade
             // 
@@ -170,14 +172,14 @@
             numQuantidade.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numQuantidade.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numQuantidade.Name = "numQuantidade";
-            numQuantidade.Size = new Size(405, 23);
+            numQuantidade.Size = new Size(192, 23);
             numQuantidade.TabIndex = 7;
             numQuantidade.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(25, 179);
+            label4.Location = new Point(22, 179);
             label4.Name = "label4";
             label4.Size = new Size(72, 15);
             label4.TabIndex = 6;
@@ -195,7 +197,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(25, 84);
+            label2.Location = new Point(22, 84);
             label2.Name = "label2";
             label2.Size = new Size(103, 15);
             label2.TabIndex = 2;
@@ -204,23 +206,22 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(23, 40);
+            label1.Location = new Point(22, 40);
             label1.Name = "label1";
             label1.Size = new Size(61, 15);
             label1.TabIndex = 0;
             label1.Text = "Categoria:";
             // 
-            // FrmAdicionarItemOrcamento
+            // FrmEditarItemOrcamento
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(485, 460);
+            ClientSize = new Size(485, 416);
             Controls.Add(btnSalvar);
             Controls.Add(btnCancelar);
             Controls.Add(groupBox1);
-            Name = "FrmAdicionarItemOrcamento";
-            Text = "FrmAdicionarItemOrcamento";
-            Load += FrmAdicionarItemOrcamento_Load;
+            Name = "FrmEditarItemOrcamento";
+            Text = "FrmEditarItemOrcamento";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numValorUnitario).EndInit();
@@ -233,6 +234,11 @@
         private Button btnSalvar;
         private Button btnCancelar;
         private GroupBox groupBox1;
+        private TextBox txtDescricaoServico;
+        private Label label3;
+        private NumericUpDown numValorUnitario;
+        private Label label6;
+        private CheckBox chkCortesia;
         private ComboBox cmbCategoria;
         private TextBox txtObservacaoServico;
         private Label label5;
@@ -241,10 +247,5 @@
         private ComboBox cmbServicoPermitido;
         private Label label2;
         private Label label1;
-        private NumericUpDown numValorUnitario;
-        private Label label6;
-        private CheckBox chkCortesia;
-        private TextBox txtDescricaoServico;
-        private Label label3;
     }
 }

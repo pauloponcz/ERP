@@ -509,6 +509,41 @@ namespace ComodoroERP.Services
             command.ExecuteNonQuery();
         }
 
+        public void AtualizarItemOrcamento(OrcamentoItem item)
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+        UPDATE OrcamentoItens
+        SET
+            Categoria = @Categoria,
+            ServicoPermitido = @ServicoPermitido,
+            DescricaoOrcamento = @DescricaoOrcamento,
+            Quantidade = @Quantidade,
+            ValorUnitario = @ValorUnitario,
+            Cortesia = @Cortesia,
+            ValorTotal = @ValorTotal,
+            Observacao = @Observacao
+        WHERE Id = @Id;
+    ";
+
+            command.Parameters.AddWithValue("@Id", item.Id);
+            command.Parameters.AddWithValue("@Categoria", item.Categoria);
+            command.Parameters.AddWithValue("@ServicoPermitido", item.ServicoPermitido);
+            command.Parameters.AddWithValue("@DescricaoOrcamento", item.DescricaoOrcamento);
+            command.Parameters.AddWithValue("@Quantidade", item.Quantidade);
+            command.Parameters.AddWithValue("@ValorUnitario", item.ValorUnitario);
+            command.Parameters.AddWithValue("@Cortesia", item.Cortesia ? 1 : 0);
+            command.Parameters.AddWithValue("@ValorTotal", item.ValorTotal);
+            command.Parameters.AddWithValue("@Observacao", item.Observacao);
+
+            command.ExecuteNonQuery();
+        }
+
+
     }
 
 }

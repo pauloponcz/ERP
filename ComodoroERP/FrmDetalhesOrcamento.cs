@@ -1,4 +1,5 @@
-﻿using ComodoroERP.Reports;
+﻿using ComodoroERP.Models;
+using ComodoroERP.Reports;
 using ComodoroERP.Services;
 using System.Data;
 using System.Diagnostics;
@@ -256,6 +257,38 @@ namespace ComodoroERP
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao remover item: " + ex.Message);
+            }
+        }
+
+        private void btnEditarItem_Click(object sender, EventArgs e)
+        {
+            if (dgvItens.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Selecione um item para editar.");
+                return;
+            }
+
+            DataGridViewRow row = dgvItens.SelectedRows[0];
+
+            var item = new OrcamentoItem
+            {
+                Id = Convert.ToInt32(row.Cells["Id"].Value),
+                OrcamentoId = _orcamentoId,
+                Categoria = row.Cells["Categoria"].Value?.ToString() ?? "",
+                ServicoPermitido = row.Cells["ServicoPermitido"].Value?.ToString() ?? "",
+                DescricaoOrcamento = row.Cells["DescricaoOrcamento"].Value?.ToString() ?? "",
+                Quantidade = Convert.ToDecimal(row.Cells["Quantidade"].Value),
+                ValorUnitario = Convert.ToDecimal(row.Cells["ValorUnitario"].Value),
+                Cortesia = Convert.ToInt32(row.Cells["Cortesia"].Value) == 1,
+                ValorTotal = Convert.ToDecimal(row.Cells["ValorTotal"].Value),
+                Observacao = row.Cells["Observacao"].Value?.ToString() ?? ""
+            };
+
+            using var tela = new FrmEditarItemOrcamento(item);
+
+            if (tela.ShowDialog() == DialogResult.OK)
+            {
+                CarregarDados();
             }
         }
 
