@@ -51,5 +51,10 @@ namespace ComodoroERP
         {
             Application.Exit();
         }
+        private void btnConfiguracoes_Click(object sender, EventArgs e)
+        {
+            using var tela = new FrmConfiguracoes();
+            tela.ShowDialog();
+        }
     }
 }

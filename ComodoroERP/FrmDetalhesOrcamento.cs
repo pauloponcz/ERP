@@ -168,7 +168,9 @@ namespace ComodoroERP
 
         private void btnAbrirPastaPdfs_Click(object sender, EventArgs e)
         {
-            string pastaPdfs = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pdfs");
+            var configuracaoService = new ConfiguracaoService();
+
+            string pastaPdfs = configuracaoService.ObterPastaPdfs();
 
             if (!Directory.Exists(pastaPdfs))
             {

@@ -10,6 +10,7 @@ namespace ComodoroERP.Reports
     public class PdfService
     {
         private readonly OrcamentoService _orcamentoService = new();
+        private readonly ConfiguracaoService _configuracaoService = new();
 
         public void GerarPdfsOrcamento(int orcamentoId)
         {
@@ -18,7 +19,7 @@ namespace ComodoroERP.Reports
             if (dados.Tables["Cabecalho"] == null || dados.Tables["Cabecalho"]!.Rows.Count == 0)
                 throw new Exception("Orçamento não encontrado.");
 
-            string pastaPdfs = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pdfs");
+            string pastaPdfs = _configuracaoService.ObterPastaPdfs();
 
             if (!Directory.Exists(pastaPdfs))
                 Directory.CreateDirectory(pastaPdfs);

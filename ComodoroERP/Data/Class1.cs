@@ -82,6 +82,12 @@ namespace ComodoroERP.Data
                     DataGeracao TEXT,
                     FOREIGN KEY (OrcamentoId) REFERENCES Orcamentos(Id)
                 );
+
+                CREATE TABLE IF NOT EXISTS Configuracoes (
+                    Chave TEXT PRIMARY KEY,
+                    Valor TEXT NOT NULL
+                );
+
             ";
 
             using var command = connection.CreateCommand();

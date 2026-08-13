@@ -2,12 +2,14 @@
 {
     public class BackupService
     {
+        private readonly ConfiguracaoService _configuracaoService = new();
+
         public void CriarBackupAutomatico()
         {
             string pastaBase = AppDomain.CurrentDomain.BaseDirectory;
 
             string pastaDados = Path.Combine(pastaBase, "dados");
-            string pastaBackups = Path.Combine(pastaBase, "backups");
+            string pastaBackups = _configuracaoService.ObterPastaBackups();
 
             string caminhoBanco = Path.Combine(pastaDados, "comodoro.db");
 
