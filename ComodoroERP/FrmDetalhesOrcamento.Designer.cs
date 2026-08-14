@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            groupBox1 = new GroupBox();
             lblValorNota3 = new Label();
             lblValorNota2 = new Label();
             lblValorNota1 = new Label();
@@ -39,7 +38,6 @@
             lblCnpj = new Label();
             lblCliente = new Label();
             lblId = new Label();
-            groupBox2 = new GroupBox();
             dgvItens = new DataGridView();
             btnGerarPdfs = new Button();
             btnFechar = new Button();
@@ -47,147 +45,126 @@
             btnEditarOrcamento = new Button();
             btnAdicionarItem = new Button();
             btnRemoverItem = new Button();
-            label1 = new Label();
-            label2 = new Label();
             btnEditarItem = new Button();
-            groupBox1.SuspendLayout();
-            groupBox2.SuspendLayout();
+            pnlTopo = new Panel();
+            lblTituloTela = new Label();
+            lblSubtituloTela = new Label();
+            pnlDados = new Panel();
+            lblDadosOrcamento = new Label();
+            pnlItens = new Panel();
+            lblItensOrcamento = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvItens).BeginInit();
+            pnlTopo.SuspendLayout();
+            pnlDados.SuspendLayout();
+            pnlItens.SuspendLayout();
             SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(lblValorNota3);
-            groupBox1.Controls.Add(lblValorNota2);
-            groupBox1.Controls.Add(lblValorNota1);
-            groupBox1.Controls.Add(lblStatus);
-            groupBox1.Controls.Add(lblTitulo);
-            groupBox1.Controls.Add(lblData);
-            groupBox1.Controls.Add(lblEndereco);
-            groupBox1.Controls.Add(lblCnpj);
-            groupBox1.Controls.Add(lblCliente);
-            groupBox1.Controls.Add(lblId);
-            groupBox1.Location = new Point(16, 5);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(690, 204);
-            groupBox1.TabIndex = 0;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "DETALHES DO ORÇAMENTO";
-            groupBox1.Enter += groupBox1_Enter;
             // 
             // lblValorNota3
             // 
             lblValorNota3.AutoSize = true;
-            lblValorNota3.Location = new Point(6, 179);
+            lblValorNota3.Font = new Font("Segoe UI Semibold", 10F);
+            lblValorNota3.Location = new Point(820, 105);
             lblValorNota3.Name = "lblValorNota3";
-            lblValorNota3.Size = new Size(38, 15);
+            lblValorNota3.Size = new Size(107, 19);
             lblValorNota3.TabIndex = 9;
-            lblValorNota3.Text = "label1";
+            lblValorNota3.Text = "Nota 3: R$ 0,00";
             // 
             // lblValorNota2
             // 
             lblValorNota2.AutoSize = true;
-            lblValorNota2.Location = new Point(6, 164);
+            lblValorNota2.Font = new Font("Segoe UI Semibold", 10F);
+            lblValorNota2.Location = new Point(670, 105);
             lblValorNota2.Name = "lblValorNota2";
-            lblValorNota2.Size = new Size(38, 15);
+            lblValorNota2.Size = new Size(107, 19);
             lblValorNota2.TabIndex = 8;
-            lblValorNota2.Text = "label1";
+            lblValorNota2.Text = "Nota 2: R$ 0,00";
             // 
             // lblValorNota1
             // 
             lblValorNota1.AutoSize = true;
-            lblValorNota1.Location = new Point(6, 149);
+            lblValorNota1.Font = new Font("Segoe UI Semibold", 10F);
+            lblValorNota1.Location = new Point(520, 105);
             lblValorNota1.Name = "lblValorNota1";
-            lblValorNota1.Size = new Size(38, 15);
+            lblValorNota1.Size = new Size(105, 19);
             lblValorNota1.TabIndex = 7;
-            lblValorNota1.Text = "label1";
+            lblValorNota1.Text = "Nota 1: R$ 0,00";
             // 
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Location = new Point(6, 120);
+            lblStatus.Location = new Point(160, 45);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(38, 15);
+            lblStatus.Size = new Size(50, 19);
             lblStatus.TabIndex = 6;
-            lblStatus.Text = "label1";
+            lblStatus.Text = "Status:";
             // 
             // lblTitulo
             // 
             lblTitulo.AutoSize = true;
-            lblTitulo.Location = new Point(6, 105);
+            lblTitulo.Location = new Point(20, 135);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(38, 15);
+            lblTitulo.Size = new Size(46, 19);
             lblTitulo.TabIndex = 5;
-            lblTitulo.Text = "label1";
+            lblTitulo.Text = "Título:";
             // 
             // lblData
             // 
             lblData.AutoSize = true;
-            lblData.Location = new Point(6, 90);
+            lblData.Location = new Point(390, 45);
             lblData.Name = "lblData";
-            lblData.Size = new Size(38, 15);
+            lblData.Size = new Size(41, 19);
             lblData.TabIndex = 4;
-            lblData.Text = "label1";
+            lblData.Text = "Data:";
             // 
             // lblEndereco
             // 
             lblEndereco.AutoSize = true;
-            lblEndereco.Location = new Point(6, 75);
+            lblEndereco.Location = new Point(20, 105);
             lblEndereco.Name = "lblEndereco";
-            lblEndereco.Size = new Size(38, 15);
+            lblEndereco.Size = new Size(68, 19);
             lblEndereco.TabIndex = 3;
-            lblEndereco.Text = "label1";
+            lblEndereco.Text = "Endereço:";
             // 
             // lblCnpj
             // 
             lblCnpj.AutoSize = true;
-            lblCnpj.Location = new Point(6, 60);
+            lblCnpj.Location = new Point(520, 75);
             lblCnpj.Name = "lblCnpj";
-            lblCnpj.Size = new Size(38, 15);
+            lblCnpj.Size = new Size(43, 19);
             lblCnpj.TabIndex = 2;
-            lblCnpj.Text = "label1";
+            lblCnpj.Text = "CNPJ:";
             // 
             // lblCliente
             // 
             lblCliente.AutoSize = true;
-            lblCliente.Location = new Point(6, 45);
+            lblCliente.Location = new Point(20, 75);
             lblCliente.Name = "lblCliente";
-            lblCliente.Size = new Size(38, 15);
+            lblCliente.Size = new Size(54, 19);
             lblCliente.TabIndex = 1;
-            lblCliente.Text = "label1";
+            lblCliente.Text = "Cliente:";
             // 
             // lblId
             // 
             lblId.AutoSize = true;
-            lblId.Location = new Point(6, 30);
+            lblId.Location = new Point(20, 45);
             lblId.Name = "lblId";
-            lblId.Size = new Size(38, 15);
+            lblId.Size = new Size(26, 19);
             lblId.TabIndex = 0;
-            lblId.Text = "label1";
-            // 
-            // groupBox2
-            // 
-            groupBox2.Controls.Add(dgvItens);
-            groupBox2.Location = new Point(16, 215);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(690, 187);
-            groupBox2.TabIndex = 10;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "ITENS DO ORÇAMENTO";
+            lblId.Text = "ID:";
             // 
             // dgvItens
             // 
             dgvItens.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvItens.Location = new Point(6, 22);
+            dgvItens.Location = new Point(15, 45);
             dgvItens.Name = "dgvItens";
-            dgvItens.Size = new Size(678, 154);
+            dgvItens.Size = new Size(960, 220);
             dgvItens.TabIndex = 0;
             // 
             // btnGerarPdfs
             // 
-            btnGerarPdfs.Location = new Point(276, 443);
+            btnGerarPdfs.Location = new Point(560, 590);
             btnGerarPdfs.Name = "btnGerarPdfs";
-            btnGerarPdfs.Size = new Size(90, 26);
+            btnGerarPdfs.Size = new Size(110, 35);
             btnGerarPdfs.TabIndex = 11;
             btnGerarPdfs.Text = "Gerar PDFs";
             btnGerarPdfs.UseVisualStyleBackColor = true;
@@ -195,9 +172,9 @@
             // 
             // btnFechar
             // 
-            btnFechar.Location = new Point(616, 475);
+            btnFechar.Location = new Point(890, 590);
             btnFechar.Name = "btnFechar";
-            btnFechar.Size = new Size(90, 26);
+            btnFechar.Size = new Size(120, 35);
             btnFechar.TabIndex = 12;
             btnFechar.Text = "Fechar";
             btnFechar.UseVisualStyleBackColor = true;
@@ -205,9 +182,9 @@
             // 
             // btnAbrirPastaPdfs
             // 
-            btnAbrirPastaPdfs.Location = new Point(372, 443);
+            btnAbrirPastaPdfs.Location = new Point(680, 590);
             btnAbrirPastaPdfs.Name = "btnAbrirPastaPdfs";
-            btnAbrirPastaPdfs.Size = new Size(117, 26);
+            btnAbrirPastaPdfs.Size = new Size(145, 35);
             btnAbrirPastaPdfs.TabIndex = 13;
             btnAbrirPastaPdfs.Text = "Abrir Pasta PDFs";
             btnAbrirPastaPdfs.UseVisualStyleBackColor = true;
@@ -215,9 +192,9 @@
             // 
             // btnEditarOrcamento
             // 
-            btnEditarOrcamento.Location = new Point(153, 443);
+            btnEditarOrcamento.Location = new Point(405, 590);
             btnEditarOrcamento.Name = "btnEditarOrcamento";
-            btnEditarOrcamento.Size = new Size(117, 26);
+            btnEditarOrcamento.Size = new Size(145, 35);
             btnEditarOrcamento.TabIndex = 14;
             btnEditarOrcamento.Text = "Editar Orçamento";
             btnEditarOrcamento.UseVisualStyleBackColor = true;
@@ -225,9 +202,9 @@
             // 
             // btnAdicionarItem
             // 
-            btnAdicionarItem.Location = new Point(153, 408);
+            btnAdicionarItem.Location = new Point(20, 590);
             btnAdicionarItem.Name = "btnAdicionarItem";
-            btnAdicionarItem.Size = new Size(101, 26);
+            btnAdicionarItem.Size = new Size(125, 35);
             btnAdicionarItem.TabIndex = 15;
             btnAdicionarItem.Text = "Adicionar Item";
             btnAdicionarItem.UseVisualStyleBackColor = true;
@@ -235,71 +212,142 @@
             // 
             // btnRemoverItem
             // 
-            btnRemoverItem.Location = new Point(260, 408);
+            btnRemoverItem.Location = new Point(275, 590);
             btnRemoverItem.Name = "btnRemoverItem";
-            btnRemoverItem.Size = new Size(100, 26);
+            btnRemoverItem.Size = new Size(120, 35);
             btnRemoverItem.TabIndex = 16;
             btnRemoverItem.Text = "Remover Item";
             btnRemoverItem.UseVisualStyleBackColor = true;
             btnRemoverItem.Click += btnRemoverItem_Click;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(16, 414);
-            label1.Name = "label1";
-            label1.Size = new Size(92, 15);
-            label1.TabIndex = 17;
-            label1.Text = "Ações dos itens:";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(16, 449);
-            label2.Name = "label2";
-            label2.Size = new Size(130, 15);
-            label2.TabIndex = 18;
-            label2.Text = "Ações dos orçamentos:";
-            // 
             // btnEditarItem
             // 
-            btnEditarItem.Location = new Point(366, 408);
+            btnEditarItem.Location = new Point(155, 590);
             btnEditarItem.Name = "btnEditarItem";
-            btnEditarItem.Size = new Size(100, 26);
+            btnEditarItem.Size = new Size(110, 35);
             btnEditarItem.TabIndex = 19;
             btnEditarItem.Text = "Editar Item";
             btnEditarItem.UseVisualStyleBackColor = true;
             btnEditarItem.Click += btnEditarItem_Click;
             // 
+            // pnlTopo
+            // 
+            pnlTopo.BackColor = Color.SteelBlue;
+            pnlTopo.Controls.Add(lblSubtituloTela);
+            pnlTopo.Controls.Add(lblTituloTela);
+            pnlTopo.Location = new Point(0, 0);
+            pnlTopo.Name = "pnlTopo";
+            pnlTopo.Size = new Size(1050, 75);
+            pnlTopo.TabIndex = 20;
+            // 
+            // lblTituloTela
+            // 
+            lblTituloTela.AutoSize = true;
+            lblTituloTela.Font = new Font("Segoe UI Semibold", 15F);
+            lblTituloTela.ForeColor = Color.White;
+            lblTituloTela.Location = new Point(25, 14);
+            lblTituloTela.Name = "lblTituloTela";
+            lblTituloTela.Size = new Size(266, 28);
+            lblTituloTela.TabIndex = 21;
+            lblTituloTela.Text = "DETALHES DO ORÇAMENTO";
+            // 
+            // lblSubtituloTela
+            // 
+            lblSubtituloTela.AutoSize = true;
+            lblSubtituloTela.Font = new Font("Segoe UI", 9F);
+            lblSubtituloTela.ForeColor = Color.WhiteSmoke;
+            lblSubtituloTela.Location = new Point(27, 43);
+            lblSubtituloTela.Name = "lblSubtituloTela";
+            lblSubtituloTela.Size = new Size(348, 15);
+            lblSubtituloTela.TabIndex = 22;
+            lblSubtituloTela.Text = "Visualize os dados, itens e ações disponíveis para este orçamento";
+            // 
+            // pnlDados
+            // 
+            pnlDados.BackColor = Color.White;
+            pnlDados.BorderStyle = BorderStyle.FixedSingle;
+            pnlDados.Controls.Add(lblValorNota3);
+            pnlDados.Controls.Add(lblDadosOrcamento);
+            pnlDados.Controls.Add(lblValorNota2);
+            pnlDados.Controls.Add(lblId);
+            pnlDados.Controls.Add(lblValorNota1);
+            pnlDados.Controls.Add(lblEndereco);
+            pnlDados.Controls.Add(lblStatus);
+            pnlDados.Controls.Add(lblCliente);
+            pnlDados.Controls.Add(lblTitulo);
+            pnlDados.Controls.Add(lblCnpj);
+            pnlDados.Controls.Add(lblData);
+            pnlDados.Location = new Point(20, 90);
+            pnlDados.Name = "pnlDados";
+            pnlDados.Size = new Size(990, 180);
+            pnlDados.TabIndex = 21;
+            // 
+            // lblDadosOrcamento
+            // 
+            lblDadosOrcamento.AutoSize = true;
+            lblDadosOrcamento.Font = new Font("Segoe UI Semibold", 11F);
+            lblDadosOrcamento.ForeColor = Color.DimGray;
+            lblDadosOrcamento.Location = new Point(15, 12);
+            lblDadosOrcamento.Name = "lblDadosOrcamento";
+            lblDadosOrcamento.Size = new Size(154, 20);
+            lblDadosOrcamento.TabIndex = 0;
+            lblDadosOrcamento.Text = "Dados do Orçamento";
+            // 
+            // pnlItens
+            // 
+            pnlItens.BackColor = Color.White;
+            pnlItens.BorderStyle = BorderStyle.FixedSingle;
+            pnlItens.Controls.Add(dgvItens);
+            pnlItens.Controls.Add(lblItensOrcamento);
+            pnlItens.Location = new Point(20, 285);
+            pnlItens.Name = "pnlItens";
+            pnlItens.Size = new Size(990, 285);
+            pnlItens.TabIndex = 22;
+            // 
+            // lblItensOrcamento
+            // 
+            lblItensOrcamento.AutoSize = true;
+            lblItensOrcamento.Font = new Font("Segoe UI Semibold", 11F);
+            lblItensOrcamento.ForeColor = Color.DimGray;
+            lblItensOrcamento.Location = new Point(15, 12);
+            lblItensOrcamento.Name = "lblItensOrcamento";
+            lblItensOrcamento.Size = new Size(143, 20);
+            lblItensOrcamento.TabIndex = 0;
+            lblItensOrcamento.Text = "Itens do Orçamento";
+            // 
             // FrmDetalhesOrcamento
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(721, 513);
+            BackColor = Color.WhiteSmoke;
+            ClientSize = new Size(1034, 661);
+            Controls.Add(pnlItens);
+            Controls.Add(pnlDados);
+            Controls.Add(pnlTopo);
             Controls.Add(btnEditarItem);
-            Controls.Add(label2);
-            Controls.Add(label1);
             Controls.Add(btnRemoverItem);
             Controls.Add(btnAdicionarItem);
             Controls.Add(btnEditarOrcamento);
             Controls.Add(btnAbrirPastaPdfs);
             Controls.Add(btnFechar);
             Controls.Add(btnGerarPdfs);
-            Controls.Add(groupBox2);
-            Controls.Add(groupBox1);
+            Font = new Font("Segoe UI", 10F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "FrmDetalhesOrcamento";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Detalhes do Orçamento";
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvItens).EndInit();
+            pnlTopo.ResumeLayout(false);
+            pnlTopo.PerformLayout();
+            pnlDados.ResumeLayout(false);
+            pnlDados.PerformLayout();
+            pnlItens.ResumeLayout(false);
+            pnlItens.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private GroupBox groupBox1;
         private Label lblId;
         private Label lblValorNota3;
         private Label lblValorNota2;
@@ -310,7 +358,6 @@
         private Label lblEndereco;
         private Label lblCnpj;
         private Label lblCliente;
-        private GroupBox groupBox2;
         private DataGridView dgvItens;
         private Button btnGerarPdfs;
         private Button btnFechar;
@@ -318,8 +365,13 @@
         private Button btnEditarOrcamento;
         private Button btnAdicionarItem;
         private Button btnRemoverItem;
-        private Label label1;
-        private Label label2;
         private Button btnEditarItem;
+        private Panel pnlTopo;
+        private Label lblSubtituloTela;
+        private Label lblTituloTela;
+        private Panel pnlDados;
+        private Label lblDadosOrcamento;
+        private Panel pnlItens;
+        private Label lblItensOrcamento;
     }
 }
