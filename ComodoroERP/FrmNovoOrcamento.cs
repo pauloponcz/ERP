@@ -53,6 +53,12 @@ namespace ComodoroERP
             if (string.IsNullOrWhiteSpace(categoria))
                 return;
 
+            bool categoriaExiste = _categoriasOriginais
+                .Any(c => NormalizarTexto(c) == NormalizarTexto(categoria));
+
+            if (!categoriaExiste)
+                return;
+
             _servicosOriginais = _servicoPermitidoService
                 .ListarServicosPorCategoria(categoria)
                 .ToList();
@@ -65,6 +71,9 @@ namespace ComodoroERP
         private void cmbCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_atualizandoComboCategoria)
+                return;
+
+            if (cmbCategoria.SelectedIndex < 0)
                 return;
 
             CarregarServicosPorCategoria();
@@ -124,6 +133,37 @@ namespace ComodoroERP
 
         private void cmbCategoria_Leave(object sender, EventArgs e)
         {
+            string categoria = cmbCategoria.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(categoria))
+            {
+                cmbServicoPermitido.Items.Clear();
+                cmbServicoPermitido.Text = "";
+                _servicosOriginais.Clear();
+                return;
+            }
+
+            bool categoriaExiste = _categoriasOriginais
+                .Any(c => NormalizarTexto(c) == NormalizarTexto(categoria));
+
+            if (!categoriaExiste)
+            {
+                MessageBox.Show(
+                    "Categoria não encontrada na lista de serviços permitidos.",
+                    "Categoria inválida",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                cmbCategoria.Text = "";
+                cmbServicoPermitido.Items.Clear();
+                cmbServicoPermitido.Text = "";
+                _servicosOriginais.Clear();
+
+                cmbCategoria.Focus();
+                return;
+            }
+
             CarregarServicosPorCategoria();
         }
 
@@ -141,6 +181,31 @@ namespace ComodoroERP
 
             string textoDigitado = cmbCategoria.Text;
 
+            if (string.IsNullOrWhiteSpace(textoDigitado))
+            {
+                try
+                {
+                    _atualizandoComboCategoria = true;
+
+                    cmbCategoria.DroppedDown = false;
+                    cmbCategoria.Items.Clear();
+
+                    foreach (var categoria in _categoriasOriginais)
+                    {
+                        cmbCategoria.Items.Add(categoria);
+                    }
+
+                    cmbCategoria.Text = "";
+                    cmbCategoria.SelectionStart = 0;
+                }
+                finally
+                {
+                    _atualizandoComboCategoria = false;
+                }
+
+                return;
+            }
+
             FiltrarComboBox(
                 cmbCategoria,
                 _categoriasOriginais,
@@ -148,7 +213,6 @@ namespace ComodoroERP
                 ref _atualizandoComboCategoria
             );
         }
-
         private void cmbServicoPermitido_TextUpdate(object sender, EventArgs e)
         {
             if (_atualizandoComboServico)
@@ -182,8 +246,10 @@ namespace ComodoroERP
                     .Where(item => NormalizarTexto(item).Contains(textoNormalizado))
                     .ToList();
 
-                comboBox.BeginUpdate();
+                // Fecha antes de mexer nos itens para evitar erro quando a lista fica vazia
+                comboBox.DroppedDown = false;
 
+                comboBox.BeginUpdate();
                 comboBox.Items.Clear();
 
                 foreach (var item in itensFiltrados)
@@ -197,22 +263,22 @@ namespace ComodoroERP
                 comboBox.SelectionStart = Math.Min(posicaoCursor, comboBox.Text.Length);
                 comboBox.SelectionLength = 0;
 
-                if (itensFiltrados.Count > 0)
+                // Só abre a lista se existir pelo menos um item
+                if (itensFiltrados.Count > 0 && comboBox.Focused)
                 {
                     comboBox.DroppedDown = true;
                     Cursor.Current = Cursors.Default;
                 }
-                else
-                {
-                    comboBox.DroppedDown = false;
-                }
+            }
+            catch
+            {
+                comboBox.DroppedDown = false;
             }
             finally
             {
                 atualizando = false;
             }
         }
-
         private string NormalizarTexto(string texto)
         {
             if (string.IsNullOrWhiteSpace(texto))
@@ -307,6 +373,41 @@ namespace ComodoroERP
             if (!ValidarServico())
                 return;
 
+            string categoria = cmbCategoria.Text.Trim();
+            string servicoPermitido = cmbServicoPermitido.Text.Trim();
+
+            bool categoriaExiste = _categoriasOriginais
+                .Any(c => NormalizarTexto(c) == NormalizarTexto(categoria));
+
+            if (!categoriaExiste)
+            {
+                MessageBox.Show(
+                    "Selecione uma categoria válida da lista.",
+                    "Categoria inválida",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                cmbCategoria.Focus();
+                return;
+            }
+
+            bool servicoExiste = _servicosOriginais
+                .Any(s => NormalizarTexto(s) == NormalizarTexto(servicoPermitido));
+
+            if (!servicoExiste)
+            {
+                MessageBox.Show(
+                    "Selecione um serviço permitido válido da lista.",
+                    "Serviço inválido",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                cmbServicoPermitido.Focus();
+                return;
+            }
+
             decimal quantidade = numQuantidade.Value;
             decimal valorUnitario = numValorUnitario.Value;
             bool cortesia = chkCortesia.Checked;
@@ -315,8 +416,8 @@ namespace ComodoroERP
 
             var item = new OrcamentoItem
             {
-                Categoria = cmbCategoria.Text.Trim(),
-                ServicoPermitido = cmbServicoPermitido.Text.Trim(),
+                Categoria = categoria,
+                ServicoPermitido = servicoPermitido,
                 DescricaoOrcamento = txtDescricaoServico.Text.Trim().ToUpper(),
                 Quantidade = quantidade,
                 ValorUnitario = valorUnitario,
