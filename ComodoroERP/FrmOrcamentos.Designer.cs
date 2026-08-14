@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            lblFiltroCliente = new Label();
             txtFiltroCliente = new TextBox();
             cmbFiltroStatus = new ComboBox();
-            label8 = new Label();
-            label2 = new Label();
+            lblFiltroStatus = new Label();
+            lblDataInicial = new Label();
             dtpDataInicial = new DateTimePicker();
-            label3 = new Label();
+            lblDataFinal = new Label();
             dtpDataFinal = new DateTimePicker();
             dgvOrcamentos = new DataGridView();
             btnFiltrar = new Button();
@@ -44,24 +44,34 @@
             btnFechar = new Button();
             btnAbrirOrcamento = new Button();
             btnExcluirOrcamento = new Button();
+            pnlTopo = new Panel();
+            lblTituloTela = new Label();
+            lblSubtituloTela = new Label();
+            pnlFiltros = new Panel();
+            lblFiltros = new Label();
+            pnlGrid = new Panel();
+            lblOrcamentos = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvOrcamentos).BeginInit();
+            pnlTopo.SuspendLayout();
+            pnlFiltros.SuspendLayout();
+            pnlGrid.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // lblFiltroCliente
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(15, 12);
-            label1.Name = "label1";
-            label1.Size = new Size(47, 15);
-            label1.TabIndex = 3;
-            label1.Text = "Cliente:";
-            label1.Click += label1_Click;
+            lblFiltroCliente.AutoSize = true;
+            lblFiltroCliente.Location = new Point(20, 42);
+            lblFiltroCliente.Name = "lblFiltroCliente";
+            lblFiltroCliente.Size = new Size(54, 19);
+            lblFiltroCliente.TabIndex = 3;
+            lblFiltroCliente.Text = "Cliente:";
+            lblFiltroCliente.Click += label1_Click;
             // 
             // txtFiltroCliente
             // 
-            txtFiltroCliente.Location = new Point(68, 9);
+            txtFiltroCliente.Location = new Point(20, 65);
             txtFiltroCliente.Name = "txtFiltroCliente";
-            txtFiltroCliente.Size = new Size(126, 23);
+            txtFiltroCliente.Size = new Size(260, 25);
             txtFiltroCliente.TabIndex = 2;
             // 
             // cmbFiltroStatus
@@ -69,55 +79,55 @@
             cmbFiltroStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbFiltroStatus.FormattingEnabled = true;
             cmbFiltroStatus.Items.AddRange(new object[] { "Pendente", "Pago", "Parcial", "Concluído", "Cancelado" });
-            cmbFiltroStatus.Location = new Point(245, 9);
+            cmbFiltroStatus.Location = new Point(300, 65);
             cmbFiltroStatus.Name = "cmbFiltroStatus";
-            cmbFiltroStatus.Size = new Size(88, 23);
+            cmbFiltroStatus.Size = new Size(145, 25);
             cmbFiltroStatus.TabIndex = 15;
             // 
-            // label8
+            // lblFiltroStatus
             // 
-            label8.AutoSize = true;
-            label8.Location = new Point(200, 12);
-            label8.Name = "label8";
-            label8.Size = new Size(42, 15);
-            label8.TabIndex = 14;
-            label8.Text = "Status:";
+            lblFiltroStatus.AutoSize = true;
+            lblFiltroStatus.Location = new Point(300, 42);
+            lblFiltroStatus.Name = "lblFiltroStatus";
+            lblFiltroStatus.Size = new Size(50, 19);
+            lblFiltroStatus.TabIndex = 14;
+            lblFiltroStatus.Text = "Status:";
             // 
-            // label2
+            // lblDataInicial
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(342, 12);
-            label2.Name = "label2";
-            label2.Size = new Size(34, 15);
-            label2.TabIndex = 16;
-            label2.Text = "Data:";
+            lblDataInicial.AutoSize = true;
+            lblDataInicial.Location = new Point(465, 42);
+            lblDataInicial.Name = "lblDataInicial";
+            lblDataInicial.Size = new Size(79, 19);
+            lblDataInicial.TabIndex = 16;
+            lblDataInicial.Text = "Data Inicial:";
             // 
             // dtpDataInicial
             // 
             dtpDataInicial.Format = DateTimePickerFormat.Short;
-            dtpDataInicial.Location = new Point(382, 8);
+            dtpDataInicial.Location = new Point(465, 65);
             dtpDataInicial.Name = "dtpDataInicial";
             dtpDataInicial.ShowCheckBox = true;
-            dtpDataInicial.Size = new Size(139, 23);
+            dtpDataInicial.Size = new Size(120, 25);
             dtpDataInicial.TabIndex = 17;
             // 
-            // label3
+            // lblDataFinal
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(527, 12);
-            label3.Name = "label3";
-            label3.Size = new Size(25, 15);
-            label3.TabIndex = 18;
-            label3.Text = "Até";
-            label3.Click += label3_Click;
+            lblDataFinal.AutoSize = true;
+            lblDataFinal.Location = new Point(605, 42);
+            lblDataFinal.Name = "lblDataFinal";
+            lblDataFinal.Size = new Size(73, 19);
+            lblDataFinal.TabIndex = 18;
+            lblDataFinal.Text = "Data Final:";
+            lblDataFinal.Click += label3_Click;
             // 
             // dtpDataFinal
             // 
             dtpDataFinal.Format = DateTimePickerFormat.Short;
-            dtpDataFinal.Location = new Point(558, 8);
+            dtpDataFinal.Location = new Point(605, 65);
             dtpDataFinal.Name = "dtpDataFinal";
             dtpDataFinal.ShowCheckBox = true;
-            dtpDataFinal.Size = new Size(139, 23);
+            dtpDataFinal.Size = new Size(120, 25);
             dtpDataFinal.TabIndex = 19;
             // 
             // dgvOrcamentos
@@ -126,19 +136,19 @@
             dgvOrcamentos.AllowUserToDeleteRows = false;
             dgvOrcamentos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvOrcamentos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvOrcamentos.Location = new Point(15, 75);
+            dgvOrcamentos.Location = new Point(15, 45);
             dgvOrcamentos.MultiSelect = false;
             dgvOrcamentos.Name = "dgvOrcamentos";
             dgvOrcamentos.ReadOnly = true;
             dgvOrcamentos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvOrcamentos.Size = new Size(923, 296);
+            dgvOrcamentos.Size = new Size(960, 260);
             dgvOrcamentos.TabIndex = 21;
             // 
             // btnFiltrar
             // 
-            btnFiltrar.Location = new Point(15, 40);
+            btnFiltrar.Location = new Point(755, 60);
             btnFiltrar.Name = "btnFiltrar";
-            btnFiltrar.Size = new Size(99, 23);
+            btnFiltrar.Size = new Size(95, 35);
             btnFiltrar.TabIndex = 22;
             btnFiltrar.Text = "Filtrar";
             btnFiltrar.UseVisualStyleBackColor = true;
@@ -146,19 +156,19 @@
             // 
             // btnLimparFiltros
             // 
-            btnLimparFiltros.Location = new Point(120, 40);
+            btnLimparFiltros.Location = new Point(865, 60);
             btnLimparFiltros.Name = "btnLimparFiltros";
-            btnLimparFiltros.Size = new Size(99, 23);
+            btnLimparFiltros.Size = new Size(95, 35);
             btnLimparFiltros.TabIndex = 23;
-            btnLimparFiltros.Text = "Limpar Filtros";
+            btnLimparFiltros.Text = "Limpar";
             btnLimparFiltros.UseVisualStyleBackColor = true;
             btnLimparFiltros.Click += btnLimparFiltros_Click;
             // 
             // btnGerarPdfs
             // 
-            btnGerarPdfs.Location = new Point(225, 377);
+            btnGerarPdfs.Location = new Point(300, 570);
             btnGerarPdfs.Name = "btnGerarPdfs";
-            btnGerarPdfs.Size = new Size(99, 23);
+            btnGerarPdfs.Size = new Size(130, 35);
             btnGerarPdfs.TabIndex = 25;
             btnGerarPdfs.Text = "Gerar PDFs";
             btnGerarPdfs.UseVisualStyleBackColor = true;
@@ -166,9 +176,9 @@
             // 
             // btnAlterarStatus
             // 
-            btnAlterarStatus.Location = new Point(120, 377);
+            btnAlterarStatus.Location = new Point(160, 570);
             btnAlterarStatus.Name = "btnAlterarStatus";
-            btnAlterarStatus.Size = new Size(99, 23);
+            btnAlterarStatus.Size = new Size(130, 35);
             btnAlterarStatus.TabIndex = 24;
             btnAlterarStatus.Text = "Alterar Status";
             btnAlterarStatus.UseVisualStyleBackColor = true;
@@ -176,9 +186,9 @@
             // 
             // btnFechar
             // 
-            btnFechar.Location = new Point(839, 412);
+            btnFechar.Location = new Point(890, 570);
             btnFechar.Name = "btnFechar";
-            btnFechar.Size = new Size(99, 23);
+            btnFechar.Size = new Size(120, 35);
             btnFechar.TabIndex = 27;
             btnFechar.Text = "Fechar";
             btnFechar.UseVisualStyleBackColor = true;
@@ -186,9 +196,9 @@
             // 
             // btnAbrirOrcamento
             // 
-            btnAbrirOrcamento.Location = new Point(15, 377);
+            btnAbrirOrcamento.Location = new Point(20, 570);
             btnAbrirOrcamento.Name = "btnAbrirOrcamento";
-            btnAbrirOrcamento.Size = new Size(99, 23);
+            btnAbrirOrcamento.Size = new Size(130, 35);
             btnAbrirOrcamento.TabIndex = 26;
             btnAbrirOrcamento.Text = "Abrir Orçamento";
             btnAbrirOrcamento.UseVisualStyleBackColor = true;
@@ -196,51 +206,138 @@
             // 
             // btnExcluirOrcamento
             // 
-            btnExcluirOrcamento.Location = new Point(374, 377);
+            btnExcluirOrcamento.Location = new Point(436, 570);
             btnExcluirOrcamento.Name = "btnExcluirOrcamento";
-            btnExcluirOrcamento.Size = new Size(99, 23);
+            btnExcluirOrcamento.Size = new Size(100, 35);
             btnExcluirOrcamento.TabIndex = 28;
-            btnExcluirOrcamento.Text = "Excluir Orçamento";
+            btnExcluirOrcamento.Text = "Excluir";
             btnExcluirOrcamento.UseVisualStyleBackColor = true;
             btnExcluirOrcamento.Click += btnExcluirOrcamento_Click;
             // 
+            // pnlTopo
+            // 
+            pnlTopo.BackColor = Color.SteelBlue;
+            pnlTopo.Controls.Add(lblSubtituloTela);
+            pnlTopo.Controls.Add(lblTituloTela);
+            pnlTopo.Location = new Point(0, 0);
+            pnlTopo.Name = "pnlTopo";
+            pnlTopo.Size = new Size(1050, 75);
+            pnlTopo.TabIndex = 29;
+            // 
+            // lblTituloTela
+            // 
+            lblTituloTela.AutoSize = true;
+            lblTituloTela.Font = new Font("Segoe UI Semibold", 15F);
+            lblTituloTela.ForeColor = Color.White;
+            lblTituloTela.Location = new Point(25, 14);
+            lblTituloTela.Name = "lblTituloTela";
+            lblTituloTela.Size = new Size(184, 28);
+            lblTituloTela.TabIndex = 0;
+            lblTituloTela.Text = "VER ORÇAMENTOS";
+            // 
+            // lblSubtituloTela
+            // 
+            lblSubtituloTela.AutoSize = true;
+            lblSubtituloTela.Font = new Font("Segoe UI", 9F);
+            lblSubtituloTela.ForeColor = Color.WhiteSmoke;
+            lblSubtituloTela.Location = new Point(27, 43);
+            lblSubtituloTela.Name = "lblSubtituloTela";
+            lblSubtituloTela.Size = new Size(371, 15);
+            lblSubtituloTela.TabIndex = 1;
+            lblSubtituloTela.Text = "Consulte, filtre, altere status e gere PDFs dos orçamentos cadastrados";
+            // 
+            // pnlFiltros
+            // 
+            pnlFiltros.BackColor = Color.White;
+            pnlFiltros.BorderStyle = BorderStyle.FixedSingle;
+            pnlFiltros.Controls.Add(lblFiltros);
+            pnlFiltros.Controls.Add(lblFiltroCliente);
+            pnlFiltros.Controls.Add(txtFiltroCliente);
+            pnlFiltros.Controls.Add(lblFiltroStatus);
+            pnlFiltros.Controls.Add(cmbFiltroStatus);
+            pnlFiltros.Controls.Add(lblDataInicial);
+            pnlFiltros.Controls.Add(dtpDataInicial);
+            pnlFiltros.Controls.Add(btnLimparFiltros);
+            pnlFiltros.Controls.Add(lblDataFinal);
+            pnlFiltros.Controls.Add(btnFiltrar);
+            pnlFiltros.Controls.Add(dtpDataFinal);
+            pnlFiltros.Location = new Point(20, 90);
+            pnlFiltros.Name = "pnlFiltros";
+            pnlFiltros.Size = new Size(990, 120);
+            pnlFiltros.TabIndex = 30;
+            // 
+            // lblFiltros
+            // 
+            lblFiltros.AutoSize = true;
+            lblFiltros.Font = new Font("Segoe UI Semibold", 11F);
+            lblFiltros.ForeColor = Color.DimGray;
+            lblFiltros.Location = new Point(15, 12);
+            lblFiltros.Name = "lblFiltros";
+            lblFiltros.Size = new Size(51, 20);
+            lblFiltros.TabIndex = 0;
+            lblFiltros.Text = "Filtros";
+            // 
+            // pnlGrid
+            // 
+            pnlGrid.BackColor = Color.White;
+            pnlGrid.BorderStyle = BorderStyle.FixedSingle;
+            pnlGrid.Controls.Add(lblOrcamentos);
+            pnlGrid.Controls.Add(dgvOrcamentos);
+            pnlGrid.Location = new Point(20, 225);
+            pnlGrid.Name = "pnlGrid";
+            pnlGrid.Size = new Size(990, 325);
+            pnlGrid.TabIndex = 31;
+            // 
+            // lblOrcamentos
+            // 
+            lblOrcamentos.AutoSize = true;
+            lblOrcamentos.Font = new Font("Segoe UI Semibold", 11F);
+            lblOrcamentos.ForeColor = Color.DimGray;
+            lblOrcamentos.Location = new Point(15, 12);
+            lblOrcamentos.Name = "lblOrcamentos";
+            lblOrcamentos.Size = new Size(91, 20);
+            lblOrcamentos.TabIndex = 0;
+            lblOrcamentos.Text = "Orçamentos";
+            // 
             // FrmOrcamentos
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(963, 447);
+            BackColor = Color.WhiteSmoke;
+            ClientSize = new Size(1034, 634);
+            Controls.Add(pnlGrid);
+            Controls.Add(pnlFiltros);
+            Controls.Add(pnlTopo);
             Controls.Add(btnExcluirOrcamento);
             Controls.Add(btnFechar);
             Controls.Add(btnAbrirOrcamento);
             Controls.Add(btnGerarPdfs);
             Controls.Add(btnAlterarStatus);
-            Controls.Add(btnLimparFiltros);
-            Controls.Add(btnFiltrar);
-            Controls.Add(dgvOrcamentos);
-            Controls.Add(dtpDataFinal);
-            Controls.Add(label3);
-            Controls.Add(dtpDataInicial);
-            Controls.Add(label2);
-            Controls.Add(cmbFiltroStatus);
-            Controls.Add(label8);
-            Controls.Add(label1);
-            Controls.Add(txtFiltroCliente);
+            Font = new Font("Segoe UI", 10F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MinimizeBox = false;
             Name = "FrmOrcamentos";
-            Text = "FrmOrcamentos";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Ver Orçamentos";
             ((System.ComponentModel.ISupportInitialize)dgvOrcamentos).EndInit();
+            pnlTopo.ResumeLayout(false);
+            pnlTopo.PerformLayout();
+            pnlFiltros.ResumeLayout(false);
+            pnlFiltros.PerformLayout();
+            pnlGrid.ResumeLayout(false);
+            pnlGrid.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
+        private Label lblFiltroCliente;
         private TextBox txtFiltroCliente;
         private ComboBox cmbFiltroStatus;
-        private Label label8;
-        private Label label2;
+        private Label lblFiltroStatus;
+        private Label lblDataInicial;
         private DateTimePicker dtpDataInicial;
-        private Label label3;
+        private Label lblDataFinal;
         private DateTimePicker dtpDataFinal;
         private DataGridView dgvOrcamentos;
         private Button btnFiltrar;
@@ -250,5 +347,12 @@
         private Button btnFechar;
         private Button btnAbrirOrcamento;
         private Button btnExcluirOrcamento;
+        private Panel pnlTopo;
+        private Label lblSubtituloTela;
+        private Label lblTituloTela;
+        private Panel pnlFiltros;
+        private Label lblFiltros;
+        private Panel pnlGrid;
+        private Label lblOrcamentos;
     }
 }
