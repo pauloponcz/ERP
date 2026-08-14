@@ -56,5 +56,15 @@ namespace ComodoroERP
             using var tela = new FrmConfiguracoes();
             tela.ShowDialog();
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FrmMenu_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

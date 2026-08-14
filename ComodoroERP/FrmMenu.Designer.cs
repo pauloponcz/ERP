@@ -29,111 +29,204 @@
         private void InitializeComponent()
         {
             btnNovoOrcamento = new Button();
-            btnVerOrcamentos = new Button();
-            btnItensLancados = new Button();
-            btnServicosPermitidos = new Button();
-            btnDashboard = new Button();
             btnSair = new Button();
-            groupBox1 = new GroupBox();
             btnConfiguracoes = new Button();
-            groupBox1.SuspendLayout();
+            pnlMenu = new Panel();
+            btnDashboard = new Button();
+            btnServicosPermitidos = new Button();
+            btnItensLancados = new Button();
+            btnVerOrcamentos = new Button();
+            pnlTopo = new Panel();
+            lblSubtitulo = new Label();
+            lblTitulo = new Label();
+            pnlMenu.SuspendLayout();
+            pnlTopo.SuspendLayout();
             SuspendLayout();
             // 
             // btnNovoOrcamento
             // 
-            btnNovoOrcamento.Location = new Point(25, 17);
+            btnNovoOrcamento.BackColor = Color.White;
+            btnNovoOrcamento.Cursor = Cursors.Hand;
+            btnNovoOrcamento.FlatAppearance.BorderColor = Color.Gainsboro;
+            btnNovoOrcamento.FlatStyle = FlatStyle.Flat;
+            btnNovoOrcamento.Font = new Font("Segoe UI Semibold", 10F);
+            btnNovoOrcamento.ForeColor = Color.DimGray;
+            btnNovoOrcamento.Location = new Point(40, 20);
+            btnNovoOrcamento.MaximumSize = new Size(220, 42);
+            btnNovoOrcamento.MinimumSize = new Size(220, 42);
             btnNovoOrcamento.Name = "btnNovoOrcamento";
-            btnNovoOrcamento.Size = new Size(130, 45);
+            btnNovoOrcamento.Size = new Size(220, 42);
             btnNovoOrcamento.TabIndex = 0;
             btnNovoOrcamento.Text = "Novo Orçamento";
-            btnNovoOrcamento.UseVisualStyleBackColor = true;
+            btnNovoOrcamento.UseVisualStyleBackColor = false;
             btnNovoOrcamento.Click += btnNovoOrcamento_Click;
-            // 
-            // btnVerOrcamentos
-            // 
-            btnVerOrcamentos.Location = new Point(25, 68);
-            btnVerOrcamentos.Name = "btnVerOrcamentos";
-            btnVerOrcamentos.Size = new Size(130, 45);
-            btnVerOrcamentos.TabIndex = 1;
-            btnVerOrcamentos.Text = "Ver Orçamentos";
-            btnVerOrcamentos.UseVisualStyleBackColor = true;
-            btnVerOrcamentos.Click += btnVerOrcamentos_Click;
-            // 
-            // btnItensLancados
-            // 
-            btnItensLancados.Location = new Point(25, 119);
-            btnItensLancados.Name = "btnItensLancados";
-            btnItensLancados.Size = new Size(130, 45);
-            btnItensLancados.TabIndex = 2;
-            btnItensLancados.Text = "Itens Lançados";
-            btnItensLancados.UseVisualStyleBackColor = true;
-            btnItensLancados.Click += btnItensLancados_Click;
-            // 
-            // btnServicosPermitidos
-            // 
-            btnServicosPermitidos.Location = new Point(25, 170);
-            btnServicosPermitidos.Name = "btnServicosPermitidos";
-            btnServicosPermitidos.Size = new Size(130, 45);
-            btnServicosPermitidos.TabIndex = 3;
-            btnServicosPermitidos.Text = "Serviços Permitidos";
-            btnServicosPermitidos.UseVisualStyleBackColor = true;
-            btnServicosPermitidos.Click += btnServicosPermitidos_Click;
-            // 
-            // btnDashboard
-            // 
-            btnDashboard.Location = new Point(25, 221);
-            btnDashboard.Name = "btnDashboard";
-            btnDashboard.Size = new Size(130, 45);
-            btnDashboard.TabIndex = 4;
-            btnDashboard.Text = "Dashboard";
-            btnDashboard.UseVisualStyleBackColor = true;
-            btnDashboard.Click += btnDashboard_Click;
             // 
             // btnSair
             // 
-            btnSair.Location = new Point(37, 353);
+            btnSair.BackColor = Color.IndianRed;
+            btnSair.Cursor = Cursors.Hand;
+            btnSair.FlatAppearance.BorderSize = 0;
+            btnSair.FlatStyle = FlatStyle.Flat;
+            btnSair.ForeColor = Color.White;
+            btnSair.Location = new Point(70, 444);
             btnSair.Name = "btnSair";
-            btnSair.Size = new Size(130, 45);
+            btnSair.Size = new Size(220, 40);
             btnSair.TabIndex = 5;
             btnSair.Text = "Sair";
-            btnSair.UseVisualStyleBackColor = true;
+            btnSair.UseVisualStyleBackColor = false;
             btnSair.Click += btnSair_Click;
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(btnDashboard);
-            groupBox1.Controls.Add(btnServicosPermitidos);
-            groupBox1.Controls.Add(btnItensLancados);
-            groupBox1.Controls.Add(btnVerOrcamentos);
-            groupBox1.Controls.Add(btnNovoOrcamento);
-            groupBox1.Location = new Point(12, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(189, 274);
-            groupBox1.TabIndex = 7;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "COMODORO ERP";
             // 
             // btnConfiguracoes
             // 
-            btnConfiguracoes.Location = new Point(37, 302);
+            btnConfiguracoes.BackColor = Color.White;
+            btnConfiguracoes.Cursor = Cursors.Hand;
+            btnConfiguracoes.FlatAppearance.BorderColor = Color.Silver;
+            btnConfiguracoes.FlatStyle = FlatStyle.Flat;
+            btnConfiguracoes.ForeColor = Color.DimGray;
+            btnConfiguracoes.Location = new Point(70, 398);
             btnConfiguracoes.Name = "btnConfiguracoes";
-            btnConfiguracoes.Size = new Size(130, 45);
+            btnConfiguracoes.Size = new Size(220, 40);
             btnConfiguracoes.TabIndex = 8;
             btnConfiguracoes.Text = "Configurações";
-            btnConfiguracoes.UseVisualStyleBackColor = true;
+            btnConfiguracoes.UseVisualStyleBackColor = false;
             btnConfiguracoes.Click += btnConfiguracoes_Click;
+            // 
+            // pnlMenu
+            // 
+            pnlMenu.Controls.Add(btnDashboard);
+            pnlMenu.Controls.Add(btnServicosPermitidos);
+            pnlMenu.Controls.Add(btnItensLancados);
+            pnlMenu.Controls.Add(btnVerOrcamentos);
+            pnlMenu.Controls.Add(btnNovoOrcamento);
+            pnlMenu.Location = new Point(30, 90);
+            pnlMenu.Name = "pnlMenu";
+            pnlMenu.Size = new Size(300, 290);
+            pnlMenu.TabIndex = 9;
+            // 
+            // btnDashboard
+            // 
+            btnDashboard.BackColor = Color.White;
+            btnDashboard.Cursor = Cursors.Hand;
+            btnDashboard.FlatAppearance.BorderColor = Color.Gainsboro;
+            btnDashboard.FlatStyle = FlatStyle.Flat;
+            btnDashboard.Font = new Font("Segoe UI Semibold", 10F);
+            btnDashboard.ForeColor = Color.DimGray;
+            btnDashboard.Location = new Point(40, 220);
+            btnDashboard.MaximumSize = new Size(220, 42);
+            btnDashboard.MinimumSize = new Size(220, 42);
+            btnDashboard.Name = "btnDashboard";
+            btnDashboard.Size = new Size(220, 42);
+            btnDashboard.TabIndex = 8;
+            btnDashboard.Text = "Dashboard";
+            btnDashboard.UseVisualStyleBackColor = false;
+            btnDashboard.Click += btnDashboard_Click;
+            // 
+            // btnServicosPermitidos
+            // 
+            btnServicosPermitidos.BackColor = Color.White;
+            btnServicosPermitidos.Cursor = Cursors.Hand;
+            btnServicosPermitidos.FlatAppearance.BorderColor = Color.Gainsboro;
+            btnServicosPermitidos.FlatStyle = FlatStyle.Flat;
+            btnServicosPermitidos.Font = new Font("Segoe UI Semibold", 10F);
+            btnServicosPermitidos.ForeColor = Color.DimGray;
+            btnServicosPermitidos.Location = new Point(40, 170);
+            btnServicosPermitidos.MaximumSize = new Size(220, 42);
+            btnServicosPermitidos.MinimumSize = new Size(220, 42);
+            btnServicosPermitidos.Name = "btnServicosPermitidos";
+            btnServicosPermitidos.Size = new Size(220, 42);
+            btnServicosPermitidos.TabIndex = 7;
+            btnServicosPermitidos.Text = "Serviços Permitidos";
+            btnServicosPermitidos.UseVisualStyleBackColor = false;
+            btnServicosPermitidos.Click += btnServicosPermitidos_Click;
+            // 
+            // btnItensLancados
+            // 
+            btnItensLancados.BackColor = Color.White;
+            btnItensLancados.Cursor = Cursors.Hand;
+            btnItensLancados.FlatAppearance.BorderColor = Color.Gainsboro;
+            btnItensLancados.FlatStyle = FlatStyle.Flat;
+            btnItensLancados.Font = new Font("Segoe UI Semibold", 10F);
+            btnItensLancados.ForeColor = Color.DimGray;
+            btnItensLancados.Location = new Point(40, 120);
+            btnItensLancados.MaximumSize = new Size(220, 42);
+            btnItensLancados.MinimumSize = new Size(220, 42);
+            btnItensLancados.Name = "btnItensLancados";
+            btnItensLancados.Size = new Size(220, 42);
+            btnItensLancados.TabIndex = 6;
+            btnItensLancados.Text = "Itens Lançados";
+            btnItensLancados.UseVisualStyleBackColor = false;
+            btnItensLancados.Click += btnItensLancados_Click;
+            // 
+            // btnVerOrcamentos
+            // 
+            btnVerOrcamentos.BackColor = Color.White;
+            btnVerOrcamentos.Cursor = Cursors.Hand;
+            btnVerOrcamentos.FlatAppearance.BorderColor = Color.Gainsboro;
+            btnVerOrcamentos.FlatStyle = FlatStyle.Flat;
+            btnVerOrcamentos.Font = new Font("Segoe UI Semibold", 10F);
+            btnVerOrcamentos.ForeColor = Color.DimGray;
+            btnVerOrcamentos.Location = new Point(40, 70);
+            btnVerOrcamentos.MaximumSize = new Size(220, 42);
+            btnVerOrcamentos.MinimumSize = new Size(220, 42);
+            btnVerOrcamentos.Name = "btnVerOrcamentos";
+            btnVerOrcamentos.Size = new Size(220, 42);
+            btnVerOrcamentos.TabIndex = 5;
+            btnVerOrcamentos.Text = "Ver Orçamentos";
+            btnVerOrcamentos.UseVisualStyleBackColor = false;
+            btnVerOrcamentos.Click += btnVerOrcamentos_Click;
+            // 
+            // pnlTopo
+            // 
+            pnlTopo.BackColor = Color.SteelBlue;
+            pnlTopo.Controls.Add(lblSubtitulo);
+            pnlTopo.Controls.Add(lblTitulo);
+            pnlTopo.Location = new Point(0, 0);
+            pnlTopo.Name = "pnlTopo";
+            pnlTopo.Size = new Size(380, 70);
+            pnlTopo.TabIndex = 10;
+            // 
+            // lblSubtitulo
+            // 
+            lblSubtitulo.AutoSize = true;
+            lblSubtitulo.Font = new Font("Segoe UI", 9F);
+            lblSubtitulo.ForeColor = Color.WhiteSmoke;
+            lblSubtitulo.Location = new Point(22, 40);
+            lblSubtitulo.Name = "lblSubtitulo";
+            lblSubtitulo.Size = new Size(187, 15);
+            lblSubtitulo.TabIndex = 1;
+            lblSubtitulo.Text = "Sistema de Orçamentos e Serviços";
+            // 
+            // lblTitulo
+            // 
+            lblTitulo.AutoSize = true;
+            lblTitulo.Font = new Font("Segoe UI Semibold", 14F);
+            lblTitulo.ForeColor = Color.White;
+            lblTitulo.Location = new Point(20, 12);
+            lblTitulo.Name = "lblTitulo";
+            lblTitulo.Size = new Size(162, 25);
+            lblTitulo.TabIndex = 0;
+            lblTitulo.Text = "COMODORO ERP";
             // 
             // FrmMenu
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(223, 450);
+            BackColor = Color.WhiteSmoke;
+            ClientSize = new Size(364, 525);
+            Controls.Add(pnlTopo);
+            Controls.Add(pnlMenu);
             Controls.Add(btnConfiguracoes);
-            Controls.Add(groupBox1);
             Controls.Add(btnSair);
+            Font = new Font("Segoe UI", 10F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "FrmMenu";
-            Text = "FrmMenu";
-            groupBox1.ResumeLayout(false);
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Comodoro ERP";
+            Load += FrmMenu_Load;
+            pnlMenu.ResumeLayout(false);
+            pnlTopo.ResumeLayout(false);
+            pnlTopo.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -141,11 +234,14 @@
 
         private Button btnNovoOrcamento;
         private Button btnVerOrcamentos;
-        private Button btnItensLancados;
         private Button btnServicosPermitidos;
         private Button btnDashboard;
         private Button btnSair;
-        private GroupBox groupBox1;
         private Button btnConfiguracoes;
+        private Panel pnlMenu;
+        private Panel pnlTopo;
+        private Label lblSubtitulo;
+        private Label lblTitulo;
+        private Button btnItensLancados;
     }
 }
