@@ -1,10 +1,10 @@
 ﻿using ComodoroERP.Models;
 using ComodoroERP.Reports;
 using ComodoroERP.Services;
+using ComodoroERP.Utils;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
-using System.Drawing;
 
 namespace ComodoroERP
 {
@@ -16,6 +16,8 @@ namespace ComodoroERP
         public FrmDetalhesOrcamento(int orcamentoId)
         {
             InitializeComponent();
+
+            DarkTitleBar.Ativar(this);
 
             _orcamentoId = orcamentoId;
 
@@ -83,8 +85,8 @@ namespace ComodoroERP
             lblCnpj.ForeColor = corTextoPrincipal;
             lblCnpj.Font = fonteDestaque;
 
-            lblEndereco.ForeColor = corTextoSecundario;
-            lblEndereco.Font = fonteNormal;
+            lblEndereco.ForeColor = corTextoPrincipal;
+            lblEndereco.Font = fonteDestaque;
 
             lblTitulo.ForeColor = corTextoPrincipal;
             lblTitulo.Font = fonteDestaque;

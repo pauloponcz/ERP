@@ -1,4 +1,5 @@
 ﻿using ComodoroERP.Services;
+using ComodoroERP.Utils;
 using System.Data;
 
 namespace ComodoroERP
@@ -10,6 +11,8 @@ namespace ComodoroERP
         public FrmServicosPermitidos()
         {
             InitializeComponent();
+
+            DarkTitleBar.Ativar(this);
 
             ConfigurarGrid();
             CarregarCategorias();

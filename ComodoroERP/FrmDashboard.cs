@@ -1,4 +1,5 @@
 ﻿using ComodoroERP.Services;
+using ComodoroERP.Utils;
 using System.Data;
 using System.Globalization;
 
@@ -9,6 +10,8 @@ namespace ComodoroERP
         public FrmDashboard()
         {
             InitializeComponent();
+
+            DarkTitleBar.Ativar(this);
 
             ConfigurarGrid();
             CarregarDashboard();

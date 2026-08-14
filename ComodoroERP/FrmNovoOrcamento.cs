@@ -1,7 +1,7 @@
 ﻿using ComodoroERP.Models;
 using ComodoroERP.Services;
+using ComodoroERP.Utils;
 using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.Text;
 
@@ -82,6 +82,9 @@ namespace ComodoroERP
         public FrmNovoOrcamento()
         {
             InitializeComponent();
+
+            DarkTitleBar.Ativar(this);
+
             ConfigurarTela();
             ConfigurarGridServicos();
 

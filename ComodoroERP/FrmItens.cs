@@ -1,4 +1,5 @@
 ﻿using ComodoroERP.Services;
+using ComodoroERP.Utils;
 using System.Data;
 
 namespace ComodoroERP
@@ -10,6 +11,9 @@ namespace ComodoroERP
         public FrmItens()
         {
             InitializeComponent();
+
+            DarkTitleBar.Ativar(this);
+
             ConfigurarTela();
             ConfigurarGrid();
             AplicarEstiloVisual();

@@ -631,7 +631,7 @@
         private TextBox txtBairroCep;
         private Label label3;
         private TextBox txtEndereco;
-        private GroupBox grpOrcamento;
+        //private GroupBox grpOrcamento;
         private DateTimePicker dtpDataOrcamento;
         private Label lblObservacao;
         private TextBox txtObservacao;

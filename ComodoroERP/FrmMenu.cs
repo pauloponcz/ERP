@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using ComodoroERP.Utils;
 
 namespace ComodoroERP
 {
@@ -15,6 +7,7 @@ namespace ComodoroERP
         public FrmMenu()
         {
             InitializeComponent();
+            DarkTitleBar.Ativar(this);
         }
 
         private void btnNovoOrcamento_Click(object sender, EventArgs e)
@@ -51,15 +44,11 @@ namespace ComodoroERP
         {
             Application.Exit();
         }
+
         private void btnConfiguracoes_Click(object sender, EventArgs e)
         {
             using var tela = new FrmConfiguracoes();
             tela.ShowDialog();
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void FrmMenu_Load(object sender, EventArgs e)

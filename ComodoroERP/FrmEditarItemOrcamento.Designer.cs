@@ -30,9 +30,8 @@
         {
             btnSalvar = new Button();
             btnCancelar = new Button();
-            groupBox1 = new GroupBox();
             txtDescricaoServico = new TextBox();
-            label3 = new Label();
+            lblDescricaoServico = new Label();
             numValorUnitario = new NumericUpDown();
             label6 = new Label();
             chkCortesia = new CheckBox();
@@ -40,20 +39,26 @@
             txtObservacaoServico = new TextBox();
             label5 = new Label();
             numQuantidade = new NumericUpDown();
-            label4 = new Label();
+            lblQuantidade = new Label();
             cmbServicoPermitido = new ComboBox();
-            label2 = new Label();
-            label1 = new Label();
-            groupBox1.SuspendLayout();
+            lblServicoPermitido = new Label();
+            lblCategoria = new Label();
+            lblSubtituloTela = new Label();
+            lblTituloTela = new Label();
+            pnlServico = new Panel();
+            lblDadosServico = new Label();
+            pnlTopo = new Panel();
             ((System.ComponentModel.ISupportInitialize)numValorUnitario).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numQuantidade).BeginInit();
+            pnlServico.SuspendLayout();
+            pnlTopo.SuspendLayout();
             SuspendLayout();
             // 
             // btnSalvar
             // 
-            btnSalvar.Location = new Point(282, 374);
+            btnSalvar.Location = new Point(365, 428);
             btnSalvar.Name = "btnSalvar";
-            btnSalvar.Size = new Size(88, 23);
+            btnSalvar.Size = new Size(100, 35);
             btnSalvar.TabIndex = 16;
             btnSalvar.Text = "Salvar";
             btnSalvar.UseVisualStyleBackColor = true;
@@ -61,106 +66,83 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(382, 374);
+            btnCancelar.Location = new Point(480, 428);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(88, 23);
+            btnCancelar.Size = new Size(105, 35);
             btnCancelar.TabIndex = 17;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
             btnCancelar.Click += btnCancelar_Click;
             // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(txtDescricaoServico);
-            groupBox1.Controls.Add(label3);
-            groupBox1.Controls.Add(numValorUnitario);
-            groupBox1.Controls.Add(label6);
-            groupBox1.Controls.Add(chkCortesia);
-            groupBox1.Controls.Add(cmbCategoria);
-            groupBox1.Controls.Add(txtObservacaoServico);
-            groupBox1.Controls.Add(label5);
-            groupBox1.Controls.Add(numQuantidade);
-            groupBox1.Controls.Add(label4);
-            groupBox1.Controls.Add(cmbServicoPermitido);
-            groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(12, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(458, 356);
-            groupBox1.TabIndex = 15;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "EDITAR ITEM DO ORÇAMENTO";
-            // 
             // txtDescricaoServico
             // 
-            txtDescricaoServico.Location = new Point(23, 153);
+            txtDescricaoServico.Location = new Point(20, 187);
             txtDescricaoServico.Name = "txtDescricaoServico";
-            txtDescricaoServico.Size = new Size(405, 23);
+            txtDescricaoServico.Size = new Size(515, 25);
             txtDescricaoServico.TabIndex = 15;
             // 
-            // label3
+            // lblDescricaoServico
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(22, 132);
-            label3.Name = "label3";
-            label3.Size = new Size(158, 15);
-            label3.TabIndex = 14;
-            label3.Text = "Descrição para o orçamento:";
+            lblDescricaoServico.AutoSize = true;
+            lblDescricaoServico.Location = new Point(20, 165);
+            lblDescricaoServico.Name = "lblDescricaoServico";
+            lblDescricaoServico.Size = new Size(183, 19);
+            lblDescricaoServico.TabIndex = 14;
+            lblDescricaoServico.Text = "Descrição para o orçamento:";
             // 
             // numValorUnitario
             // 
             numValorUnitario.DecimalPlaces = 2;
-            numValorUnitario.Location = new Point(234, 200);
+            numValorUnitario.Location = new Point(155, 247);
             numValorUnitario.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numValorUnitario.Name = "numValorUnitario";
-            numValorUnitario.Size = new Size(194, 23);
+            numValorUnitario.Size = new Size(130, 25);
             numValorUnitario.TabIndex = 13;
             numValorUnitario.Value = new decimal(new int[] { 1000000, 0, 0, 0 });
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(234, 179);
+            label6.Location = new Point(155, 225);
             label6.Name = "label6";
-            label6.Size = new Size(81, 15);
+            label6.Size = new Size(96, 19);
             label6.TabIndex = 12;
             label6.Text = "Valor Unitário:";
             // 
             // chkCortesia
             // 
             chkCortesia.AutoSize = true;
-            chkCortesia.Location = new Point(22, 231);
+            chkCortesia.Location = new Point(315, 249);
             chkCortesia.Name = "chkCortesia";
-            chkCortesia.Size = new Size(69, 19);
+            chkCortesia.Size = new Size(78, 23);
             chkCortesia.TabIndex = 11;
             chkCortesia.Text = "Cortesia";
             chkCortesia.UseVisualStyleBackColor = true;
             // 
             // cmbCategoria
             // 
-            cmbCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCategoria.FormattingEnabled = true;
-            cmbCategoria.Location = new Point(22, 58);
+            cmbCategoria.Location = new Point(20, 67);
             cmbCategoria.Name = "cmbCategoria";
-            cmbCategoria.Size = new Size(405, 23);
+            cmbCategoria.Size = new Size(515, 25);
             cmbCategoria.TabIndex = 10;
             cmbCategoria.SelectedIndexChanged += cmbCategoria_SelectedIndexChanged;
             // 
             // txtObservacaoServico
             // 
-            txtObservacaoServico.Location = new Point(22, 276);
+            txtObservacaoServico.Location = new Point(105, 277);
             txtObservacaoServico.Multiline = true;
             txtObservacaoServico.Name = "txtObservacaoServico";
-            txtObservacaoServico.Size = new Size(405, 63);
+            txtObservacaoServico.Size = new Size(430, 25);
             txtObservacaoServico.TabIndex = 9;
             txtObservacaoServico.TextChanged += txtObservacaoServico_TextChanged;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(22, 258);
+            label5.Location = new Point(20, 280);
             label5.Name = "label5";
-            label5.Size = new Size(72, 15);
+            label5.Size = new Size(84, 19);
             label5.TabIndex = 8;
             label5.Text = "Observação:";
             label5.Click += label5_Click;
@@ -168,64 +150,138 @@
             // numQuantidade
             // 
             numQuantidade.DecimalPlaces = 2;
-            numQuantidade.Location = new Point(23, 200);
+            numQuantidade.Location = new Point(20, 247);
             numQuantidade.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numQuantidade.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numQuantidade.Name = "numQuantidade";
-            numQuantidade.Size = new Size(192, 23);
+            numQuantidade.Size = new Size(110, 25);
             numQuantidade.TabIndex = 7;
             numQuantidade.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // label4
+            // lblQuantidade
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(22, 179);
-            label4.Name = "label4";
-            label4.Size = new Size(72, 15);
-            label4.TabIndex = 6;
-            label4.Text = "Quantidade:";
+            lblQuantidade.AutoSize = true;
+            lblQuantidade.Location = new Point(20, 225);
+            lblQuantidade.Name = "lblQuantidade";
+            lblQuantidade.Size = new Size(84, 19);
+            lblQuantidade.TabIndex = 6;
+            lblQuantidade.Text = "Quantidade:";
             // 
             // cmbServicoPermitido
             // 
-            cmbServicoPermitido.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbServicoPermitido.FormattingEnabled = true;
-            cmbServicoPermitido.Location = new Point(23, 102);
+            cmbServicoPermitido.Location = new Point(20, 127);
             cmbServicoPermitido.Name = "cmbServicoPermitido";
-            cmbServicoPermitido.Size = new Size(405, 23);
+            cmbServicoPermitido.Size = new Size(515, 25);
             cmbServicoPermitido.TabIndex = 3;
             // 
-            // label2
+            // lblServicoPermitido
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(22, 84);
-            label2.Name = "label2";
-            label2.Size = new Size(103, 15);
-            label2.TabIndex = 2;
-            label2.Text = "Serviço Permitido:";
+            lblServicoPermitido.AutoSize = true;
+            lblServicoPermitido.Location = new Point(20, 105);
+            lblServicoPermitido.Name = "lblServicoPermitido";
+            lblServicoPermitido.Size = new Size(117, 19);
+            lblServicoPermitido.TabIndex = 2;
+            lblServicoPermitido.Text = "Serviço Permitido:";
             // 
-            // label1
+            // lblCategoria
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(22, 40);
-            label1.Name = "label1";
-            label1.Size = new Size(61, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Categoria:";
+            lblCategoria.AutoSize = true;
+            lblCategoria.Location = new Point(20, 45);
+            lblCategoria.Name = "lblCategoria";
+            lblCategoria.Size = new Size(71, 19);
+            lblCategoria.TabIndex = 0;
+            lblCategoria.Text = "Categoria:";
+            // 
+            // lblSubtituloTela
+            // 
+            lblSubtituloTela.AutoSize = true;
+            lblSubtituloTela.Font = new Font("Segoe UI", 9F);
+            lblSubtituloTela.ForeColor = Color.WhiteSmoke;
+            lblSubtituloTela.Location = new Point(27, 49);
+            lblSubtituloTela.Name = "lblSubtituloTela";
+            lblSubtituloTela.Size = new Size(289, 15);
+            lblSubtituloTela.TabIndex = 1;
+            lblSubtituloTela.Text = "Altere os dados do serviço selecionado no orçamento";
+            // 
+            // lblTituloTela
+            // 
+            lblTituloTela.AutoSize = true;
+            lblTituloTela.Font = new Font("Segoe UI Semibold", 15F);
+            lblTituloTela.ForeColor = Color.White;
+            lblTituloTela.Location = new Point(25, 16);
+            lblTituloTela.Name = "lblTituloTela";
+            lblTituloTela.Size = new Size(128, 28);
+            lblTituloTela.TabIndex = 0;
+            lblTituloTela.Text = "EDITAR ITEM";
+            // 
+            // pnlServico
+            // 
+            pnlServico.BackColor = Color.White;
+            pnlServico.BorderStyle = BorderStyle.FixedSingle;
+            pnlServico.Controls.Add(txtObservacaoServico);
+            pnlServico.Controls.Add(chkCortesia);
+            pnlServico.Controls.Add(label5);
+            pnlServico.Controls.Add(label6);
+            pnlServico.Controls.Add(numValorUnitario);
+            pnlServico.Controls.Add(txtDescricaoServico);
+            pnlServico.Controls.Add(lblDadosServico);
+            pnlServico.Controls.Add(lblDescricaoServico);
+            pnlServico.Controls.Add(cmbCategoria);
+            pnlServico.Controls.Add(lblCategoria);
+            pnlServico.Controls.Add(numQuantidade);
+            pnlServico.Controls.Add(cmbServicoPermitido);
+            pnlServico.Controls.Add(lblQuantidade);
+            pnlServico.Controls.Add(lblServicoPermitido);
+            pnlServico.Location = new Point(20, 108);
+            pnlServico.Name = "pnlServico";
+            pnlServico.Size = new Size(565, 315);
+            pnlServico.TabIndex = 19;
+            // 
+            // lblDadosServico
+            // 
+            lblDadosServico.AutoSize = true;
+            lblDadosServico.Font = new Font("Segoe UI Semibold", 11F);
+            lblDadosServico.ForeColor = Color.DimGray;
+            lblDadosServico.Location = new Point(15, 12);
+            lblDadosServico.Name = "lblDadosServico";
+            lblDadosServico.Size = new Size(129, 20);
+            lblDadosServico.TabIndex = 0;
+            lblDadosServico.Text = "Dados do Serviço";
+            // 
+            // pnlTopo
+            // 
+            pnlTopo.BackColor = Color.SteelBlue;
+            pnlTopo.Controls.Add(lblSubtituloTela);
+            pnlTopo.Controls.Add(lblTituloTela);
+            pnlTopo.Location = new Point(0, 0);
+            pnlTopo.Name = "pnlTopo";
+            pnlTopo.Size = new Size(620, 85);
+            pnlTopo.TabIndex = 18;
             // 
             // FrmEditarItemOrcamento
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(485, 416);
+            BackColor = Color.WhiteSmoke;
+            ClientSize = new Size(604, 472);
+            Controls.Add(pnlServico);
+            Controls.Add(pnlTopo);
             Controls.Add(btnSalvar);
             Controls.Add(btnCancelar);
-            Controls.Add(groupBox1);
+            Font = new Font("Segoe UI", 10F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FrmEditarItemOrcamento";
-            Text = "FrmEditarItemOrcamento";
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Editar Item do Orçamento";
             ((System.ComponentModel.ISupportInitialize)numValorUnitario).EndInit();
             ((System.ComponentModel.ISupportInitialize)numQuantidade).EndInit();
+            pnlServico.ResumeLayout(false);
+            pnlServico.PerformLayout();
+            pnlTopo.ResumeLayout(false);
+            pnlTopo.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -233,9 +289,8 @@
 
         private Button btnSalvar;
         private Button btnCancelar;
-        private GroupBox groupBox1;
         private TextBox txtDescricaoServico;
-        private Label label3;
+        private Label lblDescricaoServico;
         private NumericUpDown numValorUnitario;
         private Label label6;
         private CheckBox chkCortesia;
@@ -243,9 +298,14 @@
         private TextBox txtObservacaoServico;
         private Label label5;
         private NumericUpDown numQuantidade;
-        private Label label4;
+        private Label lblQuantidade;
         private ComboBox cmbServicoPermitido;
-        private Label label2;
-        private Label label1;
+        private Label lblServicoPermitido;
+        private Label lblCategoria;
+        private Label lblSubtituloTela;
+        private Label lblTituloTela;
+        private Panel pnlServico;
+        private Label lblDadosServico;
+        private Panel pnlTopo;
     }
 }

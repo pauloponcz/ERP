@@ -1,4 +1,6 @@
 ﻿using ComodoroERP.Services;
+using ComodoroERP.Utils;
+
 
 namespace ComodoroERP
 {
@@ -9,6 +11,8 @@ namespace ComodoroERP
         public FrmConfiguracoes()
         {
             InitializeComponent();
+
+            DarkTitleBar.Ativar(this);
 
             CarregarConfiguracoes();
             AplicarEstiloVisual();

@@ -1,9 +1,8 @@
 ﻿using ComodoroERP.Models;
 using ComodoroERP.Services;
-using System.Drawing;
+using ComodoroERP.Utils;
 using System.Globalization;
 using System.Text;
-using System.Linq;
 
 namespace ComodoroERP
 {
@@ -28,6 +27,8 @@ namespace ComodoroERP
         public FrmAdicionarItemOrcamento(int orcamentoId)
         {
             InitializeComponent();
+
+            DarkTitleBar.Ativar(this);
 
             _orcamentoId = orcamentoId;
 
