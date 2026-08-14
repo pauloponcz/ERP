@@ -252,16 +252,16 @@ namespace ComodoroERP.Services
         SELECT
             O.Id AS OrcamentoId,
             O.DataOrcamento AS Data,
-            C.Nome AS Cliente,
-            O.Status,
-            I.Categoria,
-            I.ServicoPermitido,
-            I.DescricaoOrcamento,
-            I.Quantidade,
-            I.ValorUnitario,
-            I.ValorTotal,
+            IFNULL(C.Nome, '') AS Cliente,
+            IFNULL(O.Status, '') AS Status,
+            IFNULL(I.Categoria, '') AS Categoria,
+            IFNULL(I.ServicoPermitido, '') AS ServicoPermitido,
+            IFNULL(I.DescricaoOrcamento, '') AS DescricaoOrcamento,
+            IFNULL(I.Quantidade, 0) AS Quantidade,
+            IFNULL(I.ValorUnitario, 0) AS ValorUnitario,
+            IFNULL(I.ValorTotal, 0) AS ValorTotal,
             CASE 
-                WHEN I.Cortesia = 1 THEN 'Sim'
+                WHEN IFNULL(I.Cortesia, 0) = 1 THEN 'Sim'
                 ELSE 'Não'
             END AS Cortesia
         FROM OrcamentoItens I
@@ -272,7 +272,11 @@ namespace ComodoroERP.Services
             AND
             (@CategoriaFiltro = '' OR I.Categoria = @CategoriaFiltro)
             AND
-            (@ServicoFiltro = '' OR I.ServicoPermitido LIKE '%' || @ServicoFiltro || '%' OR I.DescricaoOrcamento LIKE '%' || @ServicoFiltro || '%')
+            (
+                @ServicoFiltro = ''
+                OR I.ServicoPermitido LIKE '%' || @ServicoFiltro || '%'
+                OR I.DescricaoOrcamento LIKE '%' || @ServicoFiltro || '%'
+            )
             AND
             (@StatusFiltro = '' OR O.Status = @StatusFiltro)
             AND
@@ -282,17 +286,45 @@ namespace ComodoroERP.Services
         ORDER BY O.Id DESC, I.Id ASC;
     ";
 
-            command.Parameters.AddWithValue("@ClienteFiltro", clienteFiltro);
-            command.Parameters.AddWithValue("@CategoriaFiltro", categoriaFiltro);
-            command.Parameters.AddWithValue("@ServicoFiltro", servicoFiltro);
-            command.Parameters.AddWithValue("@StatusFiltro", statusFiltro);
+            command.Parameters.AddWithValue("@ClienteFiltro", clienteFiltro ?? "");
+            command.Parameters.AddWithValue("@CategoriaFiltro", categoriaFiltro ?? "");
+            command.Parameters.AddWithValue("@ServicoFiltro", servicoFiltro ?? "");
+            command.Parameters.AddWithValue("@StatusFiltro", statusFiltro ?? "");
             command.Parameters.AddWithValue("@DataInicial", dataInicial.HasValue ? dataInicial.Value.ToString("yyyy-MM-dd") : "");
             command.Parameters.AddWithValue("@DataFinal", dataFinal.HasValue ? dataFinal.Value.ToString("yyyy-MM-dd") : "");
 
             using var reader = command.ExecuteReader();
 
             var table = new DataTable();
-            table.Load(reader);
+
+            table.Columns.Add("OrcamentoId", typeof(int));
+            table.Columns.Add("Data", typeof(string));
+            table.Columns.Add("Cliente", typeof(string));
+            table.Columns.Add("Status", typeof(string));
+            table.Columns.Add("Categoria", typeof(string));
+            table.Columns.Add("ServicoPermitido", typeof(string));
+            table.Columns.Add("DescricaoOrcamento", typeof(string));
+            table.Columns.Add("Quantidade", typeof(decimal));
+            table.Columns.Add("ValorUnitario", typeof(decimal));
+            table.Columns.Add("ValorTotal", typeof(decimal));
+            table.Columns.Add("Cortesia", typeof(string));
+
+            while (reader.Read())
+            {
+                table.Rows.Add(
+                    reader["OrcamentoId"] == DBNull.Value ? 0 : Convert.ToInt32(reader["OrcamentoId"]),
+                    reader["Data"] == DBNull.Value ? "" : Convert.ToDateTime(reader["Data"]).ToString("dd/MM/yyyy"),
+                    reader["Cliente"]?.ToString() ?? "",
+                    reader["Status"]?.ToString() ?? "",
+                    reader["Categoria"]?.ToString() ?? "",
+                    reader["ServicoPermitido"]?.ToString() ?? "",
+                    reader["DescricaoOrcamento"]?.ToString() ?? "",
+                    reader["Quantidade"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["Quantidade"]),
+                    reader["ValorUnitario"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["ValorUnitario"]),
+                    reader["ValorTotal"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["ValorTotal"]),
+                    reader["Cortesia"]?.ToString() ?? "Não"
+                );
+            }
 
             return table;
         }

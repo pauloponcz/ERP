@@ -30,7 +30,7 @@
         {
             cmbFiltroCategoria = new ComboBox();
             label8 = new Label();
-            label1 = new Label();
+            lblFiltroCliente = new Label();
             txtFiltroCliente = new TextBox();
             label3 = new Label();
             txtFiltroServico = new TextBox();
@@ -44,7 +44,17 @@
             label2 = new Label();
             dtpDataInicial = new DateTimePicker();
             label5 = new Label();
+            pnlTopo = new Panel();
+            lblSubtituloTela = new Label();
+            lblTituloTela = new Label();
+            pnlFiltros = new Panel();
+            lblFiltros = new Label();
+            pnlGrid = new Panel();
+            lblItensLancados = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvItens).BeginInit();
+            pnlTopo.SuspendLayout();
+            pnlFiltros.SuspendLayout();
+            pnlGrid.SuspendLayout();
             SuspendLayout();
             // 
             // cmbFiltroCategoria
@@ -52,52 +62,52 @@
             cmbFiltroCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbFiltroCategoria.FormattingEnabled = true;
             cmbFiltroCategoria.Items.AddRange(new object[] { "Pendente", "Pago", "Parcial", "Concluído", "Cancelado" });
-            cmbFiltroCategoria.Location = new Point(253, 12);
+            cmbFiltroCategoria.Location = new Point(240, 65);
             cmbFiltroCategoria.Name = "cmbFiltroCategoria";
-            cmbFiltroCategoria.Size = new Size(136, 23);
+            cmbFiltroCategoria.Size = new Size(230, 25);
             cmbFiltroCategoria.TabIndex = 24;
             cmbFiltroCategoria.SelectedIndexChanged += cmbFiltroStatus_SelectedIndexChanged;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(192, 15);
+            label8.Location = new Point(240, 42);
             label8.Name = "label8";
-            label8.Size = new Size(61, 15);
+            label8.Size = new Size(71, 19);
             label8.TabIndex = 23;
             label8.Text = "Categoria:";
             // 
-            // label1
+            // lblFiltroCliente
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(7, 15);
-            label1.Name = "label1";
-            label1.Size = new Size(47, 15);
-            label1.TabIndex = 22;
-            label1.Text = "Cliente:";
+            lblFiltroCliente.AutoSize = true;
+            lblFiltroCliente.Location = new Point(20, 42);
+            lblFiltroCliente.Name = "lblFiltroCliente";
+            lblFiltroCliente.Size = new Size(54, 19);
+            lblFiltroCliente.TabIndex = 22;
+            lblFiltroCliente.Text = "Cliente:";
             // 
             // txtFiltroCliente
             // 
-            txtFiltroCliente.Location = new Point(60, 12);
+            txtFiltroCliente.Location = new Point(20, 65);
             txtFiltroCliente.Name = "txtFiltroCliente";
-            txtFiltroCliente.Size = new Size(126, 23);
+            txtFiltroCliente.Size = new Size(200, 25);
             txtFiltroCliente.TabIndex = 21;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(400, 15);
+            label3.Location = new Point(490, 42);
             label3.Name = "label3";
-            label3.Size = new Size(48, 15);
+            label3.Size = new Size(55, 19);
             label3.TabIndex = 27;
             label3.Text = "Serviço:";
             label3.Click += label3_Click;
             // 
             // txtFiltroServico
             // 
-            txtFiltroServico.Location = new Point(448, 12);
+            txtFiltroServico.Location = new Point(490, 65);
             txtFiltroServico.Name = "txtFiltroServico";
-            txtFiltroServico.Size = new Size(126, 23);
+            txtFiltroServico.Size = new Size(210, 25);
             txtFiltroServico.TabIndex = 28;
             txtFiltroServico.TextChanged += textBox1_TextChanged;
             // 
@@ -106,37 +116,37 @@
             cmbFiltroStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbFiltroStatus.FormattingEnabled = true;
             cmbFiltroStatus.Items.AddRange(new object[] { "Pendente", "Pago", "Parcial", "Concluído", "Cancelado" });
-            cmbFiltroStatus.Location = new Point(626, 12);
+            cmbFiltroStatus.Location = new Point(720, 65);
             cmbFiltroStatus.Name = "cmbFiltroStatus";
-            cmbFiltroStatus.Size = new Size(136, 23);
+            cmbFiltroStatus.Size = new Size(130, 25);
             cmbFiltroStatus.TabIndex = 30;
             cmbFiltroStatus.SelectedIndexChanged += cmbFiltroStatus_SelectedIndexChanged;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(581, 15);
+            label4.Location = new Point(720, 42);
             label4.Name = "label4";
-            label4.Size = new Size(42, 15);
+            label4.Size = new Size(50, 19);
             label4.TabIndex = 29;
             label4.Text = "Status:";
             label4.Click += label4_Click;
             // 
             // btnLimparFiltros
             // 
-            btnLimparFiltros.Location = new Point(112, 82);
+            btnLimparFiltros.Location = new Point(925, 92);
             btnLimparFiltros.Name = "btnLimparFiltros";
-            btnLimparFiltros.Size = new Size(99, 23);
+            btnLimparFiltros.Size = new Size(95, 35);
             btnLimparFiltros.TabIndex = 32;
-            btnLimparFiltros.Text = "Limpar Filtros";
+            btnLimparFiltros.Text = "Limpar";
             btnLimparFiltros.UseVisualStyleBackColor = true;
             btnLimparFiltros.Click += btnLimparFiltros_Click;
             // 
             // btnFiltrar
             // 
-            btnFiltrar.Location = new Point(7, 82);
+            btnFiltrar.Location = new Point(820, 92);
             btnFiltrar.Name = "btnFiltrar";
-            btnFiltrar.Size = new Size(99, 23);
+            btnFiltrar.Size = new Size(95, 35);
             btnFiltrar.TabIndex = 31;
             btnFiltrar.Text = "Filtrar";
             btnFiltrar.UseVisualStyleBackColor = true;
@@ -148,19 +158,19 @@
             dgvItens.AllowUserToDeleteRows = false;
             dgvItens.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvItens.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvItens.Location = new Point(7, 111);
+            dgvItens.Location = new Point(15, 45);
             dgvItens.MultiSelect = false;
             dgvItens.Name = "dgvItens";
             dgvItens.ReadOnly = true;
             dgvItens.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvItens.Size = new Size(755, 296);
+            dgvItens.Size = new Size(1010, 250);
             dgvItens.TabIndex = 33;
             // 
             // btnFechar
             // 
-            btnFechar.Location = new Point(663, 415);
+            btnFechar.Location = new Point(940, 580);
             btnFechar.Name = "btnFechar";
-            btnFechar.Size = new Size(99, 23);
+            btnFechar.Size = new Size(120, 35);
             btnFechar.TabIndex = 34;
             btnFechar.Text = "Fechar";
             btnFechar.UseVisualStyleBackColor = true;
@@ -169,72 +179,159 @@
             // dtpDataFinal
             // 
             dtpDataFinal.Format = DateTimePickerFormat.Short;
-            dtpDataFinal.Location = new Point(299, 53);
+            dtpDataFinal.Location = new Point(350, 97);
             dtpDataFinal.Name = "dtpDataFinal";
             dtpDataFinal.ShowCheckBox = true;
-            dtpDataFinal.Size = new Size(139, 23);
+            dtpDataFinal.Size = new Size(140, 25);
             dtpDataFinal.TabIndex = 38;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(231, 57);
+            label2.Location = new Point(270, 100);
             label2.Name = "label2";
-            label2.Size = new Size(62, 15);
+            label2.Size = new Size(73, 19);
             label2.TabIndex = 37;
             label2.Text = "Data Final:";
             // 
             // dtpDataInicial
             // 
             dtpDataInicial.Format = DateTimePickerFormat.Short;
-            dtpDataInicial.Location = new Point(86, 53);
+            dtpDataInicial.Location = new Point(105, 97);
             dtpDataInicial.Name = "dtpDataInicial";
             dtpDataInicial.ShowCheckBox = true;
-            dtpDataInicial.Size = new Size(139, 23);
+            dtpDataInicial.Size = new Size(139, 25);
             dtpDataInicial.TabIndex = 36;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(12, 57);
+            label5.Location = new Point(20, 100);
             label5.Name = "label5";
-            label5.Size = new Size(68, 15);
+            label5.Size = new Size(79, 19);
             label5.TabIndex = 35;
             label5.Text = "Data Inicial:";
             // 
+            // pnlTopo
+            // 
+            pnlTopo.BackColor = Color.SteelBlue;
+            pnlTopo.Controls.Add(lblSubtituloTela);
+            pnlTopo.Controls.Add(lblTituloTela);
+            pnlTopo.Location = new Point(0, 0);
+            pnlTopo.Name = "pnlTopo";
+            pnlTopo.Size = new Size(1100, 75);
+            pnlTopo.TabIndex = 39;
+            // 
+            // lblSubtituloTela
+            // 
+            lblSubtituloTela.AutoSize = true;
+            lblSubtituloTela.Font = new Font("Segoe UI", 9F);
+            lblSubtituloTela.ForeColor = Color.WhiteSmoke;
+            lblSubtituloTela.Location = new Point(27, 43);
+            lblSubtituloTela.Name = "lblSubtituloTela";
+            lblSubtituloTela.Size = new Size(351, 15);
+            lblSubtituloTela.TabIndex = 1;
+            lblSubtituloTela.Text = "Consulte todos os serviços lançados nos orçamentos cadastrados";
+            // 
+            // lblTituloTela
+            // 
+            lblTituloTela.AutoSize = true;
+            lblTituloTela.Font = new Font("Segoe UI Semibold", 15F);
+            lblTituloTela.ForeColor = Color.White;
+            lblTituloTela.Location = new Point(25, 14);
+            lblTituloTela.Name = "lblTituloTela";
+            lblTituloTela.Size = new Size(175, 28);
+            lblTituloTela.TabIndex = 0;
+            lblTituloTela.Text = "ITENS LANÇADOS";
+            // 
+            // pnlFiltros
+            // 
+            pnlFiltros.BackColor = Color.White;
+            pnlFiltros.BorderStyle = BorderStyle.FixedSingle;
+            pnlFiltros.Controls.Add(lblFiltros);
+            pnlFiltros.Controls.Add(lblFiltroCliente);
+            pnlFiltros.Controls.Add(dtpDataFinal);
+            pnlFiltros.Controls.Add(txtFiltroCliente);
+            pnlFiltros.Controls.Add(btnLimparFiltros);
+            pnlFiltros.Controls.Add(label2);
+            pnlFiltros.Controls.Add(btnFiltrar);
+            pnlFiltros.Controls.Add(label8);
+            pnlFiltros.Controls.Add(dtpDataInicial);
+            pnlFiltros.Controls.Add(cmbFiltroCategoria);
+            pnlFiltros.Controls.Add(label5);
+            pnlFiltros.Controls.Add(label3);
+            pnlFiltros.Controls.Add(txtFiltroServico);
+            pnlFiltros.Controls.Add(label4);
+            pnlFiltros.Controls.Add(cmbFiltroStatus);
+            pnlFiltros.Location = new Point(20, 90);
+            pnlFiltros.Name = "pnlFiltros";
+            pnlFiltros.Size = new Size(1040, 140);
+            pnlFiltros.TabIndex = 40;
+            // 
+            // lblFiltros
+            // 
+            lblFiltros.AutoSize = true;
+            lblFiltros.Font = new Font("Segoe UI Semibold", 11F);
+            lblFiltros.ForeColor = Color.DimGray;
+            lblFiltros.Location = new Point(15, 12);
+            lblFiltros.Name = "lblFiltros";
+            lblFiltros.Size = new Size(51, 20);
+            lblFiltros.TabIndex = 0;
+            lblFiltros.Text = "Filtros";
+            // 
+            // pnlGrid
+            // 
+            pnlGrid.BackColor = Color.White;
+            pnlGrid.BorderStyle = BorderStyle.FixedSingle;
+            pnlGrid.Controls.Add(lblItensLancados);
+            pnlGrid.Controls.Add(dgvItens);
+            pnlGrid.Location = new Point(20, 245);
+            pnlGrid.Name = "pnlGrid";
+            pnlGrid.Size = new Size(1040, 315);
+            pnlGrid.TabIndex = 41;
+            // 
+            // lblItensLancados
+            // 
+            lblItensLancados.AutoSize = true;
+            lblItensLancados.Font = new Font("Segoe UI Semibold", 11F);
+            lblItensLancados.ForeColor = Color.DimGray;
+            lblItensLancados.Location = new Point(15, 12);
+            lblItensLancados.Name = "lblItensLancados";
+            lblItensLancados.Size = new Size(108, 20);
+            lblItensLancados.TabIndex = 34;
+            lblItensLancados.Text = "Itens Lançados";
+            // 
             // FrmItens
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(796, 450);
-            Controls.Add(dtpDataFinal);
-            Controls.Add(label2);
-            Controls.Add(dtpDataInicial);
-            Controls.Add(label5);
+            BackColor = Color.WhiteSmoke;
+            ClientSize = new Size(1084, 628);
+            Controls.Add(pnlGrid);
+            Controls.Add(pnlFiltros);
+            Controls.Add(pnlTopo);
             Controls.Add(btnFechar);
-            Controls.Add(dgvItens);
-            Controls.Add(btnLimparFiltros);
-            Controls.Add(btnFiltrar);
-            Controls.Add(cmbFiltroStatus);
-            Controls.Add(label4);
-            Controls.Add(txtFiltroServico);
-            Controls.Add(label3);
-            Controls.Add(cmbFiltroCategoria);
-            Controls.Add(label8);
-            Controls.Add(label1);
-            Controls.Add(txtFiltroCliente);
+            Font = new Font("Segoe UI", 10F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "FrmItens";
-            Text = "FrmItens";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Itens Lançados";
             ((System.ComponentModel.ISupportInitialize)dgvItens).EndInit();
+            pnlTopo.ResumeLayout(false);
+            pnlTopo.PerformLayout();
+            pnlFiltros.ResumeLayout(false);
+            pnlFiltros.PerformLayout();
+            pnlGrid.ResumeLayout(false);
+            pnlGrid.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private ComboBox cmbFiltroCategoria;
         private Label label8;
-        private Label label1;
+        private Label lblFiltroCliente;
         private TextBox txtFiltroCliente;
         private Label label3;
         private TextBox txtFiltroServico;
@@ -248,5 +345,12 @@
         private Label label2;
         private DateTimePicker dtpDataInicial;
         private Label label5;
+        private Panel pnlTopo;
+        private Label lblSubtituloTela;
+        private Label lblTituloTela;
+        private Panel pnlFiltros;
+        private Label lblFiltros;
+        private Panel pnlGrid;
+        private Label lblItensLancados;
     }
 }
