@@ -146,5 +146,33 @@ namespace ComodoroERP.Services
 
             command.ExecuteNonQuery();
         }
+
+        public List<string> ListarEscolas()
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+        SELECT DISTINCT
+            NomeEscola
+        FROM Acertos
+        WHERE NomeEscola IS NOT NULL
+          AND TRIM(NomeEscola) <> ''
+        ORDER BY NomeEscola;
+    ";
+
+            using var reader = command.ExecuteReader();
+
+            var escolas = new List<string>();
+
+            while (reader.Read())
+            {
+                escolas.Add(reader["NomeEscola"]?.ToString() ?? "");
+            }
+
+            return escolas;
+        }
     }
 }

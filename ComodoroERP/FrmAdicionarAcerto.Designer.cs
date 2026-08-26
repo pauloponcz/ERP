@@ -39,11 +39,11 @@ namespace ComodoroERP
             lblValor = new Label();
             txtServico = new TextBox();
             lblServico = new Label();
-            txtNomeEscola = new TextBox();
             lblNomeEscola = new Label();
             lblDadosAcerto = new Label();
             btnSalvar = new Button();
             btnCancelar = new Button();
+            cmbNomeEscola = new ComboBox();
             pnlTopo.SuspendLayout();
             pnlAcerto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numValor).BeginInit();
@@ -66,7 +66,7 @@ namespace ComodoroERP
             lblSubtituloTela.ForeColor = Color.WhiteSmoke;
             lblSubtituloTela.Location = new Point(27, 43);
             lblSubtituloTela.Name = "lblSubtituloTela";
-            lblSubtituloTela.Size = new Size(243, 15);
+            lblSubtituloTela.Size = new Size(284, 15);
             lblSubtituloTela.TabIndex = 1;
             lblSubtituloTela.Text = "Cadastre serviços avulsos separados dos orçamentos";
             // 
@@ -77,7 +77,7 @@ namespace ComodoroERP
             lblTituloTela.ForeColor = Color.White;
             lblTituloTela.Location = new Point(25, 14);
             lblTituloTela.Name = "lblTituloTela";
-            lblTituloTela.Size = new Size(190, 28);
+            lblTituloTela.Size = new Size(196, 28);
             lblTituloTela.TabIndex = 0;
             lblTituloTela.Text = "ADICIONAR ACERTO";
             // 
@@ -85,13 +85,13 @@ namespace ComodoroERP
             // 
             pnlAcerto.BackColor = Color.White;
             pnlAcerto.BorderStyle = BorderStyle.FixedSingle;
+            pnlAcerto.Controls.Add(cmbNomeEscola);
             pnlAcerto.Controls.Add(cmbStatusPagamento);
             pnlAcerto.Controls.Add(lblStatusPagamento);
             pnlAcerto.Controls.Add(numValor);
             pnlAcerto.Controls.Add(lblValor);
             pnlAcerto.Controls.Add(txtServico);
             pnlAcerto.Controls.Add(lblServico);
-            pnlAcerto.Controls.Add(txtNomeEscola);
             pnlAcerto.Controls.Add(lblNomeEscola);
             pnlAcerto.Controls.Add(lblDadosAcerto);
             pnlAcerto.Location = new Point(20, 95);
@@ -113,7 +113,7 @@ namespace ComodoroERP
             lblStatusPagamento.AutoSize = true;
             lblStatusPagamento.Location = new Point(20, 182);
             lblStatusPagamento.Name = "lblStatusPagamento";
-            lblStatusPagamento.Size = new Size(126, 17);
+            lblStatusPagamento.Size = new Size(144, 19);
             lblStatusPagamento.TabIndex = 7;
             lblStatusPagamento.Text = "Status do Pagamento:";
             // 
@@ -132,7 +132,7 @@ namespace ComodoroERP
             lblValor.AutoSize = true;
             lblValor.Location = new Point(20, 122);
             lblValor.Name = "lblValor";
-            lblValor.Size = new Size(111, 17);
+            lblValor.Size = new Size(110, 19);
             lblValor.TabIndex = 5;
             lblValor.Text = "Valor do Serviço:";
             // 
@@ -148,23 +148,16 @@ namespace ComodoroERP
             lblServico.AutoSize = true;
             lblServico.Location = new Point(20, 62);
             lblServico.Name = "lblServico";
-            lblServico.Size = new Size(99, 17);
+            lblServico.Size = new Size(116, 19);
             lblServico.TabIndex = 3;
             lblServico.Text = "Serviço Realizado:";
-            // 
-            // txtNomeEscola
-            // 
-            txtNomeEscola.Location = new Point(20, 35);
-            txtNomeEscola.Name = "txtNomeEscola";
-            txtNomeEscola.Size = new Size(515, 25);
-            txtNomeEscola.TabIndex = 2;
             // 
             // lblNomeEscola
             // 
             lblNomeEscola.AutoSize = true;
             lblNomeEscola.Location = new Point(20, 12);
             lblNomeEscola.Name = "lblNomeEscola";
-            lblNomeEscola.Size = new Size(104, 17);
+            lblNomeEscola.Size = new Size(109, 19);
             lblNomeEscola.TabIndex = 1;
             lblNomeEscola.Text = "Nome da Escola:";
             // 
@@ -173,7 +166,7 @@ namespace ComodoroERP
             lblDadosAcerto.AutoSize = true;
             lblDadosAcerto.Location = new Point(15, -100);
             lblDadosAcerto.Name = "lblDadosAcerto";
-            lblDadosAcerto.Size = new Size(100, 17);
+            lblDadosAcerto.Size = new Size(112, 19);
             lblDadosAcerto.TabIndex = 0;
             lblDadosAcerto.Text = "Dados do Acerto";
             lblDadosAcerto.Visible = false;
@@ -210,6 +203,14 @@ namespace ComodoroERP
             btnCancelar.UseVisualStyleBackColor = false;
             btnCancelar.Click += btnCancelar_Click;
             // 
+            // cmbNomeEscola
+            // 
+            cmbNomeEscola.FormattingEnabled = true;
+            cmbNomeEscola.Location = new Point(20, 35);
+            cmbNomeEscola.Name = "cmbNomeEscola";
+            cmbNomeEscola.Size = new Size(515, 25);
+            cmbNomeEscola.TabIndex = 9;
+            // 
             // FrmAdicionarAcerto
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -243,7 +244,6 @@ namespace ComodoroERP
         private Panel pnlAcerto;
         private Label lblDadosAcerto;
         private Label lblNomeEscola;
-        private TextBox txtNomeEscola;
         private Label lblServico;
         private TextBox txtServico;
         private Label lblValor;
@@ -252,5 +252,6 @@ namespace ComodoroERP
         private ComboBox cmbStatusPagamento;
         private Button btnSalvar;
         private Button btnCancelar;
+        private ComboBox cmbNomeEscola;
     }
 }
