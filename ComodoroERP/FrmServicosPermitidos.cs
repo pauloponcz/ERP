@@ -4,7 +4,7 @@ using System.Data;
 
 namespace ComodoroERP
 {
-    public partial class FrmServicosPermitidos : Form
+    public partial class FrmServicosPermitidos : FrmBase
     {
         private readonly ServicoPermitidoService _service = new();
 

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ComodoroERP
 {
-    public partial class FrmAdicionarItemOrcamento : Form
+    public partial class FrmAdicionarItemOrcamento : FrmBase
     {
 
         private void FrmAdicionarItemOrcamento_Load(object sender, EventArgs e)

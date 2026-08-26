@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ComodoroERP
 {
-    public partial class FrmNovoOrcamento : Form
+    public partial class FrmNovoOrcamento : FrmBase
     {
 
         private List<string> _categoriasOriginais = new();

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ComodoroERP
 {
-    public partial class FrmAcertos : Form
+    public partial class FrmAcertos : FrmBase
     {
         private readonly AcertoService _acertoService = new();
         private List<string> _escolasOriginais = new();

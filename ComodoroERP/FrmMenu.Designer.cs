@@ -28,14 +28,15 @@ namespace ComodoroERP
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMenu));
             btnNovoOrcamento = new Button();
             btnSair = new Button();
             btnConfiguracoes = new Button();
             pnlMenu = new Panel();
             btnDashboard = new Button();
+            btnServicosPermitidos = new Button();
             btnVerAcertos = new Button();
             btnAdicionarAcerto = new Button();
-            btnServicosPermitidos = new Button();
             btnItensLancados = new Button();
             btnVerOrcamentos = new Button();
             pnlTopo = new Panel();
@@ -125,6 +126,24 @@ namespace ComodoroERP
             btnDashboard.UseVisualStyleBackColor = false;
             btnDashboard.Click += btnDashboard_Click;
             // 
+            // btnServicosPermitidos
+            // 
+            btnServicosPermitidos.BackColor = Color.White;
+            btnServicosPermitidos.Cursor = Cursors.Hand;
+            btnServicosPermitidos.FlatAppearance.BorderColor = Color.Gainsboro;
+            btnServicosPermitidos.FlatStyle = FlatStyle.Flat;
+            btnServicosPermitidos.Font = new Font("Segoe UI Semibold", 10F);
+            btnServicosPermitidos.ForeColor = Color.DimGray;
+            btnServicosPermitidos.Location = new Point(40, 270);
+            btnServicosPermitidos.MaximumSize = new Size(220, 42);
+            btnServicosPermitidos.MinimumSize = new Size(220, 42);
+            btnServicosPermitidos.Name = "btnServicosPermitidos";
+            btnServicosPermitidos.Size = new Size(220, 42);
+            btnServicosPermitidos.TabIndex = 7;
+            btnServicosPermitidos.Text = "Serviços Permitidos";
+            btnServicosPermitidos.UseVisualStyleBackColor = false;
+            btnServicosPermitidos.Click += btnServicosPermitidos_Click;
+            // 
             // btnVerAcertos
             // 
             btnVerAcertos.BackColor = Color.White;
@@ -160,25 +179,6 @@ namespace ComodoroERP
             btnAdicionarAcerto.Text = "Adicionar Acerto";
             btnAdicionarAcerto.UseVisualStyleBackColor = false;
             btnAdicionarAcerto.Click += btnAdicionarAcerto_Click;
-            // 
-            // 
-            // btnServicosPermitidos
-            // 
-            btnServicosPermitidos.BackColor = Color.White;
-            btnServicosPermitidos.Cursor = Cursors.Hand;
-            btnServicosPermitidos.FlatAppearance.BorderColor = Color.Gainsboro;
-            btnServicosPermitidos.FlatStyle = FlatStyle.Flat;
-            btnServicosPermitidos.Font = new Font("Segoe UI Semibold", 10F);
-            btnServicosPermitidos.ForeColor = Color.DimGray;
-            btnServicosPermitidos.Location = new Point(40, 270);
-            btnServicosPermitidos.MaximumSize = new Size(220, 42);
-            btnServicosPermitidos.MinimumSize = new Size(220, 42);
-            btnServicosPermitidos.Name = "btnServicosPermitidos";
-            btnServicosPermitidos.Size = new Size(220, 42);
-            btnServicosPermitidos.TabIndex = 7;
-            btnServicosPermitidos.Text = "Serviços Permitidos";
-            btnServicosPermitidos.UseVisualStyleBackColor = false;
-            btnServicosPermitidos.Click += btnServicosPermitidos_Click;
             // 
             // btnItensLancados
             // 
@@ -260,6 +260,7 @@ namespace ComodoroERP
             Controls.Add(btnSair);
             Font = new Font("Segoe UI", 10F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "FrmMenu";
             StartPosition = FormStartPosition.CenterScreen;

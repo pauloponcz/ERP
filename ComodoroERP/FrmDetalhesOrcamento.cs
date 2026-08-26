@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace ComodoroERP
 {
-    public partial class FrmDetalhesOrcamento : Form
+    public partial class FrmDetalhesOrcamento : FrmBase
     {
         private readonly int _orcamentoId;
         private readonly OrcamentoService _orcamentoService = new();

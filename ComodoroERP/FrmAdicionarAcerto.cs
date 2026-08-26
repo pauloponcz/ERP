@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ComodoroERP
 {
-    public partial class FrmAdicionarAcerto : Form
+    public partial class FrmAdicionarAcerto : FrmBase
     {
         private readonly AcertoService _acertoService = new();
         private int _versaoFiltroEscola = 0;

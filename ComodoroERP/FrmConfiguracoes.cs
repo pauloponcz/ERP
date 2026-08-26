@@ -4,7 +4,7 @@ using ComodoroERP.Utils;
 
 namespace ComodoroERP
 {
-    public partial class FrmConfiguracoes : Form
+    public partial class FrmConfiguracoes : FrmBase
     {
         private readonly ConfiguracaoService _configuracaoService = new();
 

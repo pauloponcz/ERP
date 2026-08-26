@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace ComodoroERP
 {
-    public partial class FrmEditarAcerto : Form
+    public partial class FrmEditarAcerto : FrmBase
     {
         private readonly int _acertoId;
         private readonly AcertoService _acertoService = new();

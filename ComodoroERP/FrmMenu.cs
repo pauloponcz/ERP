@@ -2,7 +2,7 @@ using ComodoroERP.Utils;
 
 namespace ComodoroERP
 {
-    public partial class FrmMenu : Form
+    public partial class FrmMenu : FrmBase
     {
         public FrmMenu()
         {

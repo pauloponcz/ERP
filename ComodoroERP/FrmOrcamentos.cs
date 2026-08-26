@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace ComodoroERP
 {
-    public partial class FrmOrcamentos : Form
+    public partial class FrmOrcamentos : FrmBase
     {
         private readonly OrcamentoService _orcamentoService = new();
 

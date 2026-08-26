@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+
+	 <ApplicationIcon>logo-comodoro-erp-transparente.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace ComodoroERP
 {
-    public partial class FrmDashboard : Form
+    public partial class FrmDashboard : FrmBase
     {
         public FrmDashboard()
         {

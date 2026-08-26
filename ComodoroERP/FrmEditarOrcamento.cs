@@ -4,7 +4,7 @@ using System.Data;
 
 namespace ComodoroERP
 {
-    public partial class FrmEditarOrcamento : Form
+    public partial class FrmEditarOrcamento : FrmBase
     {
         private void cmbStatus_SelectedIndexChanged(object sender, EventArgs e)
         {

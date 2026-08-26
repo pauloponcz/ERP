@@ -3,7 +3,7 @@ using ComodoroERP.Utils;
 
 namespace ComodoroERP
 {
-    public partial class FrmAlterarStatus : Form
+    public partial class FrmAlterarStatus : FrmBase
     {
         private readonly int _orcamentoId;
         private readonly OrcamentoService _orcamentoService = new();

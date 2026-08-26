@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ComodoroERP
 {
-    public partial class FrmEditarItemOrcamento : Form
+    public partial class FrmEditarItemOrcamento : FrmBase
     {
         private readonly OrcamentoItem _item;
         private readonly OrcamentoService _orcamentoService = new();

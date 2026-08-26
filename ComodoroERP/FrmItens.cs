@@ -4,7 +4,7 @@ using System.Data;
 
 namespace ComodoroERP
 {
-    public partial class FrmItens : Form
+    public partial class FrmItens : FrmBase
     {
         private readonly OrcamentoService _orcamentoService = new();
 
