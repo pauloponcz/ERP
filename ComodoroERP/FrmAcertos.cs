@@ -77,6 +77,7 @@ namespace ComodoroERP
                 dgvAcertos.AutoGenerateColumns = true;
                 dgvAcertos.DataSource = tabela;
 
+                AdicionarColunaSelecionar();
                 AdicionarColunaPago();
                 FormatarGrid();
             }
@@ -87,6 +88,28 @@ namespace ComodoroERP
             finally
             {
                 _carregandoGrid = false;
+            }
+        }
+
+
+        private void AdicionarColunaSelecionar()
+        {
+            if (dgvAcertos.Columns.Contains("Selecionar"))
+                return;
+
+            var colunaSelecionar = new DataGridViewCheckBoxColumn
+            {
+                Name = "Selecionar",
+                HeaderText = "",
+                Width = 35,
+                ReadOnly = false
+            };
+
+            dgvAcertos.Columns.Insert(0, colunaSelecionar);
+
+            foreach (DataGridViewRow row in dgvAcertos.Rows)
+            {
+                row.Cells["Selecionar"].Value = false;
             }
         }
 
@@ -103,7 +126,8 @@ namespace ComodoroERP
                 ReadOnly = false
             };
 
-            dgvAcertos.Columns.Insert(0, colunaPago);
+            int indicePago = dgvAcertos.Columns.Contains("Selecionar") ? 1 : 0;
+            dgvAcertos.Columns.Insert(indicePago, colunaPago);
 
             foreach (DataGridViewRow row in dgvAcertos.Rows)
             {
@@ -141,15 +165,22 @@ namespace ComodoroERP
 
             foreach (DataGridViewColumn coluna in dgvAcertos.Columns)
             {
-                coluna.ReadOnly = coluna.Name != "Pago";
+                coluna.ReadOnly = coluna.Name != "Pago" && coluna.Name != "Selecionar";
             }
 
             if (dgvAcertos.Columns.Contains("Id"))
                 dgvAcertos.Columns["Id"].Visible = false;
 
+            if (dgvAcertos.Columns.Contains("Selecionar"))
+            {
+                dgvAcertos.Columns["Selecionar"].DisplayIndex = 0;
+                dgvAcertos.Columns["Selecionar"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                dgvAcertos.Columns["Selecionar"].Width = 35;
+            }
+
             if (dgvAcertos.Columns.Contains("Pago"))
             {
-                dgvAcertos.Columns["Pago"].DisplayIndex = 0;
+                dgvAcertos.Columns["Pago"].DisplayIndex = 1;
                 dgvAcertos.Columns["Pago"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
                 dgvAcertos.Columns["Pago"].Width = 60;
             }
@@ -193,7 +224,12 @@ namespace ComodoroERP
             if (_carregandoGrid || e.RowIndex < 0 || e.ColumnIndex < 0)
                 return;
 
-            if (dgvAcertos.Columns[e.ColumnIndex].Name != "Pago")
+            string nomeColuna = dgvAcertos.Columns[e.ColumnIndex].Name;
+
+            if (nomeColuna == "Selecionar")
+                return;
+
+            if (nomeColuna != "Pago")
                 return;
 
             DataGridViewRow row = dgvAcertos.Rows[e.RowIndex];
@@ -240,8 +276,109 @@ namespace ComodoroERP
             CarregarAcertos();
         }
 
+
+        private int ObterIdSelecionado()
+        {
+            dgvAcertos.EndEdit();
+
+            var linhasMarcadas = dgvAcertos.Rows
+                .Cast<DataGridViewRow>()
+                .Where(row => Convert.ToBoolean(row.Cells["Selecionar"].Value ?? false))
+                .ToList();
+
+            if (linhasMarcadas.Count == 0)
+            {
+                MessageBox.Show(
+                    "Selecione um acerto na primeira coluna.",
+                    "Atenção",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                return 0;
+            }
+
+            if (linhasMarcadas.Count > 1)
+            {
+                MessageBox.Show(
+                    "Selecione apenas um acerto para editar ou excluir.",
+                    "Atenção",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                return 0;
+            }
+
+            object? valorId = linhasMarcadas[0].Cells["Id"].Value;
+
+            if (valorId == null)
+                return 0;
+
+            return Convert.ToInt32(valorId);
+        }
+
+        private void btnEditar_Click(object? sender, EventArgs e)
+        {
+            int id = ObterIdSelecionado();
+
+            if (id <= 0)
+                return;
+
+            using var tela = new FrmEditarAcerto(id);
+
+            if (tela.ShowDialog() == DialogResult.OK)
+            {
+                CarregarEscolas();
+                CarregarAcertos();
+            }
+        }
+
+        private void btnExcluir_Click(object? sender, EventArgs e)
+        {
+            int id = ObterIdSelecionado();
+
+            if (id <= 0)
+                return;
+
+            DialogResult resultado = MessageBox.Show(
+                "Deseja realmente excluir o acerto selecionado?",
+                "Confirmar exclusão",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (resultado != DialogResult.Yes)
+                return;
+
+            try
+            {
+                _acertoService.ExcluirAcerto(id);
+
+                MessageBox.Show(
+                    "Acerto excluído com sucesso.",
+                    "Sucesso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                CarregarEscolas();
+                CarregarAcertos();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Erro ao excluir acerto: " + ex.Message,
+                    "Erro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
+
         private void btnAtualizar_Click(object? sender, EventArgs e)
         {
+            CarregarEscolas();
             CarregarAcertos();
         }
 
@@ -260,6 +397,8 @@ namespace ComodoroERP
 
             AplicarEstiloBotaoPrincipal(btnFiltrar);
             AplicarEstiloBotaoPrincipal(btnLimparFiltros);
+            AplicarEstiloBotaoPrincipal(btnEditar);
+            AplicarEstiloBotaoExcluir(btnExcluir);
             AplicarEstiloBotaoPrincipal(btnAtualizar);
             AplicarEstiloBotaoCancelar(btnFechar);
 
@@ -308,6 +447,20 @@ namespace ComodoroERP
             botao.FlatAppearance.BorderSize = 1;
             botao.MouseEnter += (s, e) => { botao.BackColor = Color.Gainsboro; };
             botao.MouseLeave += (s, e) => { botao.BackColor = Color.White; };
+        }
+
+
+        private void AplicarEstiloBotaoExcluir(Button botao)
+        {
+            botao.FlatStyle = FlatStyle.Flat;
+            botao.BackColor = Color.IndianRed;
+            botao.ForeColor = Color.White;
+            botao.Font = new Font("Segoe UI Semibold", 10);
+            botao.Cursor = Cursors.Hand;
+            botao.FlatAppearance.BorderColor = Color.Firebrick;
+            botao.FlatAppearance.BorderSize = 1;
+            botao.MouseEnter += (s, e) => { botao.BackColor = Color.Firebrick; };
+            botao.MouseLeave += (s, e) => { botao.BackColor = Color.IndianRed; };
         }
 
         private void AplicarEstiloGrid(DataGridView grid)

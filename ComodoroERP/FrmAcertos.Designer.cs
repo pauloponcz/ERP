@@ -33,6 +33,8 @@ namespace ComodoroERP
             pnlGrid = new Panel();
             dgvAcertos = new DataGridView();
             lblAcertos = new Label();
+            btnEditar = new Button();
+            btnExcluir = new Button();
             btnAtualizar = new Button();
             btnFechar = new Button();
             cmbFiltroEscola = new ComboBox();
@@ -237,6 +239,38 @@ namespace ComodoroERP
             lblAcertos.TabIndex = 0;
             lblAcertos.Text = "Acertos";
             // 
+            // btnEditar
+            // 
+            btnEditar.BackColor = Color.White;
+            btnEditar.Cursor = Cursors.Hand;
+            btnEditar.FlatAppearance.BorderColor = Color.Gainsboro;
+            btnEditar.FlatStyle = FlatStyle.Flat;
+            btnEditar.Font = new Font("Segoe UI Semibold", 10F);
+            btnEditar.ForeColor = Color.FromArgb(45, 45, 45);
+            btnEditar.Location = new Point(610, 555);
+            btnEditar.Name = "btnEditar";
+            btnEditar.Size = new Size(110, 35);
+            btnEditar.TabIndex = 12;
+            btnEditar.Text = "Editar";
+            btnEditar.UseVisualStyleBackColor = false;
+            btnEditar.Click += btnEditar_Click;
+            // 
+            // btnExcluir
+            // 
+            btnExcluir.BackColor = Color.IndianRed;
+            btnExcluir.Cursor = Cursors.Hand;
+            btnExcluir.FlatAppearance.BorderColor = Color.Firebrick;
+            btnExcluir.FlatStyle = FlatStyle.Flat;
+            btnExcluir.Font = new Font("Segoe UI Semibold", 10F);
+            btnExcluir.ForeColor = Color.White;
+            btnExcluir.Location = new Point(730, 555);
+            btnExcluir.Name = "btnExcluir";
+            btnExcluir.Size = new Size(110, 35);
+            btnExcluir.TabIndex = 13;
+            btnExcluir.Text = "Excluir";
+            btnExcluir.UseVisualStyleBackColor = false;
+            btnExcluir.Click += btnExcluir_Click;
+            // 
             // btnAtualizar
             // 
             btnAtualizar.BackColor = Color.White;
@@ -245,10 +279,10 @@ namespace ComodoroERP
             btnAtualizar.FlatStyle = FlatStyle.Flat;
             btnAtualizar.Font = new Font("Segoe UI Semibold", 10F);
             btnAtualizar.ForeColor = Color.FromArgb(45, 45, 45);
-            btnAtualizar.Location = new Point(730, 555);
+            btnAtualizar.Location = new Point(20, 555);
             btnAtualizar.Name = "btnAtualizar";
             btnAtualizar.Size = new Size(110, 35);
-            btnAtualizar.TabIndex = 3;
+            btnAtualizar.TabIndex = 14;
             btnAtualizar.Text = "Atualizar";
             btnAtualizar.UseVisualStyleBackColor = false;
             btnAtualizar.Click += btnAtualizar_Click;
@@ -264,7 +298,7 @@ namespace ComodoroERP
             btnFechar.Location = new Point(850, 555);
             btnFechar.Name = "btnFechar";
             btnFechar.Size = new Size(110, 35);
-            btnFechar.TabIndex = 4;
+            btnFechar.TabIndex = 15;
             btnFechar.Text = "Fechar";
             btnFechar.UseVisualStyleBackColor = false;
             btnFechar.Click += btnFechar_Click;
@@ -284,6 +318,8 @@ namespace ComodoroERP
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(984, 611);
             Controls.Add(btnFechar);
+            Controls.Add(btnExcluir);
+            Controls.Add(btnEditar);
             Controls.Add(btnAtualizar);
             Controls.Add(pnlGrid);
             Controls.Add(pnlFiltros);
@@ -324,6 +360,8 @@ namespace ComodoroERP
         private Panel pnlGrid;
         private Label lblAcertos;
         private DataGridView dgvAcertos;
+        private Button btnEditar;
+        private Button btnExcluir;
         private Button btnAtualizar;
         private Button btnFechar;
         private ComboBox cmbFiltroEscola;

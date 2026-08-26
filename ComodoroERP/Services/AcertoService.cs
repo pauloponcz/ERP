@@ -174,5 +174,93 @@ namespace ComodoroERP.Services
 
             return escolas;
         }
+
+        public Acerto? ObterAcertoPorId(int id)
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+        SELECT
+            Id,
+            NomeEscola,
+            Servico,
+            Valor,
+            StatusPagamento,
+            DataCriacao,
+            DataPagamento
+        FROM Acertos
+        WHERE Id = @Id;
+    ";
+
+            command.Parameters.AddWithValue("@Id", id);
+
+            using var reader = command.ExecuteReader();
+
+            if (!reader.Read())
+                return null;
+
+            return new Acerto
+            {
+                Id = reader["Id"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Id"]),
+                NomeEscola = reader["NomeEscola"]?.ToString() ?? "",
+                Servico = reader["Servico"]?.ToString() ?? "",
+                Valor = reader["Valor"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["Valor"]),
+                StatusPagamento = reader["StatusPagamento"]?.ToString() ?? "Pendente",
+                DataCriacao = reader["DataCriacao"] == DBNull.Value ? DateTime.Now : Convert.ToDateTime(reader["DataCriacao"]),
+                DataPagamento = reader["DataPagamento"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataPagamento"])
+            };
+        }
+
+        public void AtualizarAcerto(Acerto acerto)
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+        UPDATE Acertos
+        SET
+            NomeEscola = @NomeEscola,
+            Servico = @Servico,
+            Valor = @Valor,
+            StatusPagamento = @StatusPagamento,
+            DataPagamento = @DataPagamento
+        WHERE Id = @Id;
+    ";
+
+            command.Parameters.AddWithValue("@Id", acerto.Id);
+            command.Parameters.AddWithValue("@NomeEscola", acerto.NomeEscola);
+            command.Parameters.AddWithValue("@Servico", acerto.Servico);
+            command.Parameters.AddWithValue("@Valor", acerto.Valor);
+            command.Parameters.AddWithValue("@StatusPagamento", acerto.StatusPagamento);
+
+            if (acerto.StatusPagamento == "Pago")
+                command.Parameters.AddWithValue("@DataPagamento", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            else
+                command.Parameters.AddWithValue("@DataPagamento", DBNull.Value);
+
+            command.ExecuteNonQuery();
+        }
+
+        public void ExcluirAcerto(int id)
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+        DELETE FROM Acertos
+        WHERE Id = @Id;
+    ";
+
+            command.Parameters.AddWithValue("@Id", id);
+
+            command.ExecuteNonQuery();
+        }
     }
 }
