@@ -1,4 +1,4 @@
-﻿using ComodoroERP.Utils;
+using ComodoroERP.Utils;
 
 namespace ComodoroERP
 {
@@ -37,6 +37,19 @@ namespace ComodoroERP
         private void btnDashboard_Click(object sender, EventArgs e)
         {
             FrmDashboard tela = new FrmDashboard();
+            tela.ShowDialog();
+        }
+
+
+        private void btnAdicionarAcerto_Click(object? sender, EventArgs e)
+        {
+            using var tela = new FrmAdicionarAcerto();
+            tela.ShowDialog();
+        }
+
+        private void btnVerAcertos_Click(object? sender, EventArgs e)
+        {
+            using var tela = new FrmAcertos();
             tela.ShowDialog();
         }
 

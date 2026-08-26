@@ -1,4 +1,4 @@
-﻿namespace ComodoroERP
+namespace ComodoroERP
 {
     partial class FrmMenu
     {
@@ -33,6 +33,8 @@
             btnConfiguracoes = new Button();
             pnlMenu = new Panel();
             btnDashboard = new Button();
+            btnVerAcertos = new Button();
+            btnAdicionarAcerto = new Button();
             btnServicosPermitidos = new Button();
             btnItensLancados = new Button();
             btnVerOrcamentos = new Button();
@@ -68,7 +70,7 @@
             btnSair.FlatAppearance.BorderSize = 0;
             btnSair.FlatStyle = FlatStyle.Flat;
             btnSair.ForeColor = Color.White;
-            btnSair.Location = new Point(70, 444);
+            btnSair.Location = new Point(70, 534);
             btnSair.Name = "btnSair";
             btnSair.Size = new Size(220, 40);
             btnSair.TabIndex = 5;
@@ -83,7 +85,7 @@
             btnConfiguracoes.FlatAppearance.BorderColor = Color.Silver;
             btnConfiguracoes.FlatStyle = FlatStyle.Flat;
             btnConfiguracoes.ForeColor = Color.DimGray;
-            btnConfiguracoes.Location = new Point(70, 398);
+            btnConfiguracoes.Location = new Point(70, 488);
             btnConfiguracoes.Name = "btnConfiguracoes";
             btnConfiguracoes.Size = new Size(220, 40);
             btnConfiguracoes.TabIndex = 8;
@@ -95,12 +97,14 @@
             // 
             pnlMenu.Controls.Add(btnDashboard);
             pnlMenu.Controls.Add(btnServicosPermitidos);
+            pnlMenu.Controls.Add(btnVerAcertos);
+            pnlMenu.Controls.Add(btnAdicionarAcerto);
             pnlMenu.Controls.Add(btnItensLancados);
             pnlMenu.Controls.Add(btnVerOrcamentos);
             pnlMenu.Controls.Add(btnNovoOrcamento);
             pnlMenu.Location = new Point(30, 90);
             pnlMenu.Name = "pnlMenu";
-            pnlMenu.Size = new Size(300, 290);
+            pnlMenu.Size = new Size(300, 380);
             pnlMenu.TabIndex = 9;
             // 
             // btnDashboard
@@ -111,7 +115,7 @@
             btnDashboard.FlatStyle = FlatStyle.Flat;
             btnDashboard.Font = new Font("Segoe UI Semibold", 10F);
             btnDashboard.ForeColor = Color.DimGray;
-            btnDashboard.Location = new Point(40, 220);
+            btnDashboard.Location = new Point(40, 320);
             btnDashboard.MaximumSize = new Size(220, 42);
             btnDashboard.MinimumSize = new Size(220, 42);
             btnDashboard.Name = "btnDashboard";
@@ -121,6 +125,43 @@
             btnDashboard.UseVisualStyleBackColor = false;
             btnDashboard.Click += btnDashboard_Click;
             // 
+            // btnVerAcertos
+            // 
+            btnVerAcertos.BackColor = Color.White;
+            btnVerAcertos.Cursor = Cursors.Hand;
+            btnVerAcertos.FlatAppearance.BorderColor = Color.Gainsboro;
+            btnVerAcertos.FlatStyle = FlatStyle.Flat;
+            btnVerAcertos.Font = new Font("Segoe UI Semibold", 10F);
+            btnVerAcertos.ForeColor = Color.DimGray;
+            btnVerAcertos.Location = new Point(40, 220);
+            btnVerAcertos.MaximumSize = new Size(220, 42);
+            btnVerAcertos.MinimumSize = new Size(220, 42);
+            btnVerAcertos.Name = "btnVerAcertos";
+            btnVerAcertos.Size = new Size(220, 42);
+            btnVerAcertos.TabIndex = 10;
+            btnVerAcertos.Text = "Ver Acertos";
+            btnVerAcertos.UseVisualStyleBackColor = false;
+            btnVerAcertos.Click += btnVerAcertos_Click;
+            // 
+            // btnAdicionarAcerto
+            // 
+            btnAdicionarAcerto.BackColor = Color.White;
+            btnAdicionarAcerto.Cursor = Cursors.Hand;
+            btnAdicionarAcerto.FlatAppearance.BorderColor = Color.Gainsboro;
+            btnAdicionarAcerto.FlatStyle = FlatStyle.Flat;
+            btnAdicionarAcerto.Font = new Font("Segoe UI Semibold", 10F);
+            btnAdicionarAcerto.ForeColor = Color.DimGray;
+            btnAdicionarAcerto.Location = new Point(40, 170);
+            btnAdicionarAcerto.MaximumSize = new Size(220, 42);
+            btnAdicionarAcerto.MinimumSize = new Size(220, 42);
+            btnAdicionarAcerto.Name = "btnAdicionarAcerto";
+            btnAdicionarAcerto.Size = new Size(220, 42);
+            btnAdicionarAcerto.TabIndex = 9;
+            btnAdicionarAcerto.Text = "Adicionar Acerto";
+            btnAdicionarAcerto.UseVisualStyleBackColor = false;
+            btnAdicionarAcerto.Click += btnAdicionarAcerto_Click;
+            // 
+            // 
             // btnServicosPermitidos
             // 
             btnServicosPermitidos.BackColor = Color.White;
@@ -129,7 +170,7 @@
             btnServicosPermitidos.FlatStyle = FlatStyle.Flat;
             btnServicosPermitidos.Font = new Font("Segoe UI Semibold", 10F);
             btnServicosPermitidos.ForeColor = Color.DimGray;
-            btnServicosPermitidos.Location = new Point(40, 170);
+            btnServicosPermitidos.Location = new Point(40, 270);
             btnServicosPermitidos.MaximumSize = new Size(220, 42);
             btnServicosPermitidos.MinimumSize = new Size(220, 42);
             btnServicosPermitidos.Name = "btnServicosPermitidos";
@@ -212,7 +253,7 @@
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(364, 525);
+            ClientSize = new Size(364, 615);
             Controls.Add(pnlTopo);
             Controls.Add(pnlMenu);
             Controls.Add(btnConfiguracoes);
@@ -243,5 +284,7 @@
         private Label lblSubtitulo;
         private Label lblTitulo;
         private Button btnItensLancados;
+        private Button btnAdicionarAcerto;
+        private Button btnVerAcertos;
     }
 }

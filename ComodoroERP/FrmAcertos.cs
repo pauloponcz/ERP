@@ -1,0 +1,354 @@
+using ComodoroERP.Services;
+using ComodoroERP.Utils;
+using System.Data;
+using System.Drawing;
+
+namespace ComodoroERP
+{
+    public partial class FrmAcertos : Form
+    {
+        private readonly AcertoService _acertoService = new();
+        private bool _carregandoGrid = false;
+
+        public FrmAcertos()
+        {
+            InitializeComponent();
+            DarkTitleBar.Ativar(this);
+            ConfigurarTela();
+            AplicarEstiloVisual();
+            CarregarAcertos();
+        }
+
+        private void ConfigurarTela()
+        {
+            cmbStatus.Items.Clear();
+            cmbStatus.Items.Add("Todos");
+            cmbStatus.Items.Add("Pendente");
+            cmbStatus.Items.Add("Pago");
+            cmbStatus.SelectedIndex = 0;
+
+            dtpDataInicial.Checked = false;
+            dtpDataFinal.Checked = false;
+
+            dgvAcertos.DataError += dgvAcertos_DataError;
+            dgvAcertos.CurrentCellDirtyStateChanged += dgvAcertos_CurrentCellDirtyStateChanged;
+            dgvAcertos.CellValueChanged += dgvAcertos_CellValueChanged;
+        }
+
+        private void CarregarAcertos()
+        {
+            try
+            {
+                _carregandoGrid = true;
+
+                string escolaFiltro = txtFiltroEscola.Text.Trim();
+                string statusFiltro = cmbStatus.Text == "Todos" ? "" : cmbStatus.Text;
+                DateTime? dataInicial = dtpDataInicial.Checked ? dtpDataInicial.Value.Date : null;
+                DateTime? dataFinal = dtpDataFinal.Checked ? dtpDataFinal.Value.Date : null;
+
+                DataTable tabela = _acertoService.ListarAcertos(escolaFiltro, dataInicial, dataFinal);
+
+                if (!string.IsNullOrWhiteSpace(statusFiltro))
+                {
+                    DataView view = tabela.DefaultView;
+                    view.RowFilter = $"Status = '{statusFiltro.Replace("'", "''")}'";
+                    tabela = view.ToTable();
+                }
+
+                dgvAcertos.DataSource = null;
+                dgvAcertos.Columns.Clear();
+                dgvAcertos.AutoGenerateColumns = true;
+                dgvAcertos.DataSource = tabela;
+
+                AdicionarColunaPago();
+                FormatarGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar acertos: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                _carregandoGrid = false;
+            }
+        }
+
+        private void AdicionarColunaPago()
+        {
+            if (dgvAcertos.Columns.Contains("Pago"))
+                return;
+
+            var colunaPago = new DataGridViewCheckBoxColumn
+            {
+                Name = "Pago",
+                HeaderText = "Pago",
+                Width = 60,
+                ReadOnly = false
+            };
+
+            dgvAcertos.Columns.Insert(0, colunaPago);
+
+            foreach (DataGridViewRow row in dgvAcertos.Rows)
+            {
+                string status = row.Cells["Status"].Value?.ToString() ?? "";
+                row.Cells["Pago"].Value = status == "Pago";
+            }
+        }
+
+        private void FormatarGrid()
+        {
+            dgvAcertos.BackgroundColor = Color.White;
+            dgvAcertos.BorderStyle = BorderStyle.None;
+            dgvAcertos.GridColor = Color.Gainsboro;
+            dgvAcertos.EnableHeadersVisualStyles = false;
+
+            dgvAcertos.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgvAcertos.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvAcertos.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 9);
+            dgvAcertos.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            dgvAcertos.DefaultCellStyle.BackColor = Color.White;
+            dgvAcertos.DefaultCellStyle.ForeColor = Color.FromArgb(45, 45, 45);
+            dgvAcertos.DefaultCellStyle.SelectionBackColor = Color.AliceBlue;
+            dgvAcertos.DefaultCellStyle.SelectionForeColor = Color.Black;
+            dgvAcertos.DefaultCellStyle.Font = new Font("Segoe UI", 9);
+            dgvAcertos.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
+
+            dgvAcertos.RowHeadersVisible = false;
+            dgvAcertos.AllowUserToAddRows = false;
+            dgvAcertos.AllowUserToDeleteRows = false;
+            dgvAcertos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvAcertos.MultiSelect = false;
+            dgvAcertos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvAcertos.ReadOnly = false;
+
+            foreach (DataGridViewColumn coluna in dgvAcertos.Columns)
+            {
+                coluna.ReadOnly = coluna.Name != "Pago";
+            }
+
+            if (dgvAcertos.Columns.Contains("Id"))
+                dgvAcertos.Columns["Id"].Visible = false;
+
+            if (dgvAcertos.Columns.Contains("Pago"))
+            {
+                dgvAcertos.Columns["Pago"].DisplayIndex = 0;
+                dgvAcertos.Columns["Pago"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                dgvAcertos.Columns["Pago"].Width = 60;
+            }
+
+            if (dgvAcertos.Columns.Contains("Escola"))
+                dgvAcertos.Columns["Escola"].FillWeight = 160;
+
+            if (dgvAcertos.Columns.Contains("Serviço"))
+                dgvAcertos.Columns["Serviço"].FillWeight = 220;
+
+            if (dgvAcertos.Columns.Contains("Valor"))
+            {
+                dgvAcertos.Columns["Valor"].DefaultCellStyle.Format = "C2";
+                dgvAcertos.Columns["Valor"].FillWeight = 80;
+            }
+
+            if (dgvAcertos.Columns.Contains("Status"))
+                dgvAcertos.Columns["Status"].FillWeight = 80;
+
+            if (dgvAcertos.Columns.Contains("DataCadastro"))
+            {
+                dgvAcertos.Columns["DataCadastro"].HeaderText = "Data Cadastro";
+                dgvAcertos.Columns["DataCadastro"].FillWeight = 110;
+            }
+
+            if (dgvAcertos.Columns.Contains("DataPagamento"))
+            {
+                dgvAcertos.Columns["DataPagamento"].HeaderText = "Data Pagamento";
+                dgvAcertos.Columns["DataPagamento"].FillWeight = 110;
+            }
+        }
+
+        private void dgvAcertos_CurrentCellDirtyStateChanged(object? sender, EventArgs e)
+        {
+            if (dgvAcertos.IsCurrentCellDirty)
+                dgvAcertos.CommitEdit(DataGridViewDataErrorContexts.Commit);
+        }
+
+        private void dgvAcertos_CellValueChanged(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (_carregandoGrid || e.RowIndex < 0 || e.ColumnIndex < 0)
+                return;
+
+            if (dgvAcertos.Columns[e.ColumnIndex].Name != "Pago")
+                return;
+
+            DataGridViewRow row = dgvAcertos.Rows[e.RowIndex];
+
+            if (row.Cells["Id"].Value == null)
+                return;
+
+            int id = Convert.ToInt32(row.Cells["Id"].Value);
+            bool pago = Convert.ToBoolean(row.Cells["Pago"].Value ?? false);
+
+            try
+            {
+                if (pago)
+                    _acertoService.MarcarComoPago(id);
+                else
+                    _acertoService.MarcarComoPendente(id);
+
+                CarregarAcertos();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao atualizar status do acerto: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CarregarAcertos();
+            }
+        }
+
+        private void dgvAcertos_DataError(object? sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+        }
+
+        private void btnFiltrar_Click(object? sender, EventArgs e)
+        {
+            CarregarAcertos();
+        }
+
+        private void btnLimparFiltros_Click(object? sender, EventArgs e)
+        {
+            txtFiltroEscola.Clear();
+            cmbStatus.SelectedIndex = 0;
+            dtpDataInicial.Checked = false;
+            dtpDataFinal.Checked = false;
+            CarregarAcertos();
+        }
+
+        private void btnAtualizar_Click(object? sender, EventArgs e)
+        {
+            CarregarAcertos();
+        }
+
+        private void btnFechar_Click(object? sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void AplicarEstiloVisual()
+        {
+            BackColor = Color.WhiteSmoke;
+            Font = new Font("Segoe UI", 10);
+
+            AplicarEstiloPainel(pnlFiltros);
+            AplicarEstiloPainel(pnlGrid);
+
+            AplicarEstiloBotaoPrincipal(btnFiltrar);
+            AplicarEstiloBotaoPrincipal(btnLimparFiltros);
+            AplicarEstiloBotaoPrincipal(btnAtualizar);
+            AplicarEstiloBotaoCancelar(btnFechar);
+
+            AplicarEstiloGrid(dgvAcertos);
+            AplicarEstiloCampos(this);
+
+            pnlTopo.BackColor = Color.SteelBlue;
+            lblTituloTela.ForeColor = Color.White;
+            lblTituloTela.Font = new Font("Segoe UI Semibold", 15);
+            lblSubtituloTela.ForeColor = Color.WhiteSmoke;
+            lblSubtituloTela.Font = new Font("Segoe UI", 9);
+
+            lblFiltros.ForeColor = Color.FromArgb(35, 35, 35);
+            lblFiltros.Font = new Font("Segoe UI Semibold", 11);
+            lblAcertos.ForeColor = Color.FromArgb(35, 35, 35);
+            lblAcertos.Font = new Font("Segoe UI Semibold", 11);
+        }
+
+        private void AplicarEstiloPainel(Panel painel)
+        {
+            painel.BackColor = Color.White;
+            painel.BorderStyle = BorderStyle.FixedSingle;
+        }
+
+        private void AplicarEstiloBotaoPrincipal(Button botao)
+        {
+            botao.FlatStyle = FlatStyle.Flat;
+            botao.BackColor = Color.White;
+            botao.ForeColor = Color.FromArgb(45, 45, 45);
+            botao.Font = new Font("Segoe UI Semibold", 10);
+            botao.Cursor = Cursors.Hand;
+            botao.FlatAppearance.BorderColor = Color.Gainsboro;
+            botao.FlatAppearance.BorderSize = 1;
+            botao.MouseEnter += (s, e) => { botao.BackColor = Color.AliceBlue; };
+            botao.MouseLeave += (s, e) => { botao.BackColor = Color.White; };
+        }
+
+        private void AplicarEstiloBotaoCancelar(Button botao)
+        {
+            botao.FlatStyle = FlatStyle.Flat;
+            botao.BackColor = Color.White;
+            botao.ForeColor = Color.DimGray;
+            botao.Font = new Font("Segoe UI Semibold", 10);
+            botao.Cursor = Cursors.Hand;
+            botao.FlatAppearance.BorderColor = Color.Silver;
+            botao.FlatAppearance.BorderSize = 1;
+            botao.MouseEnter += (s, e) => { botao.BackColor = Color.Gainsboro; };
+            botao.MouseLeave += (s, e) => { botao.BackColor = Color.White; };
+        }
+
+        private void AplicarEstiloGrid(DataGridView grid)
+        {
+            grid.BackgroundColor = Color.White;
+            grid.BorderStyle = BorderStyle.None;
+            grid.GridColor = Color.Gainsboro;
+            grid.EnableHeadersVisualStyles = false;
+            grid.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            grid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 9);
+            grid.DefaultCellStyle.BackColor = Color.White;
+            grid.DefaultCellStyle.ForeColor = Color.FromArgb(45, 45, 45);
+            grid.DefaultCellStyle.SelectionBackColor = Color.AliceBlue;
+            grid.DefaultCellStyle.SelectionForeColor = Color.Black;
+            grid.DefaultCellStyle.Font = new Font("Segoe UI", 9);
+            grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
+            grid.RowHeadersVisible = false;
+            grid.AllowUserToAddRows = false;
+            grid.AllowUserToDeleteRows = false;
+            grid.ReadOnly = false;
+            grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            grid.MultiSelect = false;
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private void AplicarEstiloCampos(Control controlePai)
+        {
+            foreach (Control controle in controlePai.Controls)
+            {
+                if (controle is Label label)
+                {
+                    if (label.Parent == pnlTopo)
+                        continue;
+
+                    label.ForeColor = Color.DimGray;
+                    label.Font = new Font("Segoe UI", 9);
+                }
+
+                if (controle is TextBox textBox)
+                {
+                    textBox.BorderStyle = BorderStyle.FixedSingle;
+                    textBox.Font = new Font("Segoe UI", 10);
+                }
+
+                if (controle is ComboBox comboBox)
+                {
+                    comboBox.FlatStyle = FlatStyle.Flat;
+                    comboBox.Font = new Font("Segoe UI", 10);
+                }
+
+                if (controle is DateTimePicker dateTimePicker)
+                {
+                    dateTimePicker.Font = new Font("Segoe UI", 10);
+                }
+
+                if (controle.HasChildren)
+                    AplicarEstiloCampos(controle);
+            }
+        }
+    }
+}

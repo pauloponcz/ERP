@@ -88,6 +88,16 @@ namespace ComodoroERP.Data
                     Valor TEXT NOT NULL
                 );
 
+                CREATE TABLE IF NOT EXISTS Acertos (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    NomeEscola TEXT NOT NULL,
+                    Servico TEXT NOT NULL,
+                    Valor REAL NOT NULL,
+                    StatusPagamento TEXT NOT NULL DEFAULT 'Pendente',
+                    DataCriacao TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    DataPagamento TEXT NULL
+                );
+
             ";
 
             using var command = connection.CreateCommand();
