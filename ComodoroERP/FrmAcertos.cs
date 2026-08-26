@@ -13,6 +13,8 @@ namespace ComodoroERP
         private List<string> _escolasOriginais = new();
         private bool _atualizandoComboEscola = false;
 
+        private int _versaoFiltroEscola = 0;
+
         private bool _carregandoGrid = false;
 
         public FrmAcertos()
@@ -37,8 +39,8 @@ namespace ComodoroERP
 
             ConfigurarComboPesquisa(cmbFiltroEscola);
 
-            cmbFiltroEscola.KeyUp -= cmbFiltroEscola_KeyUp;
-            cmbFiltroEscola.KeyUp += cmbFiltroEscola_KeyUp;
+            cmbFiltroEscola.TextUpdate -= cmbFiltroEscola_TextUpdate;
+            cmbFiltroEscola.TextUpdate += cmbFiltroEscola_TextUpdate;
 
             cmbFiltroEscola.SelectionChangeCommitted -= cmbFiltroEscola_SelectionChangeCommitted;
             cmbFiltroEscola.SelectionChangeCommitted += cmbFiltroEscola_SelectionChangeCommitted;
@@ -268,14 +270,18 @@ namespace ComodoroERP
 
         private void btnLimparFiltros_Click(object? sender, EventArgs e)
         {
-            cmbFiltroEscola.Text = "";
+            _versaoFiltroEscola++;
+
+            cmbFiltroEscola.DroppedDown = false;
             cmbFiltroEscola.SelectedIndex = -1;
+            cmbFiltroEscola.Text = "";
+
             cmbStatus.SelectedIndex = 0;
             dtpDataInicial.Checked = false;
             dtpDataFinal.Checked = false;
+
             CarregarAcertos();
         }
-
 
         private int ObterIdSelecionado()
         {
@@ -545,36 +551,31 @@ namespace ComodoroERP
             cmbFiltroEscola.SelectedIndex = -1;
         }
 
-        private void cmbFiltroEscola_KeyUp(object? sender, KeyEventArgs e)
+        private void cmbFiltroEscola_TextUpdate(object? sender, EventArgs e)
         {
             if (_atualizandoComboEscola)
                 return;
 
-            if (e.KeyCode == Keys.Up ||
-                e.KeyCode == Keys.Down ||
-                e.KeyCode == Keys.Left ||
-                e.KeyCode == Keys.Right ||
-                e.KeyCode == Keys.Enter ||
-                e.KeyCode == Keys.Escape ||
-                e.KeyCode == Keys.Tab)
-            {
-                return;
-            }
-
             string textoDigitado = cmbFiltroEscola.Text;
             int posicaoCursor = cmbFiltroEscola.SelectionStart;
+            int versaoAtual = ++_versaoFiltroEscola;
+            bool iniciouAtualizacao = false;
 
             try
             {
                 _atualizandoComboEscola = true;
 
                 var itensFiltrados = _escolasOriginais
-                    .Where(escola => NormalizarTexto(escola).Contains(NormalizarTexto(textoDigitado)))
+                    .Where(escola =>
+                        NormalizarTexto(escola)
+                            .Contains(NormalizarTexto(textoDigitado)))
                     .ToList();
 
                 cmbFiltroEscola.DroppedDown = false;
 
                 cmbFiltroEscola.BeginUpdate();
+                iniciouAtualizacao = true;
+
                 cmbFiltroEscola.Items.Clear();
 
                 foreach (var escola in itensFiltrados)
@@ -583,15 +584,42 @@ namespace ComodoroERP
                 }
 
                 cmbFiltroEscola.EndUpdate();
+                iniciouAtualizacao = false;
 
-                cmbFiltroEscola.Text = textoDigitado;
-                cmbFiltroEscola.SelectionStart = Math.Min(posicaoCursor, cmbFiltroEscola.Text.Length);
-                cmbFiltroEscola.SelectionLength = 0;
+                RestaurarTextoFiltroEscola(
+                    textoDigitado,
+                    posicaoCursor
+                );
 
-                if (itensFiltrados.Count > 0 && cmbFiltroEscola.Focused)
+                if (itensFiltrados.Count > 0 &&
+                    cmbFiltroEscola.Focused)
                 {
                     cmbFiltroEscola.DroppedDown = true;
                     Cursor.Current = Cursors.Default;
+
+                    BeginInvoke(new Action(() =>
+                    {
+                        if (cmbFiltroEscola.IsDisposed ||
+                            !cmbFiltroEscola.Focused ||
+                            versaoAtual != _versaoFiltroEscola)
+                        {
+                            return;
+                        }
+
+                        try
+                        {
+                            _atualizandoComboEscola = true;
+
+                            RestaurarTextoFiltroEscola(
+                                textoDigitado,
+                                posicaoCursor
+                            );
+                        }
+                        finally
+                        {
+                            _atualizandoComboEscola = false;
+                        }
+                    }));
                 }
                 else
                 {
@@ -602,29 +630,61 @@ namespace ComodoroERP
             {
                 cmbFiltroEscola.DroppedDown = false;
 
-                cmbFiltroEscola.Text = textoDigitado;
-                cmbFiltroEscola.SelectionStart = Math.Min(posicaoCursor, cmbFiltroEscola.Text.Length);
+                RestaurarTextoFiltroEscola(
+                    textoDigitado,
+                    posicaoCursor
+                );
+            }
+            finally
+            {
+                if (iniciouAtualizacao)
+                    cmbFiltroEscola.EndUpdate();
+
+                _atualizandoComboEscola = false;
+            }
+        }
+
+        private void RestaurarTextoFiltroEscola(
+            string textoDigitado,
+            int posicaoCursor)
+        {
+            cmbFiltroEscola.SelectedIndex = -1;
+            cmbFiltroEscola.Text = textoDigitado;
+
+            cmbFiltroEscola.SelectionStart = Math.Min(
+                posicaoCursor,
+                cmbFiltroEscola.Text.Length
+            );
+
+            cmbFiltroEscola.SelectionLength = 0;
+        }
+
+        private void cmbFiltroEscola_SelectionChangeCommitted(
+            object? sender,
+            EventArgs e)
+        {
+            if (cmbFiltroEscola.SelectedItem == null)
+                return;
+
+            string textoSelecionado =
+                cmbFiltroEscola.SelectedItem.ToString() ?? "";
+
+            try
+            {
+                _atualizandoComboEscola = true;
+                _versaoFiltroEscola++;
+
+                cmbFiltroEscola.Text = textoSelecionado;
+                cmbFiltroEscola.SelectionStart =
+                    cmbFiltroEscola.Text.Length;
+
                 cmbFiltroEscola.SelectionLength = 0;
+                cmbFiltroEscola.DroppedDown = false;
             }
             finally
             {
                 _atualizandoComboEscola = false;
             }
-        }
-
-        private void cmbFiltroEscola_SelectionChangeCommitted(object? sender, EventArgs e)
-        {
-            if (cmbFiltroEscola.SelectedIndex < 0)
-                return;
-
-            if (cmbFiltroEscola.SelectedItem == null)
-                return;
-
-            string textoSelecionado = cmbFiltroEscola.SelectedItem.ToString() ?? "";
-
-            cmbFiltroEscola.Text = textoSelecionado;
-            cmbFiltroEscola.SelectionStart = cmbFiltroEscola.Text.Length;
-            cmbFiltroEscola.SelectionLength = 0;
         }
 
         private string NormalizarTexto(string texto)

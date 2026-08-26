@@ -10,6 +10,7 @@ namespace ComodoroERP
     public partial class FrmAdicionarAcerto : Form
     {
         private readonly AcertoService _acertoService = new();
+        private int _versaoFiltroEscola = 0;
 
         private List<string> _escolasOriginais = new();
         private bool _atualizandoComboEscola = false;
@@ -47,8 +48,11 @@ namespace ComodoroERP
 
             ConfigurarComboPesquisa(cmbNomeEscola);
 
-            cmbNomeEscola.KeyUp -= cmbNomeEscola_KeyUp;
-            cmbNomeEscola.KeyUp += cmbNomeEscola_KeyUp;
+            cmbNomeEscola.TextUpdate -= cmbNomeEscola_TextUpdate;
+            cmbNomeEscola.TextUpdate += cmbNomeEscola_TextUpdate;
+
+            cmbNomeEscola.SelectionChangeCommitted -= cmbNomeEscola_SelectionChangeCommitted;
+            cmbNomeEscola.SelectionChangeCommitted += cmbNomeEscola_SelectionChangeCommitted;
 
             CarregarEscolas();
         }
@@ -282,6 +286,7 @@ namespace ComodoroERP
             comboBox.DropDownStyle = ComboBoxStyle.DropDown;
             comboBox.AutoCompleteMode = AutoCompleteMode.None;
             comboBox.AutoCompleteSource = AutoCompleteSource.None;
+            comboBox.FlatStyle = FlatStyle.Standard;
         }
 
         private void CarregarEscolas()
@@ -298,36 +303,31 @@ namespace ComodoroERP
             }
         }
 
-        private void cmbNomeEscola_KeyUp(object? sender, KeyEventArgs e)
+        private void cmbNomeEscola_TextUpdate(object? sender, EventArgs e)
         {
             if (_atualizandoComboEscola)
                 return;
 
-            if (e.KeyCode == Keys.Up ||
-                e.KeyCode == Keys.Down ||
-                e.KeyCode == Keys.Left ||
-                e.KeyCode == Keys.Right ||
-                e.KeyCode == Keys.Enter ||
-                e.KeyCode == Keys.Escape ||
-                e.KeyCode == Keys.Tab)
-            {
-                return;
-            }
-
             string textoDigitado = cmbNomeEscola.Text;
             int posicaoCursor = cmbNomeEscola.SelectionStart;
+            int versaoAtual = ++_versaoFiltroEscola;
+            bool iniciouAtualizacao = false;
 
             try
             {
                 _atualizandoComboEscola = true;
 
                 var itensFiltrados = _escolasOriginais
-                    .Where(escola => NormalizarTexto(escola).Contains(NormalizarTexto(textoDigitado)))
+                    .Where(escola =>
+                        NormalizarTexto(escola)
+                            .Contains(NormalizarTexto(textoDigitado)))
                     .ToList();
 
                 cmbNomeEscola.DroppedDown = false;
 
                 cmbNomeEscola.BeginUpdate();
+                iniciouAtualizacao = true;
+
                 cmbNomeEscola.Items.Clear();
 
                 foreach (var escola in itensFiltrados)
@@ -336,15 +336,38 @@ namespace ComodoroERP
                 }
 
                 cmbNomeEscola.EndUpdate();
+                iniciouAtualizacao = false;
 
-                cmbNomeEscola.Text = textoDigitado;
-                cmbNomeEscola.SelectionStart = Math.Min(posicaoCursor, cmbNomeEscola.Text.Length);
-                cmbNomeEscola.SelectionLength = 0;
+                RestaurarTextoDigitado(textoDigitado, posicaoCursor);
 
                 if (itensFiltrados.Count > 0 && cmbNomeEscola.Focused)
                 {
                     cmbNomeEscola.DroppedDown = true;
                     Cursor.Current = Cursors.Default;
+
+                    BeginInvoke(new Action(() =>
+                    {
+                        if (cmbNomeEscola.IsDisposed ||
+                            !cmbNomeEscola.Focused ||
+                            versaoAtual != _versaoFiltroEscola)
+                        {
+                            return;
+                        }
+
+                        try
+                        {
+                            _atualizandoComboEscola = true;
+
+                            RestaurarTextoDigitado(
+                                textoDigitado,
+                                posicaoCursor
+                            );
+                        }
+                        finally
+                        {
+                            _atualizandoComboEscola = false;
+                        }
+                    }));
                 }
                 else
                 {
@@ -355,8 +378,51 @@ namespace ComodoroERP
             {
                 cmbNomeEscola.DroppedDown = false;
 
-                cmbNomeEscola.Text = textoDigitado;
-                cmbNomeEscola.SelectionStart = Math.Min(posicaoCursor, cmbNomeEscola.Text.Length);
+                RestaurarTextoDigitado(
+                    textoDigitado,
+                    posicaoCursor
+                );
+            }
+            finally
+            {
+                if (iniciouAtualizacao)
+                    cmbNomeEscola.EndUpdate();
+
+                _atualizandoComboEscola = false;
+            }
+        }
+
+        private void RestaurarTextoDigitado(
+            string textoDigitado,
+            int posicaoCursor)
+        {
+            cmbNomeEscola.SelectedIndex = -1;
+            cmbNomeEscola.Text = textoDigitado;
+
+            cmbNomeEscola.SelectionStart = Math.Min(
+                posicaoCursor,
+                cmbNomeEscola.Text.Length
+            );
+
+            cmbNomeEscola.SelectionLength = 0;
+        }
+
+        private void cmbNomeEscola_SelectionChangeCommitted(object? sender, EventArgs e)
+        {
+            if (cmbNomeEscola.SelectedIndex < 0)
+                return;
+
+            if (cmbNomeEscola.SelectedItem == null)
+                return;
+
+            string textoSelecionado = cmbNomeEscola.SelectedItem.ToString() ?? "";
+
+            try
+            {
+                _atualizandoComboEscola = true;
+
+                cmbNomeEscola.Text = textoSelecionado;
+                cmbNomeEscola.SelectionStart = cmbNomeEscola.Text.Length;
                 cmbNomeEscola.SelectionLength = 0;
             }
             finally
