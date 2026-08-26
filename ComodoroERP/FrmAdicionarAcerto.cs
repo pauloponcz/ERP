@@ -260,7 +260,7 @@ namespace ComodoroERP
 
                 if (controle is ComboBox comboBox)
                 {
-                    comboBox.FlatStyle = FlatStyle.Flat;
+                    comboBox.FlatStyle = FlatStyle.Standard;
                     comboBox.Font = new Font("Segoe UI", 10);
                 }
 

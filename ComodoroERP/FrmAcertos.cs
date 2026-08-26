@@ -2,12 +2,17 @@ using ComodoroERP.Services;
 using ComodoroERP.Utils;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
+using System.Text;
 
 namespace ComodoroERP
 {
     public partial class FrmAcertos : Form
     {
         private readonly AcertoService _acertoService = new();
+        private List<string> _escolasOriginais = new();
+        private bool _atualizandoComboEscola = false;
+
         private bool _carregandoGrid = false;
 
         public FrmAcertos()
@@ -30,10 +35,22 @@ namespace ComodoroERP
             dtpDataInicial.Checked = false;
             dtpDataFinal.Checked = false;
 
+            ConfigurarComboPesquisa(cmbFiltroEscola);
+
+            cmbFiltroEscola.KeyUp -= cmbFiltroEscola_KeyUp;
+            cmbFiltroEscola.KeyUp += cmbFiltroEscola_KeyUp;
+
+            cmbFiltroEscola.SelectionChangeCommitted -= cmbFiltroEscola_SelectionChangeCommitted;
+            cmbFiltroEscola.SelectionChangeCommitted += cmbFiltroEscola_SelectionChangeCommitted;
+
+            CarregarEscolas();
+
             dgvAcertos.DataError += dgvAcertos_DataError;
             dgvAcertos.CurrentCellDirtyStateChanged += dgvAcertos_CurrentCellDirtyStateChanged;
             dgvAcertos.CellValueChanged += dgvAcertos_CellValueChanged;
         }
+
+
 
         private void CarregarAcertos()
         {
@@ -41,7 +58,7 @@ namespace ComodoroERP
             {
                 _carregandoGrid = true;
 
-                string escolaFiltro = txtFiltroEscola.Text.Trim();
+                string escolaFiltro = cmbFiltroEscola.Text.Trim();
                 string statusFiltro = cmbStatus.Text == "Todos" ? "" : cmbStatus.Text;
                 DateTime? dataInicial = dtpDataInicial.Checked ? dtpDataInicial.Value.Date : null;
                 DateTime? dataFinal = dtpDataFinal.Checked ? dtpDataFinal.Value.Date : null;
@@ -215,7 +232,8 @@ namespace ComodoroERP
 
         private void btnLimparFiltros_Click(object? sender, EventArgs e)
         {
-            txtFiltroEscola.Clear();
+            cmbFiltroEscola.Text = "";
+            cmbFiltroEscola.SelectedIndex = -1;
             cmbStatus.SelectedIndex = 0;
             dtpDataInicial.Checked = false;
             dtpDataFinal.Checked = false;
@@ -337,7 +355,7 @@ namespace ComodoroERP
 
                 if (controle is ComboBox comboBox)
                 {
-                    comboBox.FlatStyle = FlatStyle.Flat;
+                    comboBox.FlatStyle = FlatStyle.Standard;
                     comboBox.Font = new Font("Segoe UI", 10);
                 }
 
@@ -349,6 +367,137 @@ namespace ComodoroERP
                 if (controle.HasChildren)
                     AplicarEstiloCampos(controle);
             }
+        }
+
+        private void ConfigurarComboPesquisa(ComboBox comboBox)
+        {
+            comboBox.DropDownStyle = ComboBoxStyle.DropDown;
+            comboBox.AutoCompleteMode = AutoCompleteMode.None;
+            comboBox.AutoCompleteSource = AutoCompleteSource.None;
+        }
+
+        private void CarregarEscolas()
+        {
+            cmbFiltroEscola.Items.Clear();
+
+            _escolasOriginais = _acertoService
+                .ListarEscolas()
+                .ToList();
+
+            foreach (var escola in _escolasOriginais)
+            {
+                cmbFiltroEscola.Items.Add(escola);
+            }
+
+            cmbFiltroEscola.SelectedIndex = -1;
+        }
+
+        private void cmbFiltroEscola_KeyUp(object? sender, KeyEventArgs e)
+        {
+            if (_atualizandoComboEscola)
+                return;
+
+            if (e.KeyCode == Keys.Up ||
+                e.KeyCode == Keys.Down ||
+                e.KeyCode == Keys.Left ||
+                e.KeyCode == Keys.Right ||
+                e.KeyCode == Keys.Enter ||
+                e.KeyCode == Keys.Escape ||
+                e.KeyCode == Keys.Tab)
+            {
+                return;
+            }
+
+            string textoDigitado = cmbFiltroEscola.Text;
+            int posicaoCursor = cmbFiltroEscola.SelectionStart;
+
+            try
+            {
+                _atualizandoComboEscola = true;
+
+                var itensFiltrados = _escolasOriginais
+                    .Where(escola => NormalizarTexto(escola).Contains(NormalizarTexto(textoDigitado)))
+                    .ToList();
+
+                cmbFiltroEscola.DroppedDown = false;
+
+                cmbFiltroEscola.BeginUpdate();
+                cmbFiltroEscola.Items.Clear();
+
+                foreach (var escola in itensFiltrados)
+                {
+                    cmbFiltroEscola.Items.Add(escola);
+                }
+
+                cmbFiltroEscola.EndUpdate();
+
+                cmbFiltroEscola.Text = textoDigitado;
+                cmbFiltroEscola.SelectionStart = Math.Min(posicaoCursor, cmbFiltroEscola.Text.Length);
+                cmbFiltroEscola.SelectionLength = 0;
+
+                if (itensFiltrados.Count > 0 && cmbFiltroEscola.Focused)
+                {
+                    cmbFiltroEscola.DroppedDown = true;
+                    Cursor.Current = Cursors.Default;
+                }
+                else
+                {
+                    cmbFiltroEscola.DroppedDown = false;
+                }
+            }
+            catch
+            {
+                cmbFiltroEscola.DroppedDown = false;
+
+                cmbFiltroEscola.Text = textoDigitado;
+                cmbFiltroEscola.SelectionStart = Math.Min(posicaoCursor, cmbFiltroEscola.Text.Length);
+                cmbFiltroEscola.SelectionLength = 0;
+            }
+            finally
+            {
+                _atualizandoComboEscola = false;
+            }
+        }
+
+        private void cmbFiltroEscola_SelectionChangeCommitted(object? sender, EventArgs e)
+        {
+            if (cmbFiltroEscola.SelectedIndex < 0)
+                return;
+
+            if (cmbFiltroEscola.SelectedItem == null)
+                return;
+
+            string textoSelecionado = cmbFiltroEscola.SelectedItem.ToString() ?? "";
+
+            cmbFiltroEscola.Text = textoSelecionado;
+            cmbFiltroEscola.SelectionStart = cmbFiltroEscola.Text.Length;
+            cmbFiltroEscola.SelectionLength = 0;
+        }
+
+        private string NormalizarTexto(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return "";
+
+            string textoNormalizado = texto.Normalize(NormalizationForm.FormD);
+
+            var builder = new StringBuilder();
+
+            foreach (char caractere in textoNormalizado)
+            {
+                UnicodeCategory categoria = CharUnicodeInfo.GetUnicodeCategory(caractere);
+
+                if (categoria != UnicodeCategory.NonSpacingMark)
+                {
+                    builder.Append(caractere);
+                }
+            }
+
+            return builder
+                .ToString()
+                .Normalize(NormalizationForm.FormC)
+                .ToUpperInvariant()
+                .Trim();
         }
     }
 }

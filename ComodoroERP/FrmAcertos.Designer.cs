@@ -28,7 +28,6 @@ namespace ComodoroERP
             lblDataInicial = new Label();
             cmbStatus = new ComboBox();
             lblStatus = new Label();
-            txtFiltroEscola = new TextBox();
             lblFiltroEscola = new Label();
             lblFiltros = new Label();
             pnlGrid = new Panel();
@@ -36,6 +35,7 @@ namespace ComodoroERP
             lblAcertos = new Label();
             btnAtualizar = new Button();
             btnFechar = new Button();
+            cmbFiltroEscola = new ComboBox();
             pnlTopo.SuspendLayout();
             pnlFiltros.SuspendLayout();
             pnlGrid.SuspendLayout();
@@ -59,7 +59,7 @@ namespace ComodoroERP
             lblSubtituloTela.ForeColor = Color.WhiteSmoke;
             lblSubtituloTela.Location = new Point(27, 43);
             lblSubtituloTela.Name = "lblSubtituloTela";
-            lblSubtituloTela.Size = new Size(311, 15);
+            lblSubtituloTela.Size = new Size(314, 15);
             lblSubtituloTela.TabIndex = 1;
             lblSubtituloTela.Text = "Consulte acertos avulsos e marque pagamentos realizados";
             // 
@@ -70,7 +70,7 @@ namespace ComodoroERP
             lblTituloTela.ForeColor = Color.White;
             lblTituloTela.Location = new Point(25, 14);
             lblTituloTela.Name = "lblTituloTela";
-            lblTituloTela.Size = new Size(132, 28);
+            lblTituloTela.Size = new Size(136, 28);
             lblTituloTela.TabIndex = 0;
             lblTituloTela.Text = "VER ACERTOS";
             // 
@@ -78,6 +78,7 @@ namespace ComodoroERP
             // 
             pnlFiltros.BackColor = Color.White;
             pnlFiltros.BorderStyle = BorderStyle.FixedSingle;
+            pnlFiltros.Controls.Add(cmbFiltroEscola);
             pnlFiltros.Controls.Add(btnLimparFiltros);
             pnlFiltros.Controls.Add(btnFiltrar);
             pnlFiltros.Controls.Add(dtpDataFinal);
@@ -86,7 +87,6 @@ namespace ComodoroERP
             pnlFiltros.Controls.Add(lblDataInicial);
             pnlFiltros.Controls.Add(cmbStatus);
             pnlFiltros.Controls.Add(lblStatus);
-            pnlFiltros.Controls.Add(txtFiltroEscola);
             pnlFiltros.Controls.Add(lblFiltroEscola);
             pnlFiltros.Controls.Add(lblFiltros);
             pnlFiltros.Location = new Point(20, 90);
@@ -140,7 +140,7 @@ namespace ComodoroERP
             lblDataFinal.AutoSize = true;
             lblDataFinal.Location = new Point(520, 49);
             lblDataFinal.Name = "lblDataFinal";
-            lblDataFinal.Size = new Size(70, 17);
+            lblDataFinal.Size = new Size(73, 19);
             lblDataFinal.TabIndex = 7;
             lblDataFinal.Text = "Data Final:";
             // 
@@ -158,7 +158,7 @@ namespace ComodoroERP
             lblDataInicial.AutoSize = true;
             lblDataInicial.Location = new Point(360, 49);
             lblDataInicial.Name = "lblDataInicial";
-            lblDataInicial.Size = new Size(78, 17);
+            lblDataInicial.Size = new Size(79, 19);
             lblDataInicial.TabIndex = 5;
             lblDataInicial.Text = "Data Inicial:";
             // 
@@ -176,23 +176,16 @@ namespace ComodoroERP
             lblStatus.AutoSize = true;
             lblStatus.Location = new Point(220, 49);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(47, 17);
+            lblStatus.Size = new Size(50, 19);
             lblStatus.TabIndex = 3;
             lblStatus.Text = "Status:";
-            // 
-            // txtFiltroEscola
-            // 
-            txtFiltroEscola.Location = new Point(20, 72);
-            txtFiltroEscola.Name = "txtFiltroEscola";
-            txtFiltroEscola.Size = new Size(180, 25);
-            txtFiltroEscola.TabIndex = 2;
             // 
             // lblFiltroEscola
             // 
             lblFiltroEscola.AutoSize = true;
             lblFiltroEscola.Location = new Point(20, 49);
             lblFiltroEscola.Name = "lblFiltroEscola";
-            lblFiltroEscola.Size = new Size(50, 17);
+            lblFiltroEscola.Size = new Size(49, 19);
             lblFiltroEscola.TabIndex = 1;
             lblFiltroEscola.Text = "Escola:";
             // 
@@ -203,7 +196,7 @@ namespace ComodoroERP
             lblFiltros.ForeColor = Color.FromArgb(35, 35, 35);
             lblFiltros.Location = new Point(15, 12);
             lblFiltros.Name = "lblFiltros";
-            lblFiltros.Size = new Size(52, 20);
+            lblFiltros.Size = new Size(51, 20);
             lblFiltros.TabIndex = 0;
             lblFiltros.Text = "Filtros";
             // 
@@ -276,6 +269,14 @@ namespace ComodoroERP
             btnFechar.UseVisualStyleBackColor = false;
             btnFechar.Click += btnFechar_Click;
             // 
+            // cmbFiltroEscola
+            // 
+            cmbFiltroEscola.FormattingEnabled = true;
+            cmbFiltroEscola.Location = new Point(20, 72);
+            cmbFiltroEscola.Name = "cmbFiltroEscola";
+            cmbFiltroEscola.Size = new Size(180, 25);
+            cmbFiltroEscola.TabIndex = 11;
+            // 
             // FrmAcertos
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -312,7 +313,6 @@ namespace ComodoroERP
         private Panel pnlFiltros;
         private Label lblFiltros;
         private Label lblFiltroEscola;
-        private TextBox txtFiltroEscola;
         private Label lblStatus;
         private ComboBox cmbStatus;
         private Label lblDataInicial;
@@ -326,5 +326,6 @@ namespace ComodoroERP
         private DataGridView dgvAcertos;
         private Button btnAtualizar;
         private Button btnFechar;
+        private ComboBox cmbFiltroEscola;
     }
 }
