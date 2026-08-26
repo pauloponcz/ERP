@@ -1,13 +1,23 @@
 using ComodoroERP.Utils;
+using ComodoroERP.Services;
 
 namespace ComodoroERP
 {
     public partial class FrmMenu : FrmBase
     {
+        private readonly AtualizacaoService _atualizacaoService = new();
+
         public FrmMenu()
         {
             InitializeComponent();
             DarkTitleBar.Ativar(this);
+
+            Shown += FrmMenu_Shown;
+        }
+
+        private async void FrmMenu_Shown(object? sender, EventArgs e)
+        {
+            await _atualizacaoService.VerificarAtualizacaoAsync();
         }
 
         private void btnNovoOrcamento_Click(object sender, EventArgs e)
