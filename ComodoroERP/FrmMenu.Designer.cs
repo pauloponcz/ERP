@@ -42,6 +42,7 @@ namespace ComodoroERP
             pnlTopo = new Panel();
             lblSubtitulo = new Label();
             lblTitulo = new Label();
+            lblVersao = new Label();
             pnlMenu.SuspendLayout();
             pnlTopo.SuspendLayout();
             SuspendLayout();
@@ -248,12 +249,24 @@ namespace ComodoroERP
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "COMODORO ERP";
             // 
+            // lblVersao
+            // 
+            lblVersao.AutoSize = true;
+            lblVersao.Font = new Font("Microsoft Sans Serif", 8.25F);
+            lblVersao.ForeColor = Color.DimGray;
+            lblVersao.Location = new Point(12, 593);
+            lblVersao.Name = "lblVersao";
+            lblVersao.Size = new Size(40, 13);
+            lblVersao.TabIndex = 11;
+            lblVersao.Text = "Versão";
+            // 
             // FrmMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(364, 615);
+            Controls.Add(lblVersao);
             Controls.Add(pnlTopo);
             Controls.Add(pnlMenu);
             Controls.Add(btnConfiguracoes);
@@ -270,6 +283,7 @@ namespace ComodoroERP
             pnlTopo.ResumeLayout(false);
             pnlTopo.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -287,5 +301,6 @@ namespace ComodoroERP
         private Button btnItensLancados;
         private Button btnAdicionarAcerto;
         private Button btnVerAcertos;
+        private Label lblVersao;
     }
 }

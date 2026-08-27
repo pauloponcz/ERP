@@ -1,5 +1,6 @@
 using ComodoroERP.Utils;
 using ComodoroERP.Services;
+using System.Reflection;
 
 namespace ComodoroERP
 {
@@ -10,9 +11,20 @@ namespace ComodoroERP
         public FrmMenu()
         {
             InitializeComponent();
+            CarregarVersao();
             DarkTitleBar.Ativar(this);
 
             Shown += FrmMenu_Shown;
+        }
+
+        private void CarregarVersao()
+        {
+            Version? versao = Assembly
+                .GetExecutingAssembly()
+                .GetName()
+                .Version;
+
+            lblVersao.Text = $"ComodoroERP - Versão {versao?.Major}.{versao?.Minor}.{versao?.Build}";
         }
 
         private async void FrmMenu_Shown(object? sender, EventArgs e)
