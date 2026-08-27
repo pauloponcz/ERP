@@ -1,8 +1,8 @@
 # ComodoroERP
 
-Sistema desktop em Windows Forms para gerenciamento de orçamentos da Comodoro Serviços.
+Sistema desktop em Windows Forms para gerenciamento de orçamentos, acertos e serviços da Comodoro Serviços.
 
-Esta versão permite cadastrar orçamentos, controlar serviços permitidos, editar itens, gerar notas em PDF a partir de modelos Excel personalizados, configurar pastas de saída e manter backup automático do banco SQLite.
+Esta versão permite cadastrar orçamentos, controlar serviços permitidos, editar itens, gerar notas em PDF a partir de modelos Excel personalizados, configurar pastas de saída, acompanhar acertos de escolas/clientes e manter backup automático do banco SQLite.
 
 ---
 
@@ -16,12 +16,15 @@ O sistema foi criado para facilitar o controle de:
 - Orçamentos;
 - Itens de serviço;
 - Serviços permitidos;
+- Acertos;
 - Status dos orçamentos;
+- Status de pagamento dos acertos;
 - Geração de notas;
 - Geração de PDFs;
 - Backup do banco de dados;
 - Configuração de pastas;
-- Dashboard de acompanhamento.
+- Dashboard de acompanhamento de acertos;
+- Atualização automática via GitHub Releases.
 
 ---
 
@@ -36,6 +39,7 @@ O sistema foi criado para facilitar o controle de:
 - ClosedXML
 - Microsoft Excel via late binding
 - Git/GitHub
+- GitHub Releases para atualização automática
 
 ---
 
@@ -47,11 +51,15 @@ ERP
 │   ├── Data
 │   │   └── Database.cs
 │   ├── Models
+│   │   ├── Acerto.cs
 │   │   ├── Cliente.cs
 │   │   ├── Orcamento.cs
 │   │   ├── OrcamentoItem.cs
 │   │   └── ServicoPermitido.cs
 │   ├── Services
+│   │   ├── AcertoDashboardService.cs
+│   │   ├── AcertoService.cs
+│   │   ├── AtualizacaoService.cs
 │   │   ├── BackupService.cs
 │   │   ├── ConfiguracaoService.cs
 │   │   ├── DashboardService.cs
@@ -61,6 +69,8 @@ ERP
 │   │   ├── PdfService.cs
 │   │   ├── ExcelNotaService.cs
 │   │   └── ExcelModeloPdfService.cs
+│   ├── Utils
+│   │   └── DarkTitleBar.cs
 │   ├── FrmMenu.cs
 │   ├── FrmNovoOrcamento.cs
 │   ├── FrmOrcamentos.cs
@@ -70,6 +80,9 @@ ERP
 │   ├── FrmEditarItemOrcamento.cs
 │   ├── FrmItens.cs
 │   ├── FrmServicosPermitidos.cs
+│   ├── FrmAdicionarAcerto.cs
+│   ├── FrmAcertos.cs
+│   ├── FrmEditarAcerto.cs
 │   ├── FrmConfiguracoes.cs
 │   └── FrmDashboard.cs
 ├── .gitignore
@@ -141,6 +154,20 @@ Campos principais:
 - Descricao
 - Ativo
 
+### Acertos
+
+Guarda os acertos lançados para escolas/clientes.
+
+Campos principais:
+
+- Id
+- NomeEscola
+- Servico
+- Valor
+- StatusPagamento
+- DataCriacao
+- DataPagamento
+
 ### NotasGeradas
 
 Guarda informações sobre PDFs/notas geradas.
@@ -179,28 +206,41 @@ A partir dela é possível acessar:
 - Novo Orçamento;
 - Ver Orçamentos;
 - Itens Lançados;
+- Adicionar Acerto;
+- Ver Acertos;
 - Serviços Permitidos;
 - Configurações;
 - Sair.
 
+A tela principal também possui notificação visual de atualização quando uma nova versão estiver disponível no GitHub Releases.
+
 ---
 
-## 5.2 Dashboard
+## 5.2 Dashboard de Acertos
 
-Tela de resumo geral.
+Tela de resumo dos acertos cadastrados.
 
 Mostra:
 
-- Total de orçamentos;
-- Quantidade de pendentes;
-- Quantidade de pagos;
-- Quantidade de cancelados;
+- Total de acertos;
 - Valor total;
-- Valor pendente;
 - Valor pago;
-- Últimos orçamentos cadastrados.
+- Valor pendente;
+- Percentual pago;
+- Escola que mais paga certo;
+- Escola que mais deve;
+- Ranking por escola;
+- Gráfico de pago x pendente;
+- Ranking de maiores pendências;
+- Ranking de maiores pagamentos.
 
-Essa tela usa o `DashboardService`.
+Filtros disponíveis:
+
+- Escola;
+- Data inicial;
+- Data final.
+
+Essa tela usa o `AcertoDashboardService`.
 
 ---
 
@@ -216,6 +256,14 @@ Funcionalidades:
 - Filtrar por descrição do serviço.
 
 Formato esperado do CSV:
+
+```csv
+Categoria;Descricao;Ativo
+SERVIÇO DE MANUTENÇÃO ELÉTRICA;INSTALAÇÃO DE LUMINÁRIA;1
+SERVIÇO DE MANUTENÇÃO HIDRÁULICA;REPARO DE REDE HIDRÁULICA;1
+```
+
+Também é aceito o formato sem a coluna `Ativo`, dependendo da rotina de importação:
 
 ```csv
 Categoria;Descricao
@@ -248,16 +296,47 @@ Permite informar:
 
 Os serviços disponíveis são carregados da tabela `ServicosPermitidos`.
 
+### Busca de Cliente/Escola
+
+O campo Cliente/Escola possui lista de sugestões com clientes já cadastrados.
+
+Funcionamento:
+
+1. O usuário começa a digitar o nome do cliente/escola;
+2. O sistema sugere clientes existentes;
+3. Ao selecionar um cliente existente, o sistema preenche automaticamente:
+   - CNPJ;
+   - Endereço;
+   - Bairro/CEP;
+   - Cidade/Estado.
+
+Se o cliente não existir, é possível digitar os dados manualmente e cadastrar normalmente ao salvar o orçamento.
+
+### Busca de Categoria e Serviço Permitido
+
+Os campos Categoria e Serviço Permitido possuem filtro por texto digitado.
+
+Funcionamento:
+
+1. O usuário digita parte do texto;
+2. O sistema exibe na lista apenas as opções que contêm o texto digitado;
+3. O campo não completa automaticamente enquanto o usuário digita;
+4. O preenchimento completo acontece somente quando o usuário seleciona uma opção da lista.
+
+Ao selecionar um Serviço Permitido, o sistema preenche automaticamente a descrição do orçamento se ela estiver vazia.
+
 Fluxo:
 
-1. Seleciona categoria;
-2. Seleciona serviço permitido;
-3. Digita a descrição que aparecerá no orçamento;
-4. Informa quantidade;
-5. Informa valor unitário;
-6. Marca cortesia, se necessário;
-7. Adiciona o item;
-8. Salva o orçamento.
+1. Informa ou seleciona o cliente/escola;
+2. Confere ou preenche os dados do cliente;
+3. Seleciona a categoria;
+4. Seleciona o serviço permitido;
+5. Confere ou altera a descrição que aparecerá no orçamento;
+6. Informa quantidade;
+7. Informa valor unitário;
+8. Marca cortesia, se necessário;
+9. Adiciona o item;
+10. Salva o orçamento.
 
 ---
 
@@ -271,6 +350,19 @@ Filtros disponíveis:
 - Status;
 - Data inicial;
 - Data final.
+
+### Busca de Cliente
+
+O filtro Cliente é um campo com sugestões.
+
+Funcionamento:
+
+1. O usuário começa a digitar o nome do cliente/escola;
+2. O sistema mostra sugestões de clientes que possuem orçamento cadastrado;
+3. Ao selecionar um cliente, o filtro é aplicado;
+4. Também é possível apertar Enter no campo para filtrar.
+
+O filtro de cliente em Ver Orçamentos carrega somente clientes que possuem orçamentos vinculados, evitando exibir escolas/clientes sem orçamento ativo.
 
 Ações disponíveis:
 
@@ -389,7 +481,83 @@ Essa tela ajuda a consultar rapidamente todos os serviços lançados no sistema.
 
 ---
 
-## 5.12 Configurações
+## 5.12 Acertos
+
+Funcionalidade para controlar valores de acerto por escola/cliente.
+
+Permite registrar:
+
+- Nome da escola;
+- Serviço;
+- Valor;
+- Status do pagamento;
+- Data de cadastro;
+- Data de pagamento.
+
+Status disponíveis:
+
+- Pendente;
+- Pago.
+
+---
+
+## 5.13 Adicionar Acerto
+
+Tela para cadastrar um novo acerto.
+
+Funcionalidades:
+
+- Campo Escola com sugestão de escolas já cadastradas;
+- Cadastro de serviço;
+- Cadastro de valor;
+- Definição do status do pagamento;
+- Salvamento do acerto.
+
+Se a escola já existir, o campo permite localizar rapidamente pela lista de sugestões.
+
+---
+
+## 5.14 Ver Acertos
+
+Tela para consultar e controlar os acertos cadastrados.
+
+Filtros disponíveis:
+
+- Escola;
+- Status;
+- Data inicial;
+- Data final.
+
+Ações disponíveis:
+
+- Marcar como pago;
+- Marcar como pendente;
+- Editar acerto;
+- Excluir acerto;
+- Fechar.
+
+A tela também possui seleção de registros para edição ou exclusão.
+
+---
+
+## 5.15 Editar Acerto
+
+Permite alterar dados de um acerto já cadastrado.
+
+Campos editáveis:
+
+- Escola;
+- Serviço;
+- Valor;
+- Status do pagamento.
+
+Se o status for alterado para Pago, o sistema registra a data de pagamento.
+
+Se o status for alterado para Pendente, o sistema limpa a data de pagamento.
+
+---
+
+## 5.16 Configurações
 
 Tela para definir caminhos usados pelo sistema.
 
@@ -403,7 +571,7 @@ Essas informações são salvas na tabela `Configuracoes`.
 
 ---
 
-## 5.13 Backup automático
+## 5.17 Backup automático
 
 Ao abrir o sistema, o `BackupService` cria backup do banco SQLite.
 
@@ -419,6 +587,22 @@ Exemplo de nome:
 ```text
 comodoro_backup_20260813.db
 ```
+
+---
+
+## 5.18 Atualização automática
+
+O sistema possui verificação de atualização pelo GitHub Releases.
+
+Funcionamento:
+
+1. O sistema consulta a versão publicada no GitHub;
+2. Se houver uma versão mais recente, exibe uma notificação visual no menu principal;
+3. O usuário pode clicar em Atualizar;
+4. O sistema baixa o pacote da nova versão;
+5. O processo de atualização é executado automaticamente.
+
+A atualização usa o `AtualizacaoService`.
 
 ---
 
@@ -696,11 +880,40 @@ Esta versão possui:
 - Remoção de itens;
 - Exclusão de orçamento;
 - Serviços permitidos via CSV;
-- Dashboard;
+- Cadastro de acertos;
+- Edição de acertos;
+- Exclusão de acertos;
+- Controle de pagamento dos acertos;
+- Dashboard de acertos;
 - Filtros por cliente/status/data;
+- Sugestão de cliente no Novo Orçamento;
+- Sugestão de cliente no Ver Orçamentos;
+- Filtro inteligente de categoria e serviço permitido;
 - Configuração de pastas;
 - Backup automático;
 - Geração de PDFs por modelo Excel;
 - Suporte a múltiplas abas/modelos no Excel;
 - Placeholders dinâmicos;
-- Ignora campos inexistentes.
+- Ignora campos inexistentes;
+- Atualização automática via GitHub Releases;
+- Notificação visual de atualização no menu principal.
+
+---
+
+## 14. Próximas melhorias sugeridas
+
+Melhorias futuras recomendadas:
+
+- Tela própria para gerenciar modelos de notas;
+- Pré-visualização das abas do modelo Excel;
+- Validação dos placeholders usados no modelo;
+- Botão para abrir o último PDF gerado;
+- Histórico de notas geradas por orçamento;
+- Exportação de relatórios para CSV/Excel;
+- Edição dos dados do cliente;
+- Caminho fixo externo para o banco SQLite;
+- Tela de restauração de backup;
+- Instalador do sistema;
+- Controle de versão do banco;
+- Relatórios específicos de acertos;
+- Exportação do dashboard de acertos.
