@@ -9,15 +9,178 @@ namespace ComodoroERP
 {
     public partial class FrmNovoOrcamento : FrmBase
     {
-
         private List<string> _categoriasOriginais = new();
         private List<string> _servicosOriginais = new();
+        private List<Cliente> _clientesOriginais = new();
 
         private bool _atualizandoComboCategoria = false;
         private bool _atualizandoComboServico = false;
 
         private readonly List<OrcamentoItem> _itens = new();
         private readonly ServicoPermitidoService _servicoPermitidoService = new();
+        private readonly OrcamentoService _orcamentoService = new();
+
+
+        public FrmNovoOrcamento()
+        {
+            InitializeComponent();
+
+            DarkTitleBar.Ativar(this);
+
+            ConfigurarTela();
+            ConfigurarGridServicos();
+
+            AplicarEstiloVisual();
+        }
+
+        private void ConfigurarTela()
+        {
+            txtCidadeEstado.Text = "CURITIBA- PARANÁ";
+
+            ConfigurarComboCliente();
+            CarregarClientes();
+
+            cmbCliente.Leave -= cmbCliente_Leave;
+            cmbCliente.Leave += cmbCliente_Leave;
+
+            cmbCliente.SelectionChangeCommitted -= cmbCliente_SelectionChangeCommitted;
+            cmbCliente.SelectionChangeCommitted += cmbCliente_SelectionChangeCommitted;
+
+            cmbCliente.KeyDown -= cmbCliente_KeyDown;
+            cmbCliente.KeyDown += cmbCliente_KeyDown;
+
+            cmbStatus.Items.Clear();
+            cmbStatus.Items.Add("Pendente");
+            cmbStatus.Items.Add("Pago");
+            cmbStatus.Items.Add("Parcial");
+            cmbStatus.Items.Add("Concluído");
+            cmbStatus.Items.Add("Cancelado");
+            cmbStatus.SelectedIndex = 0;
+
+            numQuantidade.Value = 1;
+            numVariacaoNota2.Value = -5;
+            numVariacaoNota3.Value = 1;
+
+            ConfigurarComboPesquisa(cmbCategoria);
+            ConfigurarComboPesquisa(cmbServicoPermitido);
+
+            cmbCategoria.TextUpdate -= cmbCategoria_TextUpdate;
+            cmbCategoria.TextUpdate += cmbCategoria_TextUpdate;
+
+            cmbServicoPermitido.TextUpdate -= cmbServicoPermitido_TextUpdate;
+            cmbServicoPermitido.TextUpdate += cmbServicoPermitido_TextUpdate;
+
+            cmbCategoria.SelectedIndexChanged -= cmbCategoria_SelectedIndexChanged;
+            cmbCategoria.SelectedIndexChanged += cmbCategoria_SelectedIndexChanged;
+
+            cmbCategoria.SelectionChangeCommitted -= cmbCategoria_SelectionChangeCommitted;
+            cmbCategoria.SelectionChangeCommitted += cmbCategoria_SelectionChangeCommitted;
+
+            cmbCategoria.Leave -= cmbCategoria_Leave;
+            cmbCategoria.Leave += cmbCategoria_Leave;
+
+            cmbCategoria.KeyDown -= cmbCategoria_KeyDown;
+            cmbCategoria.KeyDown += cmbCategoria_KeyDown;
+
+            cmbServicoPermitido.SelectionChangeCommitted -= cmbServicoPermitido_SelectionChangeCommitted;
+            cmbServicoPermitido.SelectionChangeCommitted += cmbServicoPermitido_SelectionChangeCommitted;
+
+            cmbServicoPermitido.Leave -= cmbServicoPermitido_Leave;
+            cmbServicoPermitido.Leave += cmbServicoPermitido_Leave;
+
+            cmbServicoPermitido.KeyDown -= cmbServicoPermitido_KeyDown;
+            cmbServicoPermitido.KeyDown += cmbServicoPermitido_KeyDown;
+
+            CarregarCategoriasPermitidas();
+        }
+
+        private void ConfigurarComboCliente()
+        {
+            cmbCliente.DropDownStyle = ComboBoxStyle.DropDown;
+            cmbCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbCliente.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmbCliente.FlatStyle = FlatStyle.Standard;
+        }
+
+        private void ConfigurarComboPesquisa(ComboBox comboBox)
+        {
+            comboBox.DropDownStyle = ComboBoxStyle.DropDown;
+
+            // Importante:
+            // None evita completar o texto automaticamente.
+            comboBox.AutoCompleteMode = AutoCompleteMode.None;
+            comboBox.AutoCompleteSource = AutoCompleteSource.None;
+
+            comboBox.FlatStyle = FlatStyle.Standard;
+        }
+        private void CarregarClientes()
+        {
+            string textoAtual = cmbCliente.Text;
+
+            cmbCliente.Items.Clear();
+
+            _clientesOriginais = _orcamentoService
+                .ListarClientes()
+                .ToList();
+
+            foreach (var cliente in _clientesOriginais)
+            {
+                if (!string.IsNullOrWhiteSpace(cliente.Nome))
+                    cmbCliente.Items.Add(cliente.Nome);
+            }
+
+            cmbCliente.Text = textoAtual;
+        }
+
+        private void cmbCliente_Leave(object? sender, EventArgs e)
+        {
+            PreencherClienteSeExistir();
+        }
+
+        private void cmbCliente_SelectionChangeCommitted(object? sender, EventArgs e)
+        {
+            PreencherClienteSeExistir();
+        }
+
+        private void cmbCliente_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter)
+                return;
+
+            PreencherClienteSeExistir();
+
+            e.SuppressKeyPress = true;
+        }
+
+        private void PreencherClienteSeExistir()
+        {
+            string nomeDigitado = cmbCliente.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(nomeDigitado))
+                return;
+
+            Cliente? cliente = _clientesOriginais
+                .FirstOrDefault(c => NormalizarTexto(c.Nome) == NormalizarTexto(nomeDigitado));
+
+            if (cliente == null)
+                cliente = _orcamentoService.ObterClientePorNome(nomeDigitado);
+
+            if (cliente == null)
+                return;
+
+            cmbCliente.Text = cliente.Nome;
+            cmbCliente.SelectionStart = cmbCliente.Text.Length;
+            cmbCliente.SelectionLength = 0;
+
+            txtCnpj.Text = cliente.Cnpj;
+            txtEndereco.Text = cliente.Endereco;
+            txtBairroCep.Text = cliente.BairroCep;
+
+            txtCidadeEstado.Text = string.IsNullOrWhiteSpace(cliente.CidadeEstado)
+                ? "CURITIBA- PARANÁ"
+                : cliente.CidadeEstado;
+        }
+
         private void CarregarCategoriasPermitidas()
         {
             cmbCategoria.Items.Clear();
@@ -40,6 +203,7 @@ namespace ComodoroERP
 
             _servicosOriginais.Clear();
         }
+
         private void CarregarServicosPorCategoria()
         {
             string categoria = cmbCategoria.Text.Trim();
@@ -68,6 +232,7 @@ namespace ComodoroERP
                 cmbServicoPermitido.Items.Add(servico);
             }
         }
+
         private void cmbCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_atualizandoComboCategoria)
@@ -76,211 +241,93 @@ namespace ComodoroERP
             if (cmbCategoria.SelectedIndex < 0)
                 return;
 
-            CarregarServicosPorCategoria();
-        }
-
-        public FrmNovoOrcamento()
-        {
-            InitializeComponent();
-
-            DarkTitleBar.Ativar(this);
-
-            ConfigurarTela();
-            ConfigurarGridServicos();
-
-            AplicarEstiloVisual();
-        }
-
-        private void ConfigurarTela()
-        {
-            txtCidadeEstado.Text = "CURITIBA- PARANÁ";
-
-            cmbStatus.Items.Clear();
-            cmbStatus.Items.Add("Pendente");
-            cmbStatus.Items.Add("Pago");
-            cmbStatus.Items.Add("Parcial");
-            cmbStatus.Items.Add("Concluído");
-            cmbStatus.Items.Add("Cancelado");
-            cmbStatus.SelectedIndex = 0;
-
-            numQuantidade.Value = 1;
-            numVariacaoNota2.Value = -5;
-            numVariacaoNota3.Value = 1;
-
-            ConfigurarComboPesquisa(cmbCategoria);
-            ConfigurarComboPesquisa(cmbServicoPermitido);
-
-            cmbCategoria.TextUpdate -= cmbCategoria_TextUpdate;
-            cmbCategoria.TextUpdate += cmbCategoria_TextUpdate;
-
-            cmbServicoPermitido.TextUpdate -= cmbServicoPermitido_TextUpdate;
-            cmbServicoPermitido.TextUpdate += cmbServicoPermitido_TextUpdate;
-
-            cmbCategoria.SelectedIndexChanged -= cmbCategoria_SelectedIndexChanged;
-            cmbCategoria.SelectedIndexChanged += cmbCategoria_SelectedIndexChanged;
-
-            cmbCategoria.Leave -= cmbCategoria_Leave;
-            cmbCategoria.Leave += cmbCategoria_Leave;
-
-            CarregarCategoriasPermitidas();
-        }
-
-        private void ConfigurarComboPesquisa(ComboBox comboBox)
-        {
-            comboBox.DropDownStyle = ComboBoxStyle.DropDown;
-
-            // Desliga o autocomplete nativo, porque ele não faz "contains" bem.
-            comboBox.AutoCompleteMode = AutoCompleteMode.None;
-            comboBox.AutoCompleteSource = AutoCompleteSource.None;
+            SelecionarCategoriaSeExistir();
         }
 
         private void cmbCategoria_Leave(object sender, EventArgs e)
         {
-            string categoria = cmbCategoria.Text.Trim();
+            SelecionarCategoriaSeExistir();
+        }
 
-            if (string.IsNullOrWhiteSpace(categoria))
+        private void cmbCategoria_SelectionChangeCommitted(object? sender, EventArgs e)
+        {
+            SelecionarCategoriaSeExistir();
+        }
+
+        private void cmbCategoria_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter)
+                return;
+
+            SelecionarCategoriaSeExistir();
+
+            e.SuppressKeyPress = true;
+        }
+
+        private void SelecionarCategoriaSeExistir()
+        {
+            string categoriaDigitada = cmbCategoria.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(categoriaDigitada))
             {
                 cmbServicoPermitido.Items.Clear();
+                cmbServicoPermitido.SelectedIndex = -1;
                 cmbServicoPermitido.Text = "";
                 _servicosOriginais.Clear();
                 return;
             }
 
-            bool categoriaExiste = _categoriasOriginais
-                .Any(c => NormalizarTexto(c) == NormalizarTexto(categoria));
+            string? categoriaEncontrada = _categoriasOriginais
+                .FirstOrDefault(c => NormalizarTexto(c) == NormalizarTexto(categoriaDigitada));
 
-            if (!categoriaExiste)
-            {
-                MessageBox.Show(
-                    "Categoria não encontrada na lista de serviços permitidos.",
-                    "Categoria inválida",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
-
-                cmbCategoria.Text = "";
-                cmbServicoPermitido.Items.Clear();
-                cmbServicoPermitido.Text = "";
-                _servicosOriginais.Clear();
-
-                cmbCategoria.Focus();
+            if (categoriaEncontrada == null)
                 return;
-            }
+
+            cmbCategoria.Text = categoriaEncontrada;
+            cmbCategoria.SelectionStart = cmbCategoria.Text.Length;
+            cmbCategoria.SelectionLength = 0;
 
             CarregarServicosPorCategoria();
         }
-
-        private void ConfigurarAutoCompleteComboBox(ComboBox comboBox)
+        private void cmbServicoPermitido_Leave(object? sender, EventArgs e)
         {
-            comboBox.DropDownStyle = ComboBoxStyle.DropDown;
-            comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            SelecionarServicoSeExistir();
         }
 
-        private void cmbCategoria_TextUpdate(object sender, EventArgs e)
+        private void cmbServicoPermitido_SelectionChangeCommitted(object? sender, EventArgs e)
         {
-            if (_atualizandoComboCategoria)
-                return;
-
-            string textoDigitado = cmbCategoria.Text;
-
-            if (string.IsNullOrWhiteSpace(textoDigitado))
-            {
-                try
-                {
-                    _atualizandoComboCategoria = true;
-
-                    cmbCategoria.DroppedDown = false;
-                    cmbCategoria.Items.Clear();
-
-                    foreach (var categoria in _categoriasOriginais)
-                    {
-                        cmbCategoria.Items.Add(categoria);
-                    }
-
-                    cmbCategoria.Text = "";
-                    cmbCategoria.SelectionStart = 0;
-                }
-                finally
-                {
-                    _atualizandoComboCategoria = false;
-                }
-
-                return;
-            }
-
-            FiltrarComboBox(
-                cmbCategoria,
-                _categoriasOriginais,
-                textoDigitado,
-                ref _atualizandoComboCategoria
-            );
-        }
-        private void cmbServicoPermitido_TextUpdate(object sender, EventArgs e)
-        {
-            if (_atualizandoComboServico)
-                return;
-
-            string textoDigitado = cmbServicoPermitido.Text;
-
-            FiltrarComboBox(
-                cmbServicoPermitido,
-                _servicosOriginais,
-                textoDigitado,
-                ref _atualizandoComboServico
-            );
+            SelecionarServicoSeExistir();
         }
 
-        private void FiltrarComboBox(
-            ComboBox comboBox,
-            List<string> listaOriginal,
-            string textoDigitado,
-            ref bool atualizando)
+        private void cmbServicoPermitido_KeyDown(object? sender, KeyEventArgs e)
         {
-            try
-            {
-                atualizando = true;
+            if (e.KeyCode != Keys.Enter)
+                return;
 
-                int posicaoCursor = comboBox.SelectionStart;
+            SelecionarServicoSeExistir();
 
-                string textoNormalizado = NormalizarTexto(textoDigitado);
+            e.SuppressKeyPress = true;
+        }
 
-                var itensFiltrados = listaOriginal
-                    .Where(item => NormalizarTexto(item).Contains(textoNormalizado))
-                    .ToList();
+        private void SelecionarServicoSeExistir()
+        {
+            string servicoDigitado = cmbServicoPermitido.Text.Trim();
 
-                // Fecha antes de mexer nos itens para evitar erro quando a lista fica vazia
-                comboBox.DroppedDown = false;
+            if (string.IsNullOrWhiteSpace(servicoDigitado))
+                return;
 
-                comboBox.BeginUpdate();
-                comboBox.Items.Clear();
+            string? servicoEncontrado = _servicosOriginais
+                .FirstOrDefault(s => NormalizarTexto(s) == NormalizarTexto(servicoDigitado));
 
-                foreach (var item in itensFiltrados)
-                {
-                    comboBox.Items.Add(item);
-                }
+            if (servicoEncontrado == null)
+                return;
 
-                comboBox.EndUpdate();
+            cmbServicoPermitido.Text = servicoEncontrado;
+            cmbServicoPermitido.SelectionStart = cmbServicoPermitido.Text.Length;
+            cmbServicoPermitido.SelectionLength = 0;
 
-                comboBox.Text = textoDigitado;
-                comboBox.SelectionStart = Math.Min(posicaoCursor, comboBox.Text.Length);
-                comboBox.SelectionLength = 0;
-
-                // Só abre a lista se existir pelo menos um item
-                if (itensFiltrados.Count > 0 && comboBox.Focused)
-                {
-                    comboBox.DroppedDown = true;
-                    Cursor.Current = Cursors.Default;
-                }
-            }
-            catch
-            {
-                comboBox.DroppedDown = false;
-            }
-            finally
-            {
-                atualizando = false;
-            }
+            if (string.IsNullOrWhiteSpace(txtDescricaoServico.Text))
+                txtDescricaoServico.Text = servicoEncontrado;
         }
         private string NormalizarTexto(string texto)
         {
@@ -306,6 +353,87 @@ namespace ComodoroERP
                 .Normalize(NormalizationForm.FormC)
                 .ToUpperInvariant()
                 .Trim();
+        }
+
+        private void cmbCategoria_TextUpdate(object? sender, EventArgs e)
+        {
+            if (_atualizandoComboCategoria)
+                return;
+
+            string textoDigitado = cmbCategoria.Text;
+
+            FiltrarComboBox(
+                cmbCategoria,
+                _categoriasOriginais,
+                textoDigitado,
+                ref _atualizandoComboCategoria
+            );
+        }
+
+        private void cmbServicoPermitido_TextUpdate(object? sender, EventArgs e)
+        {
+            if (_atualizandoComboServico)
+                return;
+
+            string textoDigitado = cmbServicoPermitido.Text;
+
+            FiltrarComboBox(
+                cmbServicoPermitido,
+                _servicosOriginais,
+                textoDigitado,
+                ref _atualizandoComboServico
+            );
+        }
+
+        private void FiltrarComboBox(
+            ComboBox comboBox,
+            List<string> listaOriginal,
+            string textoDigitado,
+            ref bool atualizando)
+        {
+            try
+            {
+                atualizando = true;
+
+                int posicaoCursor = comboBox.SelectionStart;
+                string textoNormalizado = NormalizarTexto(textoDigitado);
+
+                var itensFiltrados = listaOriginal
+                    .Where(item => NormalizarTexto(item).Contains(textoNormalizado))
+                    .ToList();
+
+                comboBox.DroppedDown = false;
+
+                comboBox.BeginUpdate();
+                comboBox.Items.Clear();
+
+                foreach (var item in itensFiltrados)
+                {
+                    comboBox.Items.Add(item);
+                }
+
+                comboBox.EndUpdate();
+
+                // Mantém exatamente o que você digitou.
+                // Não completa o campo automaticamente.
+                comboBox.Text = textoDigitado;
+                comboBox.SelectionStart = Math.Min(posicaoCursor, comboBox.Text.Length);
+                comboBox.SelectionLength = 0;
+
+                if (itensFiltrados.Count > 0 && comboBox.Focused)
+                {
+                    comboBox.DroppedDown = true;
+                    Cursor.Current = Cursors.Default;
+                }
+            }
+            catch
+            {
+                comboBox.DroppedDown = false;
+            }
+            finally
+            {
+                atualizando = false;
+            }
         }
 
         private void ConfigurarGridServicos()
@@ -440,30 +568,35 @@ namespace ComodoroERP
             if (string.IsNullOrWhiteSpace(cmbCategoria.Text))
             {
                 MessageBox.Show("Selecione a categoria do serviço.");
+                cmbCategoria.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(cmbServicoPermitido.Text))
             {
                 MessageBox.Show("Selecione o serviço permitido.");
+                cmbServicoPermitido.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtDescricaoServico.Text))
             {
                 MessageBox.Show("Informe a descrição do serviço.");
+                txtDescricaoServico.Focus();
                 return false;
             }
 
             if (numQuantidade.Value <= 0)
             {
                 MessageBox.Show("Informe uma quantidade válida.");
+                numQuantidade.Focus();
                 return false;
             }
 
             if (!chkCortesia.Checked && numValorUnitario.Value <= 0)
             {
                 MessageBox.Show("Informe um valor unitário válido.");
+                numValorUnitario.Focus();
                 return false;
             }
 
@@ -478,12 +611,11 @@ namespace ComodoroERP
             chkCortesia.Checked = false;
             txtObservacaoServico.Clear();
 
-            if (cmbCategoria.Items.Count > 0)
-            {
-                cmbCategoria.SelectedIndex = 0;
-            }
+            cmbServicoPermitido.SelectedIndex = -1;
+            cmbServicoPermitido.Text = "";
 
-            CarregarServicosPorCategoria();
+            if (!string.IsNullOrWhiteSpace(cmbCategoria.Text))
+                CarregarServicosPorCategoria();
         }
 
         private void btnRemoverServico_Click(object sender, EventArgs e)
@@ -510,7 +642,7 @@ namespace ComodoroERP
 
             var cliente = new Cliente
             {
-                Nome = txtCliente.Text.Trim().ToUpper(),
+                Nome = cmbCliente.Text.Trim().ToUpper(),
                 Cnpj = txtCnpj.Text.Trim(),
                 Endereco = txtEndereco.Text.Trim().ToUpper(),
                 BairroCep = txtBairroCep.Text.Trim().ToUpper(),
@@ -530,12 +662,11 @@ namespace ComodoroERP
 
             try
             {
-                var service = new OrcamentoService();
-
-                int idOrcamento = service.SalvarOrcamento(cliente, orcamento, _itens);
+                int idOrcamento = _orcamentoService.SalvarOrcamento(cliente, orcamento, _itens);
 
                 MessageBox.Show($"Orçamento salvo com sucesso! ID: {idOrcamento}");
 
+                CarregarClientes();
                 LimparTela();
             }
             catch (Exception ex)
@@ -546,10 +677,10 @@ namespace ComodoroERP
 
         private bool ValidarOrcamento()
         {
-            if (string.IsNullOrWhiteSpace(txtCliente.Text))
+            if (string.IsNullOrWhiteSpace(cmbCliente.Text))
             {
                 MessageBox.Show("Informe o cliente/escola.");
-                txtCliente.Focus();
+                cmbCliente.Focus();
                 return false;
             }
 
@@ -592,7 +723,9 @@ namespace ComodoroERP
 
         private void LimparTela()
         {
-            txtCliente.Clear();
+            cmbCliente.Text = "";
+            cmbCliente.SelectedIndex = -1;
+
             txtCnpj.Clear();
             txtEndereco.Clear();
             txtBairroCep.Clear();
@@ -609,13 +742,14 @@ namespace ComodoroERP
 
             LimparCamposServico();
 
-            txtCliente.Focus();
+            cmbCliente.Focus();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             Close();
         }
+
         private void AplicarEstiloVisual()
         {
             BackColor = Color.WhiteSmoke;
@@ -635,7 +769,6 @@ namespace ComodoroERP
 
             AplicarEstiloCampos(this);
 
-            // Deixe o topo por último para não ser sobrescrito
             pnlTopo.BackColor = Color.SteelBlue;
 
             lblTituloTela.ForeColor = Color.White;
@@ -644,6 +777,7 @@ namespace ComodoroERP
             lblSubtituloTela.ForeColor = Color.WhiteSmoke;
             lblSubtituloTela.Font = new Font("Segoe UI", 9);
         }
+
         private void AplicarEstiloPainel(Panel painel)
         {
             painel.BackColor = Color.White;
@@ -750,10 +884,6 @@ namespace ComodoroERP
                     AplicarEstiloCampos(controle);
                 }
             }
-        }
-
-        private void FrmNovoOrcamento_Load(object sender, EventArgs e)
-        {
         }
     }
 }

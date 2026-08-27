@@ -53,7 +53,7 @@
             label2 = new Label();
             txtCnpj = new TextBox();
             label1 = new Label();
-            txtCliente = new TextBox();
+            cmbCliente = new ComboBox();
             numVariacaoNota3 = new NumericUpDown();
             numVariacaoNota2 = new NumericUpDown();
             cmbStatus = new ComboBox();
@@ -319,12 +319,16 @@
             label1.TabIndex = 1;
             label1.Text = "Cliente / Escola:";
             // 
-            // txtCliente
+            // cmbCliente
             // 
-            txtCliente.Location = new Point(20, 55);
-            txtCliente.Name = "txtCliente";
-            txtCliente.Size = new Size(300, 25);
-            txtCliente.TabIndex = 0;
+            cmbCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbCliente.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmbCliente.DropDownStyle = ComboBoxStyle.DropDown;
+            cmbCliente.FormattingEnabled = true;
+            cmbCliente.Location = new Point(20, 55);
+            cmbCliente.Name = "cmbCliente";
+            cmbCliente.Size = new Size(300, 25);
+            cmbCliente.TabIndex = 0;
             // 
             // numVariacaoNota3
             // 
@@ -475,7 +479,7 @@
             pnlCliente.Controls.Add(label2);
             pnlCliente.Controls.Add(txtCidadeEstado);
             pnlCliente.Controls.Add(txtEndereco);
-            pnlCliente.Controls.Add(txtCliente);
+            pnlCliente.Controls.Add(cmbCliente);
             pnlCliente.Controls.Add(label4);
             pnlCliente.Controls.Add(txtBairroCep);
             pnlCliente.Controls.Add(label3);
@@ -624,7 +628,7 @@
         private Label label2;
         private TextBox txtCnpj;
         private Label label1;
-        private TextBox txtCliente;
+        private ComboBox cmbCliente;
         private Label label5;
         private TextBox txtCidadeEstado;
         private Label label4;

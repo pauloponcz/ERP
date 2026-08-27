@@ -1,4 +1,5 @@
-﻿using ComodoroERP.Reports;
+﻿using ComodoroERP.Models;
+using ComodoroERP.Reports;
 using ComodoroERP.Services;
 using ComodoroERP.Utils;
 using System.Data;
@@ -9,6 +10,7 @@ namespace ComodoroERP
     public partial class FrmOrcamentos : FrmBase
     {
         private readonly OrcamentoService _orcamentoService = new();
+        private List<Cliente> _clientesOriginais = new();
 
         public FrmOrcamentos()
         {
@@ -24,6 +26,15 @@ namespace ComodoroERP
 
         private void ConfigurarTela()
         {
+            ConfigurarComboCliente();
+            CarregarClientes();
+
+            cmbFiltroCliente.KeyDown -= cmbFiltroCliente_KeyDown;
+            cmbFiltroCliente.KeyDown += cmbFiltroCliente_KeyDown;
+
+            cmbFiltroCliente.SelectionChangeCommitted -= cmbFiltroCliente_SelectionChangeCommitted;
+            cmbFiltroCliente.SelectionChangeCommitted += cmbFiltroCliente_SelectionChangeCommitted;
+
             cmbFiltroStatus.Items.Clear();
             cmbFiltroStatus.Items.Add("Todos");
             cmbFiltroStatus.Items.Add("Pendente");
@@ -37,6 +48,49 @@ namespace ComodoroERP
             dtpDataFinal.Checked = false;
         }
 
+        private void ConfigurarComboCliente()
+        {
+            cmbFiltroCliente.DropDownStyle = ComboBoxStyle.DropDown;
+            cmbFiltroCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbFiltroCliente.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmbFiltroCliente.FlatStyle = FlatStyle.Standard;
+        }
+
+        private void CarregarClientes()
+        {
+            string textoAtual = cmbFiltroCliente.Text;
+
+            cmbFiltroCliente.Items.Clear();
+
+            _clientesOriginais = _orcamentoService
+                .ListarClientesComOrcamentos()
+                .ToList();
+
+            foreach (var cliente in _clientesOriginais)
+            {
+                if (!string.IsNullOrWhiteSpace(cliente.Nome))
+                    cmbFiltroCliente.Items.Add(cliente.Nome);
+            }
+
+            cmbFiltroCliente.Text = textoAtual;
+        }
+
+        private void cmbFiltroCliente_SelectionChangeCommitted(object? sender, EventArgs e)
+        {
+            CarregarOrcamentos();
+        }
+
+        private void cmbFiltroCliente_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter)
+                return;
+
+            CarregarOrcamentos();
+
+            e.SuppressKeyPress = true;
+        }
+
+
         private void ConfigurarGrid()
         {
             dgvOrcamentos.AllowUserToAddRows = false;
@@ -49,7 +103,7 @@ namespace ComodoroERP
 
         private void CarregarOrcamentos()
         {
-            string clienteFiltro = txtFiltroCliente.Text.Trim();
+            string clienteFiltro = cmbFiltroCliente.Text.Trim();
 
             string statusFiltro = "";
 
@@ -141,12 +195,14 @@ namespace ComodoroERP
 
         private void btnLimparFiltros_Click(object sender, EventArgs e)
         {
-            txtFiltroCliente.Clear();
+            cmbFiltroCliente.Text = "";
+            cmbFiltroCliente.SelectedIndex = -1;
             cmbFiltroStatus.SelectedIndex = 0;
 
             dtpDataInicial.Checked = false;
             dtpDataFinal.Checked = false;
 
+            CarregarClientes();
             CarregarOrcamentos();
         }
 

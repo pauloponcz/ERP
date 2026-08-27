@@ -2,12 +2,11 @@
 using ComodoroERP.Models;
 using Microsoft.Data.Sqlite;
 using System.Data;
-using System.IO;
 
 namespace ComodoroERP.Services
 {
     public class OrcamentoService
-    {
+    {        
         public int SalvarOrcamento(
             Cliente cliente,
             Orcamento orcamento,
@@ -689,6 +688,126 @@ namespace ComodoroERP.Services
             }
         }
 
+        public List<Cliente> ListarClientes()
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+        SELECT
+            Id,
+            Nome,
+            Cnpj,
+            Endereco,
+            BairroCep,
+            CidadeEstado
+        FROM Clientes
+        WHERE Nome IS NOT NULL
+          AND TRIM(Nome) <> ''
+        ORDER BY Nome;
+    ";
+
+            using var reader = command.ExecuteReader();
+
+            var clientes = new List<Cliente>();
+
+            while (reader.Read())
+            {
+                clientes.Add(new Cliente
+                {
+                    Id = reader["Id"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Id"]),
+                    Nome = reader["Nome"]?.ToString() ?? "",
+                    Cnpj = reader["Cnpj"]?.ToString() ?? "",
+                    Endereco = reader["Endereco"]?.ToString() ?? "",
+                    BairroCep = reader["BairroCep"]?.ToString() ?? "",
+                    CidadeEstado = reader["CidadeEstado"]?.ToString() ?? ""
+                });
+            }
+
+            return clientes;
+        }
+
+        public Cliente? ObterClientePorNome(string nome)
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+        SELECT
+            Id,
+            Nome,
+            Cnpj,
+            Endereco,
+            BairroCep,
+            CidadeEstado
+        FROM Clientes
+        WHERE UPPER(TRIM(Nome)) = UPPER(TRIM(@Nome))
+        LIMIT 1;
+    ";
+
+            command.Parameters.AddWithValue("@Nome", nome ?? "");
+
+            using var reader = command.ExecuteReader();
+
+            if (!reader.Read())
+                return null;
+
+            return new Cliente
+            {
+                Id = reader["Id"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Id"]),
+                Nome = reader["Nome"]?.ToString() ?? "",
+                Cnpj = reader["Cnpj"]?.ToString() ?? "",
+                Endereco = reader["Endereco"]?.ToString() ?? "",
+                BairroCep = reader["BairroCep"]?.ToString() ?? "",
+                CidadeEstado = reader["CidadeEstado"]?.ToString() ?? ""
+            };
+        }
+
+        public List<Cliente> ListarClientesComOrcamentos()
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+        SELECT DISTINCT
+            C.Id,
+            C.Nome,
+            C.Cnpj,
+            C.Endereco,
+            C.BairroCep,
+            C.CidadeEstado
+        FROM Clientes C
+        INNER JOIN Orcamentos O ON O.ClienteId = C.Id
+        WHERE C.Nome IS NOT NULL
+          AND TRIM(C.Nome) <> ''
+        ORDER BY C.Nome;
+    ";
+
+            using var reader = command.ExecuteReader();
+
+            var clientes = new List<Cliente>();
+
+            while (reader.Read())
+            {
+                clientes.Add(new Cliente
+                {
+                    Id = reader["Id"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Id"]),
+                    Nome = reader["Nome"]?.ToString() ?? "",
+                    Cnpj = reader["Cnpj"]?.ToString() ?? "",
+                    Endereco = reader["Endereco"]?.ToString() ?? "",
+                    BairroCep = reader["BairroCep"]?.ToString() ?? "",
+                    CidadeEstado = reader["CidadeEstado"]?.ToString() ?? ""
+                });
+            }
+
+            return clientes;
+        }
 
     }
 

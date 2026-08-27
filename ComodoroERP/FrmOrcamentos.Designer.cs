@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             lblFiltroCliente = new Label();
-            txtFiltroCliente = new TextBox();
+            cmbFiltroCliente = new ComboBox();
             cmbFiltroStatus = new ComboBox();
             lblFiltroStatus = new Label();
             lblDataInicial = new Label();
@@ -67,12 +67,16 @@
             lblFiltroCliente.Text = "Cliente:";
             lblFiltroCliente.Click += label1_Click;
             // 
-            // txtFiltroCliente
+            // cmbFiltroCliente
             // 
-            txtFiltroCliente.Location = new Point(20, 65);
-            txtFiltroCliente.Name = "txtFiltroCliente";
-            txtFiltroCliente.Size = new Size(260, 25);
-            txtFiltroCliente.TabIndex = 2;
+            cmbFiltroCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbFiltroCliente.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmbFiltroCliente.DropDownStyle = ComboBoxStyle.DropDown;
+            cmbFiltroCliente.FormattingEnabled = true;
+            cmbFiltroCliente.Location = new Point(20, 65);
+            cmbFiltroCliente.Name = "cmbFiltroCliente";
+            cmbFiltroCliente.Size = new Size(260, 25);
+            cmbFiltroCliente.TabIndex = 2;
             // 
             // cmbFiltroStatus
             // 
@@ -252,7 +256,7 @@
             pnlFiltros.BorderStyle = BorderStyle.FixedSingle;
             pnlFiltros.Controls.Add(lblFiltros);
             pnlFiltros.Controls.Add(lblFiltroCliente);
-            pnlFiltros.Controls.Add(txtFiltroCliente);
+            pnlFiltros.Controls.Add(cmbFiltroCliente);
             pnlFiltros.Controls.Add(lblFiltroStatus);
             pnlFiltros.Controls.Add(cmbFiltroStatus);
             pnlFiltros.Controls.Add(lblDataInicial);
@@ -332,7 +336,7 @@
         #endregion
 
         private Label lblFiltroCliente;
-        private TextBox txtFiltroCliente;
+        private ComboBox cmbFiltroCliente;
         private ComboBox cmbFiltroStatus;
         private Label lblFiltroStatus;
         private Label lblDataInicial;
