@@ -1,186 +1,77 @@
-﻿namespace ComodoroERP
+namespace ComodoroERP
 {
     partial class FrmDashboard
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
+
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            fileSystemWatcher1 = new FileSystemWatcher();
-            lblTotalOrcamentos = new Label();
-            lblPendentes = new Label();
-            lblPagos = new Label();
-            lblCancelados = new Label();
+            pnlTopo = new Panel();
+            lblSubtituloTela = new Label();
+            lblTituloTela = new Label();
+            pnlFiltros = new Panel();
+            btnLimpar = new Button();
+            btnFiltrar = new Button();
+            dtpDataFinal = new DateTimePicker();
+            lblDataFinal = new Label();
+            dtpDataInicial = new DateTimePicker();
+            lblDataInicial = new Label();
+            cmbEscola = new ComboBox();
+            lblEscola = new Label();
+            lblFiltros = new Label();
+            pnlTotalAcertos = new Panel();
+            lblTotalAcertos = new Label();
+            lblTituloTotalAcertos = new Label();
+            pnlValorTotal = new Panel();
             lblValorTotal = new Label();
+            lblTituloValorTotal = new Label();
+            pnlValorPago = new Panel();
+            lblValorPago = new Label();
+            lblTituloValorPago = new Label();
+            pnlValorPendente = new Panel();
+            lblValorPendente = new Label();
+            lblTituloValorPendente = new Label();
+            pnlPercentualPago = new Panel();
+            lblPercentualPago = new Label();
+            lblTituloPercentualPago = new Label();
+            pnlMelhorPagadora = new Panel();
+            lblMelhorPagadoraDetalhe = new Label();
+            lblMelhorPagadoraEscola = new Label();
+            lblTituloMelhorPagadora = new Label();
+            pnlMaiorDevedora = new Panel();
+            lblMaiorDevedoraDetalhe = new Label();
+            lblMaiorDevedoraEscola = new Label();
+            lblTituloMaiorDevedora = new Label();
+            pnlGraficoStatus = new Panel();
+            pnlGraficoDevedores = new Panel();
+            pnlGraficoPagadores = new Panel();
+            pnlGrid = new Panel();
+            lblRanking = new Label();
+            dgvRanking = new DataGridView();
             btnAtualizar = new Button();
             btnFechar = new Button();
-            lblValorPendente = new Label();
-            lblValorPago = new Label();
-            dgvUltimosOrcamentos = new DataGridView();
-            pnlTopo = new Panel();
-            lblTituloTela = new Label();
-            lblSubtituloTela = new Label();
-            pnlTotalOrcamentos = new Panel();
-            lblTituloTotalOrcamentos = new Label();
-            pnlPendentes = new Panel();
-            lblTituloPendentes = new Label();
-            pnlPagos = new Panel();
-            lblTituloPagos = new Label();
-            lblTituloCancelados = new Label();
-            pnlCancelados = new Panel();
-            lblTituloValorTotal = new Label();
-            pnlValorTotal = new Panel();
-            lblTituloValorPendente = new Label();
-            pnlValorPendente = new Panel();
-            lblTituloValorPago = new Label();
-            pnlValorPago = new Panel();
-            pnlGrid = new Panel();
-            lblUltimosOrcamentos = new Label();
-            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvUltimosOrcamentos).BeginInit();
             pnlTopo.SuspendLayout();
-            pnlTotalOrcamentos.SuspendLayout();
-            pnlPendentes.SuspendLayout();
-            pnlPagos.SuspendLayout();
-            pnlCancelados.SuspendLayout();
+            pnlFiltros.SuspendLayout();
+            pnlTotalAcertos.SuspendLayout();
             pnlValorTotal.SuspendLayout();
-            pnlValorPendente.SuspendLayout();
             pnlValorPago.SuspendLayout();
+            pnlValorPendente.SuspendLayout();
+            pnlPercentualPago.SuspendLayout();
+            pnlMelhorPagadora.SuspendLayout();
+            pnlMaiorDevedora.SuspendLayout();
             pnlGrid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvRanking).BeginInit();
             SuspendLayout();
-            // 
-            // fileSystemWatcher1
-            // 
-            fileSystemWatcher1.EnableRaisingEvents = true;
-            fileSystemWatcher1.SynchronizingObject = this;
-            // 
-            // lblTotalOrcamentos
-            // 
-            lblTotalOrcamentos.AutoSize = true;
-            lblTotalOrcamentos.Font = new Font("Segoe UI Semibold", 18F);
-            lblTotalOrcamentos.ForeColor = Color.SteelBlue;
-            lblTotalOrcamentos.Location = new Point(15, 35);
-            lblTotalOrcamentos.Name = "lblTotalOrcamentos";
-            lblTotalOrcamentos.Size = new Size(27, 32);
-            lblTotalOrcamentos.TabIndex = 1;
-            lblTotalOrcamentos.Text = "0";
-            // 
-            // lblPendentes
-            // 
-            lblPendentes.AutoSize = true;
-            lblPendentes.Font = new Font("Segoe UI Semibold", 18F);
-            lblPendentes.ForeColor = Color.DarkOrange;
-            lblPendentes.Location = new Point(15, 35);
-            lblPendentes.Name = "lblPendentes";
-            lblPendentes.Size = new Size(27, 32);
-            lblPendentes.TabIndex = 2;
-            lblPendentes.Text = "0";
-            // 
-            // lblPagos
-            // 
-            lblPagos.AutoSize = true;
-            lblPagos.Font = new Font("Segoe UI Semibold", 18F);
-            lblPagos.ForeColor = Color.SeaGreen;
-            lblPagos.Location = new Point(15, 35);
-            lblPagos.Name = "lblPagos";
-            lblPagos.Size = new Size(27, 32);
-            lblPagos.TabIndex = 3;
-            lblPagos.Text = "0";
-            // 
-            // lblCancelados
-            // 
-            lblCancelados.AutoSize = true;
-            lblCancelados.Font = new Font("Segoe UI Semibold", 18F);
-            lblCancelados.ForeColor = Color.IndianRed;
-            lblCancelados.Location = new Point(15, 35);
-            lblCancelados.Name = "lblCancelados";
-            lblCancelados.Size = new Size(27, 32);
-            lblCancelados.TabIndex = 4;
-            lblCancelados.Text = "0";
-            lblCancelados.Click += label4_Click;
-            // 
-            // lblValorTotal
-            // 
-            lblValorTotal.AutoSize = true;
-            lblValorTotal.Font = new Font("Segoe UI Semibold", 16F);
-            lblValorTotal.ForeColor = Color.SteelBlue;
-            lblValorTotal.Location = new Point(15, 35);
-            lblValorTotal.Name = "lblValorTotal";
-            lblValorTotal.Size = new Size(86, 30);
-            lblValorTotal.TabIndex = 5;
-            lblValorTotal.Text = "R$ 0,00";
-            // 
-            // btnAtualizar
-            // 
-            btnAtualizar.Location = new Point(725, 570);
-            btnAtualizar.Name = "btnAtualizar";
-            btnAtualizar.Size = new Size(110, 35);
-            btnAtualizar.TabIndex = 41;
-            btnAtualizar.Text = "Atualizar";
-            btnAtualizar.UseVisualStyleBackColor = true;
-            btnAtualizar.Click += btnAtualizar_Click;
-            // 
-            // btnFechar
-            // 
-            btnFechar.Location = new Point(850, 570);
-            btnFechar.Name = "btnFechar";
-            btnFechar.Size = new Size(110, 35);
-            btnFechar.TabIndex = 42;
-            btnFechar.Text = "Fechar";
-            btnFechar.UseVisualStyleBackColor = true;
-            btnFechar.Click += btnFechar_Click;
-            // 
-            // lblValorPendente
-            // 
-            lblValorPendente.AutoSize = true;
-            lblValorPendente.Font = new Font("Segoe UI Semibold", 16F);
-            lblValorPendente.ForeColor = Color.DarkOrange;
-            lblValorPendente.Location = new Point(15, 35);
-            lblValorPendente.Name = "lblValorPendente";
-            lblValorPendente.Size = new Size(86, 30);
-            lblValorPendente.TabIndex = 7;
-            lblValorPendente.Text = "R$ 0,00";
-            // 
-            // lblValorPago
-            // 
-            lblValorPago.AutoSize = true;
-            lblValorPago.Font = new Font("Segoe UI Semibold", 16F);
-            lblValorPago.ForeColor = Color.SeaGreen;
-            lblValorPago.Location = new Point(15, 35);
-            lblValorPago.Name = "lblValorPago";
-            lblValorPago.Size = new Size(86, 30);
-            lblValorPago.TabIndex = 6;
-            lblValorPago.Text = "R$ 0,00";
-            // 
-            // dgvUltimosOrcamentos
-            // 
-            dgvUltimosOrcamentos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvUltimosOrcamentos.Location = new Point(15, 45);
-            dgvUltimosOrcamentos.Name = "dgvUltimosOrcamentos";
-            dgvUltimosOrcamentos.Size = new Size(910, 185);
-            dgvUltimosOrcamentos.TabIndex = 0;
             // 
             // pnlTopo
             // 
@@ -189,19 +80,8 @@
             pnlTopo.Controls.Add(lblTituloTela);
             pnlTopo.Location = new Point(0, 0);
             pnlTopo.Name = "pnlTopo";
-            pnlTopo.Size = new Size(1000, 75);
-            pnlTopo.TabIndex = 45;
-            // 
-            // lblTituloTela
-            // 
-            lblTituloTela.AutoSize = true;
-            lblTituloTela.Font = new Font("Segoe UI Semibold", 15F);
-            lblTituloTela.ForeColor = Color.White;
-            lblTituloTela.Location = new Point(25, 14);
-            lblTituloTela.Name = "lblTituloTela";
-            lblTituloTela.Size = new Size(131, 28);
-            lblTituloTela.TabIndex = 0;
-            lblTituloTela.Text = "DASHBOARD";
+            pnlTopo.Size = new Size(1180, 75);
+            pnlTopo.TabIndex = 0;
             // 
             // lblSubtituloTela
             // 
@@ -210,152 +90,184 @@
             lblSubtituloTela.ForeColor = Color.WhiteSmoke;
             lblSubtituloTela.Location = new Point(27, 43);
             lblSubtituloTela.Name = "lblSubtituloTela";
-            lblSubtituloTela.Size = new Size(293, 15);
+            lblSubtituloTela.Size = new Size(333, 15);
             lblSubtituloTela.TabIndex = 1;
-            lblSubtituloTela.Text = "Acompanhe os principais indicadores dos orçamentos";
+            lblSubtituloTela.Text = "Acompanhe pagamentos, pendências e desempenho por escola";
             // 
-            // pnlTotalOrcamentos
+            // lblTituloTela
             // 
-            pnlTotalOrcamentos.BackColor = Color.White;
-            pnlTotalOrcamentos.BorderStyle = BorderStyle.FixedSingle;
-            pnlTotalOrcamentos.Controls.Add(lblTituloTotalOrcamentos);
-            pnlTotalOrcamentos.Controls.Add(lblTotalOrcamentos);
-            pnlTotalOrcamentos.Location = new Point(20, 95);
-            pnlTotalOrcamentos.Name = "pnlTotalOrcamentos";
-            pnlTotalOrcamentos.Size = new Size(220, 80);
-            pnlTotalOrcamentos.TabIndex = 46;
+            lblTituloTela.AutoSize = true;
+            lblTituloTela.Font = new Font("Segoe UI Semibold", 15F);
+            lblTituloTela.ForeColor = Color.White;
+            lblTituloTela.Location = new Point(25, 14);
+            lblTituloTela.Name = "lblTituloTela";
+            lblTituloTela.Size = new Size(240, 28);
+            lblTituloTela.TabIndex = 0;
+            lblTituloTela.Text = "DASHBOARD DE ACERTOS";
             // 
-            // lblTituloTotalOrcamentos
+            // pnlFiltros
             // 
-            lblTituloTotalOrcamentos.AutoSize = true;
-            lblTituloTotalOrcamentos.Font = new Font("Segoe UI", 9F);
-            lblTituloTotalOrcamentos.ForeColor = Color.DimGray;
-            lblTituloTotalOrcamentos.Location = new Point(15, 12);
-            lblTituloTotalOrcamentos.Name = "lblTituloTotalOrcamentos";
-            lblTituloTotalOrcamentos.Size = new Size(117, 15);
-            lblTituloTotalOrcamentos.TabIndex = 0;
-            lblTituloTotalOrcamentos.Text = "Total de Orçamentos";
+            pnlFiltros.BackColor = Color.White;
+            pnlFiltros.BorderStyle = BorderStyle.FixedSingle;
+            pnlFiltros.Controls.Add(btnLimpar);
+            pnlFiltros.Controls.Add(btnFiltrar);
+            pnlFiltros.Controls.Add(dtpDataFinal);
+            pnlFiltros.Controls.Add(lblDataFinal);
+            pnlFiltros.Controls.Add(dtpDataInicial);
+            pnlFiltros.Controls.Add(lblDataInicial);
+            pnlFiltros.Controls.Add(cmbEscola);
+            pnlFiltros.Controls.Add(lblEscola);
+            pnlFiltros.Controls.Add(lblFiltros);
+            pnlFiltros.Location = new Point(20, 90);
+            pnlFiltros.Name = "pnlFiltros";
+            pnlFiltros.Size = new Size(1125, 90);
+            pnlFiltros.TabIndex = 1;
             // 
-            // pnlPendentes
+            // btnLimpar
             // 
-            pnlPendentes.BackColor = Color.White;
-            pnlPendentes.BorderStyle = BorderStyle.FixedSingle;
-            pnlPendentes.Controls.Add(lblTituloPendentes);
-            pnlPendentes.Controls.Add(lblPendentes);
-            pnlPendentes.Location = new Point(260, 95);
-            pnlPendentes.Name = "pnlPendentes";
-            pnlPendentes.Size = new Size(220, 80);
-            pnlPendentes.TabIndex = 47;
+            btnLimpar.Location = new Point(1010, 38);
+            btnLimpar.Name = "btnLimpar";
+            btnLimpar.Size = new Size(90, 35);
+            btnLimpar.TabIndex = 8;
+            btnLimpar.Text = "Limpar";
+            btnLimpar.UseVisualStyleBackColor = true;
+            btnLimpar.Click += btnLimpar_Click;
             // 
-            // lblTituloPendentes
+            // btnFiltrar
             // 
-            lblTituloPendentes.AutoSize = true;
-            lblTituloPendentes.Font = new Font("Segoe UI", 9F);
-            lblTituloPendentes.ForeColor = Color.DimGray;
-            lblTituloPendentes.Location = new Point(15, 12);
-            lblTituloPendentes.Name = "lblTituloPendentes";
-            lblTituloPendentes.Size = new Size(62, 15);
-            lblTituloPendentes.TabIndex = 0;
-            lblTituloPendentes.Text = "Pendentes";
+            btnFiltrar.Location = new Point(905, 38);
+            btnFiltrar.Name = "btnFiltrar";
+            btnFiltrar.Size = new Size(90, 35);
+            btnFiltrar.TabIndex = 7;
+            btnFiltrar.Text = "Filtrar";
+            btnFiltrar.UseVisualStyleBackColor = true;
+            btnFiltrar.Click += btnFiltrar_Click;
             // 
-            // pnlPagos
+            // dtpDataFinal
             // 
-            pnlPagos.BackColor = Color.White;
-            pnlPagos.BorderStyle = BorderStyle.FixedSingle;
-            pnlPagos.Controls.Add(lblTituloPagos);
-            pnlPagos.Controls.Add(lblPagos);
-            pnlPagos.Location = new Point(500, 95);
-            pnlPagos.Name = "pnlPagos";
-            pnlPagos.Size = new Size(220, 80);
-            pnlPagos.TabIndex = 48;
+            dtpDataFinal.Format = DateTimePickerFormat.Short;
+            dtpDataFinal.Location = new Point(735, 45);
+            dtpDataFinal.Name = "dtpDataFinal";
+            dtpDataFinal.ShowCheckBox = true;
+            dtpDataFinal.Size = new Size(145, 25);
+            dtpDataFinal.TabIndex = 6;
             // 
-            // lblTituloPagos
+            // lblDataFinal
             // 
-            lblTituloPagos.AutoSize = true;
-            lblTituloPagos.Font = new Font("Segoe UI", 9F);
-            lblTituloPagos.ForeColor = Color.DimGray;
-            lblTituloPagos.Location = new Point(15, 12);
-            lblTituloPagos.Name = "lblTituloPagos";
-            lblTituloPagos.Size = new Size(39, 15);
-            lblTituloPagos.TabIndex = 0;
-            lblTituloPagos.Text = "Pagos";
+            lblDataFinal.AutoSize = true;
+            lblDataFinal.Location = new Point(735, 22);
+            lblDataFinal.Name = "lblDataFinal";
+            lblDataFinal.Size = new Size(73, 19);
+            lblDataFinal.TabIndex = 5;
+            lblDataFinal.Text = "Data Final:";
             // 
-            // lblTituloCancelados
+            // dtpDataInicial
             // 
-            lblTituloCancelados.AutoSize = true;
-            lblTituloCancelados.Font = new Font("Segoe UI", 9F);
-            lblTituloCancelados.ForeColor = Color.DimGray;
-            lblTituloCancelados.Location = new Point(15, 12);
-            lblTituloCancelados.Name = "lblTituloCancelados";
-            lblTituloCancelados.Size = new Size(68, 15);
-            lblTituloCancelados.TabIndex = 0;
-            lblTituloCancelados.Text = "Cancelados";
+            dtpDataInicial.Format = DateTimePickerFormat.Short;
+            dtpDataInicial.Location = new Point(565, 45);
+            dtpDataInicial.Name = "dtpDataInicial";
+            dtpDataInicial.ShowCheckBox = true;
+            dtpDataInicial.Size = new Size(145, 25);
+            dtpDataInicial.TabIndex = 4;
             // 
-            // pnlCancelados
+            // lblDataInicial
             // 
-            pnlCancelados.BackColor = Color.White;
-            pnlCancelados.BorderStyle = BorderStyle.FixedSingle;
-            pnlCancelados.Controls.Add(lblTituloCancelados);
-            pnlCancelados.Controls.Add(lblCancelados);
-            pnlCancelados.Location = new Point(740, 95);
-            pnlCancelados.Name = "pnlCancelados";
-            pnlCancelados.Size = new Size(220, 80);
-            pnlCancelados.TabIndex = 49;
+            lblDataInicial.AutoSize = true;
+            lblDataInicial.Location = new Point(565, 22);
+            lblDataInicial.Name = "lblDataInicial";
+            lblDataInicial.Size = new Size(79, 19);
+            lblDataInicial.TabIndex = 3;
+            lblDataInicial.Text = "Data Inicial:";
             // 
-            // lblTituloValorTotal
+            // cmbEscola
             // 
-            lblTituloValorTotal.AutoSize = true;
-            lblTituloValorTotal.Font = new Font("Segoe UI", 9F);
-            lblTituloValorTotal.ForeColor = Color.DimGray;
-            lblTituloValorTotal.Location = new Point(15, 12);
-            lblTituloValorTotal.Name = "lblTituloValorTotal";
-            lblTituloValorTotal.Size = new Size(62, 15);
-            lblTituloValorTotal.TabIndex = 0;
-            lblTituloValorTotal.Text = "Valor Total";
+            cmbEscola.FormattingEnabled = true;
+            cmbEscola.Location = new Point(145, 45);
+            cmbEscola.Name = "cmbEscola";
+            cmbEscola.Size = new Size(390, 25);
+            cmbEscola.TabIndex = 2;
+            // 
+            // lblEscola
+            // 
+            lblEscola.AutoSize = true;
+            lblEscola.Location = new Point(145, 22);
+            lblEscola.Name = "lblEscola";
+            lblEscola.Size = new Size(49, 19);
+            lblEscola.TabIndex = 1;
+            lblEscola.Text = "Escola:";
+            // 
+            // lblFiltros
+            // 
+            lblFiltros.AutoSize = true;
+            lblFiltros.Font = new Font("Segoe UI Semibold", 11F);
+            lblFiltros.ForeColor = Color.FromArgb(35, 35, 35);
+            lblFiltros.Location = new Point(15, 35);
+            lblFiltros.Name = "lblFiltros";
+            lblFiltros.Size = new Size(51, 20);
+            lblFiltros.TabIndex = 0;
+            lblFiltros.Text = "Filtros";
+            // 
+            // pnlTotalAcertos
+            // 
+            pnlTotalAcertos.BackColor = Color.White;
+            pnlTotalAcertos.BorderStyle = BorderStyle.FixedSingle;
+            pnlTotalAcertos.Controls.Add(lblTotalAcertos);
+            pnlTotalAcertos.Controls.Add(lblTituloTotalAcertos);
+            pnlTotalAcertos.Location = new Point(20, 195);
+            pnlTotalAcertos.Name = "pnlTotalAcertos";
+            pnlTotalAcertos.Size = new Size(210, 80);
+            pnlTotalAcertos.TabIndex = 2;
+            // 
+            // lblTotalAcertos
+            // 
+            lblTotalAcertos.AutoSize = true;
+            lblTotalAcertos.Font = new Font("Segoe UI Semibold", 17F);
+            lblTotalAcertos.ForeColor = Color.SteelBlue;
+            lblTotalAcertos.Location = new Point(15, 35);
+            lblTotalAcertos.Name = "lblTotalAcertos";
+            lblTotalAcertos.Size = new Size(26, 31);
+            lblTotalAcertos.TabIndex = 1;
+            lblTotalAcertos.Text = "0";
+            // 
+            // lblTituloTotalAcertos
+            // 
+            lblTituloTotalAcertos.AutoSize = true;
+            lblTituloTotalAcertos.Location = new Point(15, 12);
+            lblTituloTotalAcertos.Name = "lblTituloTotalAcertos";
+            lblTituloTotalAcertos.Size = new Size(101, 19);
+            lblTituloTotalAcertos.TabIndex = 0;
+            lblTituloTotalAcertos.Text = "Total de Acertos";
             // 
             // pnlValorTotal
             // 
             pnlValorTotal.BackColor = Color.White;
             pnlValorTotal.BorderStyle = BorderStyle.FixedSingle;
-            pnlValorTotal.Controls.Add(lblTituloValorTotal);
             pnlValorTotal.Controls.Add(lblValorTotal);
-            pnlValorTotal.Location = new Point(20, 195);
+            pnlValorTotal.Controls.Add(lblTituloValorTotal);
+            pnlValorTotal.Location = new Point(245, 195);
             pnlValorTotal.Name = "pnlValorTotal";
-            pnlValorTotal.Size = new Size(300, 80);
-            pnlValorTotal.TabIndex = 50;
+            pnlValorTotal.Size = new Size(210, 80);
+            pnlValorTotal.TabIndex = 3;
             // 
-            // lblTituloValorPendente
+            // lblValorTotal
             // 
-            lblTituloValorPendente.AutoSize = true;
-            lblTituloValorPendente.Font = new Font("Segoe UI", 9F);
-            lblTituloValorPendente.ForeColor = Color.DimGray;
-            lblTituloValorPendente.Location = new Point(15, 12);
-            lblTituloValorPendente.Name = "lblTituloValorPendente";
-            lblTituloValorPendente.Size = new Size(86, 15);
-            lblTituloValorPendente.TabIndex = 0;
-            lblTituloValorPendente.Text = "Valor Pendente";
+            lblValorTotal.AutoSize = true;
+            lblValorTotal.Font = new Font("Segoe UI Semibold", 15F);
+            lblValorTotal.ForeColor = Color.SteelBlue;
+            lblValorTotal.Location = new Point(15, 37);
+            lblValorTotal.Name = "lblValorTotal";
+            lblValorTotal.Size = new Size(79, 28);
+            lblValorTotal.TabIndex = 1;
+            lblValorTotal.Text = "R$ 0,00";
             // 
-            // pnlValorPendente
+            // lblTituloValorTotal
             // 
-            pnlValorPendente.BackColor = Color.White;
-            pnlValorPendente.BorderStyle = BorderStyle.FixedSingle;
-            pnlValorPendente.Controls.Add(lblTituloValorPendente);
-            pnlValorPendente.Controls.Add(lblValorPendente);
-            pnlValorPendente.Location = new Point(340, 195);
-            pnlValorPendente.Name = "pnlValorPendente";
-            pnlValorPendente.Size = new Size(300, 80);
-            pnlValorPendente.TabIndex = 51;
-            // 
-            // lblTituloValorPago
-            // 
-            lblTituloValorPago.AutoSize = true;
-            lblTituloValorPago.Font = new Font("Segoe UI", 9F);
-            lblTituloValorPago.ForeColor = Color.DimGray;
-            lblTituloValorPago.Location = new Point(15, 12);
-            lblTituloValorPago.Name = "lblTituloValorPago";
-            lblTituloValorPago.Size = new Size(63, 15);
-            lblTituloValorPago.TabIndex = 0;
-            lblTituloValorPago.Text = "Valor Pago";
+            lblTituloValorTotal.AutoSize = true;
+            lblTituloValorTotal.Location = new Point(15, 12);
+            lblTituloValorTotal.Name = "lblTituloValorTotal";
+            lblTituloValorTotal.Size = new Size(73, 19);
+            lblTituloValorTotal.TabIndex = 0;
+            lblTituloValorTotal.Text = "Valor Total";
             // 
             // pnlValorPago
             // 
@@ -363,110 +275,351 @@
             pnlValorPago.BorderStyle = BorderStyle.FixedSingle;
             pnlValorPago.Controls.Add(lblValorPago);
             pnlValorPago.Controls.Add(lblTituloValorPago);
-            pnlValorPago.Location = new Point(660, 195);
+            pnlValorPago.Location = new Point(470, 195);
             pnlValorPago.Name = "pnlValorPago";
-            pnlValorPago.Size = new Size(300, 80);
-            pnlValorPago.TabIndex = 52;
+            pnlValorPago.Size = new Size(210, 80);
+            pnlValorPago.TabIndex = 4;
+            // 
+            // lblValorPago
+            // 
+            lblValorPago.AutoSize = true;
+            lblValorPago.Font = new Font("Segoe UI Semibold", 15F);
+            lblValorPago.ForeColor = Color.SeaGreen;
+            lblValorPago.Location = new Point(15, 37);
+            lblValorPago.Name = "lblValorPago";
+            lblValorPago.Size = new Size(79, 28);
+            lblValorPago.TabIndex = 1;
+            lblValorPago.Text = "R$ 0,00";
+            // 
+            // lblTituloValorPago
+            // 
+            lblTituloValorPago.AutoSize = true;
+            lblTituloValorPago.Location = new Point(15, 12);
+            lblTituloValorPago.Name = "lblTituloValorPago";
+            lblTituloValorPago.Size = new Size(72, 19);
+            lblTituloValorPago.TabIndex = 0;
+            lblTituloValorPago.Text = "Valor Pago";
+            // 
+            // pnlValorPendente
+            // 
+            pnlValorPendente.BackColor = Color.White;
+            pnlValorPendente.BorderStyle = BorderStyle.FixedSingle;
+            pnlValorPendente.Controls.Add(lblValorPendente);
+            pnlValorPendente.Controls.Add(lblTituloValorPendente);
+            pnlValorPendente.Location = new Point(695, 195);
+            pnlValorPendente.Name = "pnlValorPendente";
+            pnlValorPendente.Size = new Size(210, 80);
+            pnlValorPendente.TabIndex = 5;
+            // 
+            // lblValorPendente
+            // 
+            lblValorPendente.AutoSize = true;
+            lblValorPendente.Font = new Font("Segoe UI Semibold", 15F);
+            lblValorPendente.ForeColor = Color.IndianRed;
+            lblValorPendente.Location = new Point(15, 37);
+            lblValorPendente.Name = "lblValorPendente";
+            lblValorPendente.Size = new Size(79, 28);
+            lblValorPendente.TabIndex = 1;
+            lblValorPendente.Text = "R$ 0,00";
+            // 
+            // lblTituloValorPendente
+            // 
+            lblTituloValorPendente.AutoSize = true;
+            lblTituloValorPendente.Location = new Point(15, 12);
+            lblTituloValorPendente.Name = "lblTituloValorPendente";
+            lblTituloValorPendente.Size = new Size(102, 19);
+            lblTituloValorPendente.TabIndex = 0;
+            lblTituloValorPendente.Text = "Valor Pendente";
+            // 
+            // pnlPercentualPago
+            // 
+            pnlPercentualPago.BackColor = Color.White;
+            pnlPercentualPago.BorderStyle = BorderStyle.FixedSingle;
+            pnlPercentualPago.Controls.Add(lblPercentualPago);
+            pnlPercentualPago.Controls.Add(lblTituloPercentualPago);
+            pnlPercentualPago.Location = new Point(920, 195);
+            pnlPercentualPago.Name = "pnlPercentualPago";
+            pnlPercentualPago.Size = new Size(225, 80);
+            pnlPercentualPago.TabIndex = 6;
+            // 
+            // lblPercentualPago
+            // 
+            lblPercentualPago.AutoSize = true;
+            lblPercentualPago.Font = new Font("Segoe UI Semibold", 15F);
+            lblPercentualPago.ForeColor = Color.SeaGreen;
+            lblPercentualPago.Location = new Point(15, 37);
+            lblPercentualPago.Name = "lblPercentualPago";
+            lblPercentualPago.Size = new Size(70, 28);
+            lblPercentualPago.TabIndex = 1;
+            lblPercentualPago.Text = "0,00%";
+            // 
+            // lblTituloPercentualPago
+            // 
+            lblTituloPercentualPago.AutoSize = true;
+            lblTituloPercentualPago.Location = new Point(15, 12);
+            lblTituloPercentualPago.Name = "lblTituloPercentualPago";
+            lblTituloPercentualPago.Size = new Size(54, 19);
+            lblTituloPercentualPago.TabIndex = 0;
+            lblTituloPercentualPago.Text = "% Pago";
+            // 
+            // pnlMelhorPagadora
+            // 
+            pnlMelhorPagadora.BackColor = Color.White;
+            pnlMelhorPagadora.BorderStyle = BorderStyle.FixedSingle;
+            pnlMelhorPagadora.Controls.Add(lblMelhorPagadoraDetalhe);
+            pnlMelhorPagadora.Controls.Add(lblMelhorPagadoraEscola);
+            pnlMelhorPagadora.Controls.Add(lblTituloMelhorPagadora);
+            pnlMelhorPagadora.Location = new Point(20, 290);
+            pnlMelhorPagadora.Name = "pnlMelhorPagadora";
+            pnlMelhorPagadora.Size = new Size(555, 80);
+            pnlMelhorPagadora.TabIndex = 7;
+            // 
+            // lblMelhorPagadoraDetalhe
+            // 
+            lblMelhorPagadoraDetalhe.AutoSize = true;
+            lblMelhorPagadoraDetalhe.Location = new Point(15, 55);
+            lblMelhorPagadoraDetalhe.Name = "lblMelhorPagadoraDetalhe";
+            lblMelhorPagadoraDetalhe.Size = new Size(14, 19);
+            lblMelhorPagadoraDetalhe.TabIndex = 2;
+            lblMelhorPagadoraDetalhe.Text = "-";
+            // 
+            // lblMelhorPagadoraEscola
+            // 
+            lblMelhorPagadoraEscola.AutoSize = true;
+            lblMelhorPagadoraEscola.Font = new Font("Segoe UI Semibold", 10F);
+            lblMelhorPagadoraEscola.ForeColor = Color.SeaGreen;
+            lblMelhorPagadoraEscola.Location = new Point(15, 32);
+            lblMelhorPagadoraEscola.Name = "lblMelhorPagadoraEscola";
+            lblMelhorPagadoraEscola.Size = new Size(14, 19);
+            lblMelhorPagadoraEscola.TabIndex = 1;
+            lblMelhorPagadoraEscola.Text = "-";
+            // 
+            // lblTituloMelhorPagadora
+            // 
+            lblTituloMelhorPagadora.AutoSize = true;
+            lblTituloMelhorPagadora.Location = new Point(15, 10);
+            lblTituloMelhorPagadora.Name = "lblTituloMelhorPagadora";
+            lblTituloMelhorPagadora.Size = new Size(163, 19);
+            lblTituloMelhorPagadora.TabIndex = 0;
+            lblTituloMelhorPagadora.Text = "Escola que mais paga certo";
+            // 
+            // pnlMaiorDevedora
+            // 
+            pnlMaiorDevedora.BackColor = Color.White;
+            pnlMaiorDevedora.BorderStyle = BorderStyle.FixedSingle;
+            pnlMaiorDevedora.Controls.Add(lblMaiorDevedoraDetalhe);
+            pnlMaiorDevedora.Controls.Add(lblMaiorDevedoraEscola);
+            pnlMaiorDevedora.Controls.Add(lblTituloMaiorDevedora);
+            pnlMaiorDevedora.Location = new Point(590, 290);
+            pnlMaiorDevedora.Name = "pnlMaiorDevedora";
+            pnlMaiorDevedora.Size = new Size(555, 80);
+            pnlMaiorDevedora.TabIndex = 8;
+            // 
+            // lblMaiorDevedoraDetalhe
+            // 
+            lblMaiorDevedoraDetalhe.AutoSize = true;
+            lblMaiorDevedoraDetalhe.Location = new Point(15, 55);
+            lblMaiorDevedoraDetalhe.Name = "lblMaiorDevedoraDetalhe";
+            lblMaiorDevedoraDetalhe.Size = new Size(14, 19);
+            lblMaiorDevedoraDetalhe.TabIndex = 2;
+            lblMaiorDevedoraDetalhe.Text = "-";
+            // 
+            // lblMaiorDevedoraEscola
+            // 
+            lblMaiorDevedoraEscola.AutoSize = true;
+            lblMaiorDevedoraEscola.Font = new Font("Segoe UI Semibold", 10F);
+            lblMaiorDevedoraEscola.ForeColor = Color.IndianRed;
+            lblMaiorDevedoraEscola.Location = new Point(15, 32);
+            lblMaiorDevedoraEscola.Name = "lblMaiorDevedoraEscola";
+            lblMaiorDevedoraEscola.Size = new Size(14, 19);
+            lblMaiorDevedoraEscola.TabIndex = 1;
+            lblMaiorDevedoraEscola.Text = "-";
+            // 
+            // lblTituloMaiorDevedora
+            // 
+            lblTituloMaiorDevedora.AutoSize = true;
+            lblTituloMaiorDevedora.Location = new Point(15, 10);
+            lblTituloMaiorDevedora.Name = "lblTituloMaiorDevedora";
+            lblTituloMaiorDevedora.Size = new Size(144, 19);
+            lblTituloMaiorDevedora.TabIndex = 0;
+            lblTituloMaiorDevedora.Text = "Escola que mais deve";
+            // 
+            // pnlGraficoStatus
+            // 
+            pnlGraficoStatus.BackColor = Color.White;
+            pnlGraficoStatus.BorderStyle = BorderStyle.FixedSingle;
+            pnlGraficoStatus.Location = new Point(20, 385);
+            pnlGraficoStatus.Name = "pnlGraficoStatus";
+            pnlGraficoStatus.Size = new Size(360, 165);
+            pnlGraficoStatus.TabIndex = 9;
+            pnlGraficoStatus.Paint += pnlGraficoStatus_Paint;
+            // 
+            // pnlGraficoDevedores
+            // 
+            pnlGraficoDevedores.BackColor = Color.White;
+            pnlGraficoDevedores.BorderStyle = BorderStyle.FixedSingle;
+            pnlGraficoDevedores.Location = new Point(400, 385);
+            pnlGraficoDevedores.Name = "pnlGraficoDevedores";
+            pnlGraficoDevedores.Size = new Size(360, 165);
+            pnlGraficoDevedores.TabIndex = 10;
+            pnlGraficoDevedores.Paint += pnlGraficoDevedores_Paint;
+            // 
+            // pnlGraficoPagadores
+            // 
+            pnlGraficoPagadores.BackColor = Color.White;
+            pnlGraficoPagadores.BorderStyle = BorderStyle.FixedSingle;
+            pnlGraficoPagadores.Location = new Point(785, 385);
+            pnlGraficoPagadores.Name = "pnlGraficoPagadores";
+            pnlGraficoPagadores.Size = new Size(360, 165);
+            pnlGraficoPagadores.TabIndex = 11;
+            pnlGraficoPagadores.Paint += pnlGraficoPagadores_Paint;
             // 
             // pnlGrid
             // 
             pnlGrid.BackColor = Color.White;
             pnlGrid.BorderStyle = BorderStyle.FixedSingle;
-            pnlGrid.Controls.Add(lblUltimosOrcamentos);
-            pnlGrid.Controls.Add(dgvUltimosOrcamentos);
-            pnlGrid.ForeColor = SystemColors.ControlLight;
-            pnlGrid.Location = new Point(20, 300);
+            pnlGrid.Controls.Add(lblRanking);
+            pnlGrid.Controls.Add(dgvRanking);
+            pnlGrid.Location = new Point(20, 565);
             pnlGrid.Name = "pnlGrid";
-            pnlGrid.Size = new Size(940, 250);
-            pnlGrid.TabIndex = 53;
+            pnlGrid.Size = new Size(1125, 240);
+            pnlGrid.TabIndex = 12;
             // 
-            // lblUltimosOrcamentos
+            // lblRanking
             // 
-            lblUltimosOrcamentos.AutoSize = true;
-            lblUltimosOrcamentos.Font = new Font("Segoe UI Semibold", 11F);
-            lblUltimosOrcamentos.ForeColor = Color.DimGray;
-            lblUltimosOrcamentos.Location = new Point(15, 12);
-            lblUltimosOrcamentos.Name = "lblUltimosOrcamentos";
-            lblUltimosOrcamentos.Size = new Size(147, 20);
-            lblUltimosOrcamentos.TabIndex = 1;
-            lblUltimosOrcamentos.Text = "Últimos Orçamentos";
+            lblRanking.AutoSize = true;
+            lblRanking.Font = new Font("Segoe UI Semibold", 11F);
+            lblRanking.ForeColor = Color.FromArgb(35, 35, 35);
+            lblRanking.Location = new Point(15, 12);
+            lblRanking.Name = "lblRanking";
+            lblRanking.Size = new Size(137, 20);
+            lblRanking.TabIndex = 1;
+            lblRanking.Text = "Ranking por escola";
+            // 
+            // dgvRanking
+            // 
+            dgvRanking.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvRanking.Location = new Point(15, 45);
+            dgvRanking.Name = "dgvRanking";
+            dgvRanking.Size = new Size(1095, 175);
+            dgvRanking.TabIndex = 0;
+            // 
+            // btnAtualizar
+            // 
+            btnAtualizar.Location = new Point(915, 820);
+            btnAtualizar.Name = "btnAtualizar";
+            btnAtualizar.Size = new Size(110, 35);
+            btnAtualizar.TabIndex = 13;
+            btnAtualizar.Text = "Atualizar";
+            btnAtualizar.UseVisualStyleBackColor = true;
+            btnAtualizar.Click += btnAtualizar_Click;
+            // 
+            // btnFechar
+            // 
+            btnFechar.Location = new Point(1035, 820);
+            btnFechar.Name = "btnFechar";
+            btnFechar.Size = new Size(110, 35);
+            btnFechar.TabIndex = 14;
+            btnFechar.Text = "Fechar";
+            btnFechar.UseVisualStyleBackColor = true;
+            btnFechar.Click += btnFechar_Click;
             // 
             // FrmDashboard
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(984, 615);
-            Controls.Add(pnlGrid);
-            Controls.Add(pnlValorPago);
-            Controls.Add(pnlValorPendente);
-            Controls.Add(pnlValorTotal);
-            Controls.Add(pnlCancelados);
-            Controls.Add(pnlPagos);
-            Controls.Add(pnlPendentes);
-            Controls.Add(pnlTotalOrcamentos);
-            Controls.Add(pnlTopo);
+            ClientSize = new Size(1164, 871);
             Controls.Add(btnFechar);
             Controls.Add(btnAtualizar);
+            Controls.Add(pnlGrid);
+            Controls.Add(pnlGraficoPagadores);
+            Controls.Add(pnlGraficoDevedores);
+            Controls.Add(pnlGraficoStatus);
+            Controls.Add(pnlMaiorDevedora);
+            Controls.Add(pnlMelhorPagadora);
+            Controls.Add(pnlPercentualPago);
+            Controls.Add(pnlValorPendente);
+            Controls.Add(pnlValorPago);
+            Controls.Add(pnlValorTotal);
+            Controls.Add(pnlTotalAcertos);
+            Controls.Add(pnlFiltros);
+            Controls.Add(pnlTopo);
             Font = new Font("Segoe UI", 10F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "FrmDashboard";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Dashboard";
-            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvUltimosOrcamentos).EndInit();
+            Text = "Dashboard de Acertos";
             pnlTopo.ResumeLayout(false);
             pnlTopo.PerformLayout();
-            pnlTotalOrcamentos.ResumeLayout(false);
-            pnlTotalOrcamentos.PerformLayout();
-            pnlPendentes.ResumeLayout(false);
-            pnlPendentes.PerformLayout();
-            pnlPagos.ResumeLayout(false);
-            pnlPagos.PerformLayout();
-            pnlCancelados.ResumeLayout(false);
-            pnlCancelados.PerformLayout();
+            pnlFiltros.ResumeLayout(false);
+            pnlFiltros.PerformLayout();
+            pnlTotalAcertos.ResumeLayout(false);
+            pnlTotalAcertos.PerformLayout();
             pnlValorTotal.ResumeLayout(false);
             pnlValorTotal.PerformLayout();
-            pnlValorPendente.ResumeLayout(false);
-            pnlValorPendente.PerformLayout();
             pnlValorPago.ResumeLayout(false);
             pnlValorPago.PerformLayout();
+            pnlValorPendente.ResumeLayout(false);
+            pnlValorPendente.PerformLayout();
+            pnlPercentualPago.ResumeLayout(false);
+            pnlPercentualPago.PerformLayout();
+            pnlMelhorPagadora.ResumeLayout(false);
+            pnlMelhorPagadora.PerformLayout();
+            pnlMaiorDevedora.ResumeLayout(false);
+            pnlMaiorDevedora.PerformLayout();
             pnlGrid.ResumeLayout(false);
             pnlGrid.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvRanking).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-        private FileSystemWatcher fileSystemWatcher1;
-        private Button btnFechar;
-        private Label lblValorTotal;
-        private Label lblCancelados;
-        private Label lblPagos;
-        private Label lblPendentes;
-        private Label lblTotalOrcamentos;
-        private Button btnAtualizar;
-        private DataGridView dgvUltimosOrcamentos;
-        private Label lblValorPendente;
-        private Label lblValorPago;
-        private Panel pnlTotalOrcamentos;
+
         private Panel pnlTopo;
         private Label lblSubtituloTela;
         private Label lblTituloTela;
-        private Panel pnlPagos;
-        private Label lblTituloPagos;
-        private Panel pnlPendentes;
-        private Label lblTituloPendentes;
-        private Label lblTituloTotalOrcamentos;
+        private Panel pnlFiltros;
+        private Label lblFiltros;
+        private Label lblEscola;
+        private ComboBox cmbEscola;
+        private Label lblDataInicial;
+        private DateTimePicker dtpDataInicial;
+        private Label lblDataFinal;
+        private DateTimePicker dtpDataFinal;
+        private Button btnFiltrar;
+        private Button btnLimpar;
+        private Panel pnlTotalAcertos;
+        private Label lblTotalAcertos;
+        private Label lblTituloTotalAcertos;
         private Panel pnlValorTotal;
+        private Label lblValorTotal;
         private Label lblTituloValorTotal;
-        private Panel pnlCancelados;
-        private Label lblTituloCancelados;
-        private Panel pnlGrid;
-        private Label lblUltimosOrcamentos;
         private Panel pnlValorPago;
+        private Label lblValorPago;
         private Label lblTituloValorPago;
         private Panel pnlValorPendente;
+        private Label lblValorPendente;
         private Label lblTituloValorPendente;
+        private Panel pnlPercentualPago;
+        private Label lblPercentualPago;
+        private Label lblTituloPercentualPago;
+        private Panel pnlMelhorPagadora;
+        private Label lblMelhorPagadoraDetalhe;
+        private Label lblMelhorPagadoraEscola;
+        private Label lblTituloMelhorPagadora;
+        private Panel pnlMaiorDevedora;
+        private Label lblMaiorDevedoraDetalhe;
+        private Label lblMaiorDevedoraEscola;
+        private Label lblTituloMaiorDevedora;
+        private Panel pnlGraficoStatus;
+        private Panel pnlGraficoDevedores;
+        private Panel pnlGraficoPagadores;
+        private Panel pnlGrid;
+        private Label lblRanking;
+        private DataGridView dgvRanking;
+        private Button btnAtualizar;
+        private Button btnFechar;
     }
 }

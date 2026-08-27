@@ -1,9 +1,6 @@
 using ComodoroERP.Services;
 using ComodoroERP.Utils;
 using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Text;
 
 namespace ComodoroERP
 {
@@ -11,8 +8,6 @@ namespace ComodoroERP
     {
         private readonly AcertoService _acertoService = new();
         private List<string> _escolasOriginais = new();
-        private bool _atualizandoComboEscola = false;
-
         private int _versaoFiltroEscola = 0;
 
         private bool _carregandoGrid = false;
@@ -39,19 +34,12 @@ namespace ComodoroERP
 
             ConfigurarComboPesquisa(cmbFiltroEscola);
 
-            cmbFiltroEscola.TextUpdate -= cmbFiltroEscola_TextUpdate;
-            cmbFiltroEscola.TextUpdate += cmbFiltroEscola_TextUpdate;
-
-            cmbFiltroEscola.SelectionChangeCommitted -= cmbFiltroEscola_SelectionChangeCommitted;
-            cmbFiltroEscola.SelectionChangeCommitted += cmbFiltroEscola_SelectionChangeCommitted;
-
             CarregarEscolas();
 
             dgvAcertos.DataError += dgvAcertos_DataError;
             dgvAcertos.CurrentCellDirtyStateChanged += dgvAcertos_CurrentCellDirtyStateChanged;
             dgvAcertos.CellValueChanged += dgvAcertos_CellValueChanged;
         }
-
 
 
         private void CarregarAcertos()
@@ -531,12 +519,14 @@ namespace ComodoroERP
         private void ConfigurarComboPesquisa(ComboBox comboBox)
         {
             comboBox.DropDownStyle = ComboBoxStyle.DropDown;
-            comboBox.AutoCompleteMode = AutoCompleteMode.None;
-            comboBox.AutoCompleteSource = AutoCompleteSource.None;
+            comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBox.FlatStyle = FlatStyle.Standard;
         }
-
         private void CarregarEscolas()
         {
+            string textoAtual = cmbFiltroEscola.Text;
+
             cmbFiltroEscola.Items.Clear();
 
             _escolasOriginais = _acertoService
@@ -548,169 +538,8 @@ namespace ComodoroERP
                 cmbFiltroEscola.Items.Add(escola);
             }
 
-            cmbFiltroEscola.SelectedIndex = -1;
+            cmbFiltroEscola.Text = textoAtual;
         }
 
-        private void cmbFiltroEscola_TextUpdate(object? sender, EventArgs e)
-        {
-            if (_atualizandoComboEscola)
-                return;
-
-            string textoDigitado = cmbFiltroEscola.Text;
-            int posicaoCursor = cmbFiltroEscola.SelectionStart;
-            int versaoAtual = ++_versaoFiltroEscola;
-            bool iniciouAtualizacao = false;
-
-            try
-            {
-                _atualizandoComboEscola = true;
-
-                var itensFiltrados = _escolasOriginais
-                    .Where(escola =>
-                        NormalizarTexto(escola)
-                            .Contains(NormalizarTexto(textoDigitado)))
-                    .ToList();
-
-                cmbFiltroEscola.DroppedDown = false;
-
-                cmbFiltroEscola.BeginUpdate();
-                iniciouAtualizacao = true;
-
-                cmbFiltroEscola.Items.Clear();
-
-                foreach (var escola in itensFiltrados)
-                {
-                    cmbFiltroEscola.Items.Add(escola);
-                }
-
-                cmbFiltroEscola.EndUpdate();
-                iniciouAtualizacao = false;
-
-                RestaurarTextoFiltroEscola(
-                    textoDigitado,
-                    posicaoCursor
-                );
-
-                if (itensFiltrados.Count > 0 &&
-                    cmbFiltroEscola.Focused)
-                {
-                    cmbFiltroEscola.DroppedDown = true;
-                    Cursor.Current = Cursors.Default;
-
-                    BeginInvoke(new Action(() =>
-                    {
-                        if (cmbFiltroEscola.IsDisposed ||
-                            !cmbFiltroEscola.Focused ||
-                            versaoAtual != _versaoFiltroEscola)
-                        {
-                            return;
-                        }
-
-                        try
-                        {
-                            _atualizandoComboEscola = true;
-
-                            RestaurarTextoFiltroEscola(
-                                textoDigitado,
-                                posicaoCursor
-                            );
-                        }
-                        finally
-                        {
-                            _atualizandoComboEscola = false;
-                        }
-                    }));
-                }
-                else
-                {
-                    cmbFiltroEscola.DroppedDown = false;
-                }
-            }
-            catch
-            {
-                cmbFiltroEscola.DroppedDown = false;
-
-                RestaurarTextoFiltroEscola(
-                    textoDigitado,
-                    posicaoCursor
-                );
-            }
-            finally
-            {
-                if (iniciouAtualizacao)
-                    cmbFiltroEscola.EndUpdate();
-
-                _atualizandoComboEscola = false;
-            }
-        }
-
-        private void RestaurarTextoFiltroEscola(
-            string textoDigitado,
-            int posicaoCursor)
-        {
-            cmbFiltroEscola.SelectedIndex = -1;
-            cmbFiltroEscola.Text = textoDigitado;
-
-            cmbFiltroEscola.SelectionStart = Math.Min(
-                posicaoCursor,
-                cmbFiltroEscola.Text.Length
-            );
-
-            cmbFiltroEscola.SelectionLength = 0;
-        }
-
-        private void cmbFiltroEscola_SelectionChangeCommitted(
-            object? sender,
-            EventArgs e)
-        {
-            if (cmbFiltroEscola.SelectedItem == null)
-                return;
-
-            string textoSelecionado =
-                cmbFiltroEscola.SelectedItem.ToString() ?? "";
-
-            try
-            {
-                _atualizandoComboEscola = true;
-                _versaoFiltroEscola++;
-
-                cmbFiltroEscola.Text = textoSelecionado;
-                cmbFiltroEscola.SelectionStart =
-                    cmbFiltroEscola.Text.Length;
-
-                cmbFiltroEscola.SelectionLength = 0;
-                cmbFiltroEscola.DroppedDown = false;
-            }
-            finally
-            {
-                _atualizandoComboEscola = false;
-            }
-        }
-
-        private string NormalizarTexto(string texto)
-        {
-            if (string.IsNullOrWhiteSpace(texto))
-                return "";
-
-            string textoNormalizado = texto.Normalize(NormalizationForm.FormD);
-
-            var builder = new StringBuilder();
-
-            foreach (char caractere in textoNormalizado)
-            {
-                UnicodeCategory categoria = CharUnicodeInfo.GetUnicodeCategory(caractere);
-
-                if (categoria != UnicodeCategory.NonSpacingMark)
-                {
-                    builder.Append(caractere);
-                }
-            }
-
-            return builder
-                .ToString()
-                .Normalize(NormalizationForm.FormC)
-                .ToUpperInvariant()
-                .Trim();
-        }
     }
 }

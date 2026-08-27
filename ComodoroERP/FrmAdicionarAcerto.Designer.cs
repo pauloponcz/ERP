@@ -33,6 +33,7 @@ namespace ComodoroERP
             lblSubtituloTela = new Label();
             lblTituloTela = new Label();
             pnlAcerto = new Panel();
+            cmbNomeEscola = new ComboBox();
             cmbStatusPagamento = new ComboBox();
             lblStatusPagamento = new Label();
             numValor = new NumericUpDown();
@@ -43,7 +44,6 @@ namespace ComodoroERP
             lblDadosAcerto = new Label();
             btnSalvar = new Button();
             btnCancelar = new Button();
-            cmbNomeEscola = new ComboBox();
             pnlTopo.SuspendLayout();
             pnlAcerto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numValor).BeginInit();
@@ -99,6 +99,14 @@ namespace ComodoroERP
             pnlAcerto.Size = new Size(565, 255);
             pnlAcerto.TabIndex = 1;
             // 
+            // cmbNomeEscola
+            // 
+            cmbNomeEscola.FormattingEnabled = true;
+            cmbNomeEscola.Location = new Point(20, 35);
+            cmbNomeEscola.Name = "cmbNomeEscola";
+            cmbNomeEscola.Size = new Size(515, 25);
+            cmbNomeEscola.TabIndex = 0;
+            // 
             // cmbStatusPagamento
             // 
             cmbStatusPagamento.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -106,7 +114,7 @@ namespace ComodoroERP
             cmbStatusPagamento.Location = new Point(20, 205);
             cmbStatusPagamento.Name = "cmbStatusPagamento";
             cmbStatusPagamento.Size = new Size(200, 25);
-            cmbStatusPagamento.TabIndex = 8;
+            cmbStatusPagamento.TabIndex = 3;
             // 
             // lblStatusPagamento
             // 
@@ -124,7 +132,7 @@ namespace ComodoroERP
             numValor.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             numValor.Name = "numValor";
             numValor.Size = new Size(200, 25);
-            numValor.TabIndex = 6;
+            numValor.TabIndex = 2;
             numValor.ThousandsSeparator = true;
             // 
             // lblValor
@@ -141,7 +149,7 @@ namespace ComodoroERP
             txtServico.Location = new Point(20, 85);
             txtServico.Name = "txtServico";
             txtServico.Size = new Size(515, 25);
-            txtServico.TabIndex = 4;
+            txtServico.TabIndex = 1;
             // 
             // lblServico
             // 
@@ -182,7 +190,7 @@ namespace ComodoroERP
             btnSalvar.Location = new Point(365, 370);
             btnSalvar.Name = "btnSalvar";
             btnSalvar.Size = new Size(100, 35);
-            btnSalvar.TabIndex = 2;
+            btnSalvar.TabIndex = 4;
             btnSalvar.Text = "Salvar";
             btnSalvar.UseVisualStyleBackColor = false;
             btnSalvar.Click += btnSalvar_Click;
@@ -198,18 +206,10 @@ namespace ComodoroERP
             btnCancelar.Location = new Point(480, 370);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(105, 35);
-            btnCancelar.TabIndex = 3;
+            btnCancelar.TabIndex = 5;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = false;
             btnCancelar.Click += btnCancelar_Click;
-            // 
-            // cmbNomeEscola
-            // 
-            cmbNomeEscola.FormattingEnabled = true;
-            cmbNomeEscola.Location = new Point(20, 35);
-            cmbNomeEscola.Name = "cmbNomeEscola";
-            cmbNomeEscola.Size = new Size(515, 25);
-            cmbNomeEscola.TabIndex = 9;
             // 
             // FrmAdicionarAcerto
             // 

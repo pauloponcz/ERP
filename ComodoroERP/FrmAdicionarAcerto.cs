@@ -48,15 +48,8 @@ namespace ComodoroERP
 
             ConfigurarComboPesquisa(cmbNomeEscola);
 
-            cmbNomeEscola.TextUpdate -= cmbNomeEscola_TextUpdate;
-            cmbNomeEscola.TextUpdate += cmbNomeEscola_TextUpdate;
-
-            cmbNomeEscola.SelectionChangeCommitted -= cmbNomeEscola_SelectionChangeCommitted;
-            cmbNomeEscola.SelectionChangeCommitted += cmbNomeEscola_SelectionChangeCommitted;
-
             CarregarEscolas();
         }
-
         private void btnSalvar_Click(object? sender, EventArgs e)
         {
             if (!ValidarCampos())
@@ -284,13 +277,14 @@ namespace ComodoroERP
         private void ConfigurarComboPesquisa(ComboBox comboBox)
         {
             comboBox.DropDownStyle = ComboBoxStyle.DropDown;
-            comboBox.AutoCompleteMode = AutoCompleteMode.None;
-            comboBox.AutoCompleteSource = AutoCompleteSource.None;
+            comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboBox.FlatStyle = FlatStyle.Standard;
         }
-
         private void CarregarEscolas()
         {
+            string textoAtual = cmbNomeEscola.Text;
+
             cmbNomeEscola.Items.Clear();
 
             _escolasOriginais = _acertoService
@@ -301,8 +295,9 @@ namespace ComodoroERP
             {
                 cmbNomeEscola.Items.Add(escola);
             }
-        }
 
+            cmbNomeEscola.Text = textoAtual;
+        }
         private void cmbNomeEscola_TextUpdate(object? sender, EventArgs e)
         {
             if (_atualizandoComboEscola)
@@ -405,80 +400,6 @@ namespace ComodoroERP
             );
 
             cmbNomeEscola.SelectionLength = 0;
-        }
-
-        private void cmbNomeEscola_SelectionChangeCommitted(object? sender, EventArgs e)
-        {
-            if (cmbNomeEscola.SelectedIndex < 0)
-                return;
-
-            if (cmbNomeEscola.SelectedItem == null)
-                return;
-
-            string textoSelecionado = cmbNomeEscola.SelectedItem.ToString() ?? "";
-
-            try
-            {
-                _atualizandoComboEscola = true;
-
-                cmbNomeEscola.Text = textoSelecionado;
-                cmbNomeEscola.SelectionStart = cmbNomeEscola.Text.Length;
-                cmbNomeEscola.SelectionLength = 0;
-            }
-            finally
-            {
-                _atualizandoComboEscola = false;
-            }
-        }
-
-        private void FiltrarComboBox(
-            ComboBox comboBox,
-            List<string> listaOriginal,
-            string textoDigitado,
-            ref bool atualizando)
-        {
-            try
-            {
-                atualizando = true;
-
-                int posicaoCursor = comboBox.SelectionStart;
-
-                string textoNormalizado = NormalizarTexto(textoDigitado);
-
-                var itensFiltrados = listaOriginal
-                    .Where(item => NormalizarTexto(item).Contains(textoNormalizado))
-                    .ToList();
-
-                comboBox.DroppedDown = false;
-
-                comboBox.BeginUpdate();
-                comboBox.Items.Clear();
-
-                foreach (var item in itensFiltrados)
-                {
-                    comboBox.Items.Add(item);
-                }
-
-                comboBox.EndUpdate();
-
-                comboBox.Text = textoDigitado;
-                comboBox.SelectionStart = Math.Min(posicaoCursor, comboBox.Text.Length);
-                comboBox.SelectionLength = 0;
-
-                if (itensFiltrados.Count > 0 && comboBox.Focused)
-                {
-                    comboBox.DroppedDown = true;
-                    Cursor.Current = Cursors.Default;
-                }
-            }
-            catch
-            {
-                comboBox.DroppedDown = false;
-            }
-            finally
-            {
-                atualizando = false;
-            }
         }
 
         private string NormalizarTexto(string texto)
