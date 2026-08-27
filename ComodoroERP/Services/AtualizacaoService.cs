@@ -6,12 +6,20 @@ using System.Text.Json;
 
 namespace ComodoroERP.Services
 {
+    public class AtualizacaoDisponivel
+    {
+        public Version VersaoAtual { get; set; } = new Version(1, 0, 0, 0);
+        public Version NovaVersao { get; set; } = new Version(1, 0, 0, 0);
+        public string UrlDownload { get; set; } = string.Empty;
+        public string PaginaRelease { get; set; } = string.Empty;
+    }
+
     public class AtualizacaoService
     {
         private const string UsuarioGithub = "pauloponcz";
         private const string RepositorioGithub = "ERP";
 
-        public async Task VerificarAtualizacaoAsync()
+        public async Task<AtualizacaoDisponivel?> VerificarAtualizacaoDisponivelAsync()
         {
             try
             {
@@ -37,52 +45,47 @@ namespace ComodoroERP.Services
                 Version? versaoGithub = ConverterTagParaVersao(tagName);
 
                 if (versaoGithub == null)
-                    return;
+                    return null;
 
                 if (versaoGithub <= versaoAtual)
-                    return;
+                    return null;
 
                 string urlDownload = ObterUrlDownloadZip(root);
 
-                DialogResult resultado = MessageBox.Show(
-                    $"Existe uma nova versão disponível.\n\n" +
-                    $"Versão instalada: {FormatarVersao(versaoAtual)}\n" +
-                    $"Nova versão: {FormatarVersao(versaoGithub)}\n\n" +
-                    $"Deseja baixar e instalar agora?",
-                    "Atualização disponível",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Information
-                );
-
-                if (resultado != DialogResult.Yes)
-                    return;
-
-                if (string.IsNullOrWhiteSpace(urlDownload))
+                return new AtualizacaoDisponivel
                 {
-                    MessageBox.Show(
-                        "Não foi encontrado um arquivo .zip anexado nessa release.\n\n" +
-                        "A página do GitHub será aberta para baixar manualmente.",
-                        "Arquivo de atualização não encontrado",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = paginaRelease,
-                        UseShellExecute = true
-                    });
-
-                    return;
-                }
-
-                await BaixarEInstalarAtualizacaoAsync(urlDownload, versaoGithub);
+                    VersaoAtual = versaoAtual,
+                    NovaVersao = versaoGithub,
+                    UrlDownload = urlDownload,
+                    PaginaRelease = paginaRelease
+                };
             }
             catch
             {
-                // Não mostra erro para o usuário.
-                // Se estiver sem internet ou o GitHub falhar, o sistema abre normalmente.
+                return null;
             }
+        }
+
+        public async Task InstalarAtualizacaoAsync(AtualizacaoDisponivel atualizacao)
+        {
+            if (atualizacao == null)
+                return;
+
+            if (string.IsNullOrWhiteSpace(atualizacao.UrlDownload))
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = atualizacao.PaginaRelease,
+                    UseShellExecute = true
+                });
+
+                return;
+            }
+
+            await BaixarEInstalarAtualizacaoAsync(
+                atualizacao.UrlDownload,
+                atualizacao.NovaVersao
+            );
         }
 
         private async Task BaixarEInstalarAtualizacaoAsync(string urlDownload, Version novaVersao)
@@ -93,59 +96,38 @@ namespace ComodoroERP.Services
             string pastaAplicacao = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
             string caminhoBat = Path.Combine(pastaTemp, "atualizar_comodoro.bat");
 
-            try
+            if (Directory.Exists(pastaTemp))
+                Directory.Delete(pastaTemp, true);
+
+            Directory.CreateDirectory(pastaTemp);
+
+            using var httpClient = new HttpClient();
+
+            httpClient.DefaultRequestHeaders.UserAgent.Add(
+                new ProductInfoHeaderValue("ComodoroERP", FormatarVersao(novaVersao))
+            );
+
+            byte[] conteudo = await httpClient.GetByteArrayAsync(urlDownload);
+
+            await File.WriteAllBytesAsync(arquivoZip, conteudo);
+
+            string conteudoBat = MontarScriptAtualizacao(
+                arquivoZip,
+                pastaExtraida,
+                pastaAplicacao
+            );
+
+            await File.WriteAllTextAsync(caminhoBat, conteudoBat, Encoding.UTF8);
+
+            Process.Start(new ProcessStartInfo
             {
-                if (Directory.Exists(pastaTemp))
-                    Directory.Delete(pastaTemp, true);
+                FileName = caminhoBat,
+                UseShellExecute = true,
+                WorkingDirectory = pastaTemp,
+                WindowStyle = ProcessWindowStyle.Hidden
+            });
 
-                Directory.CreateDirectory(pastaTemp);
-
-                using var httpClient = new HttpClient();
-
-                httpClient.DefaultRequestHeaders.UserAgent.Add(
-                    new ProductInfoHeaderValue("ComodoroERP", FormatarVersao(novaVersao))
-                );
-
-                byte[] conteudo = await httpClient.GetByteArrayAsync(urlDownload);
-
-                await File.WriteAllBytesAsync(arquivoZip, conteudo);
-
-                string conteudoBat = MontarScriptAtualizacao(
-                    arquivoZip,
-                    pastaExtraida,
-                    pastaAplicacao
-                );
-
-                await File.WriteAllTextAsync(caminhoBat, conteudoBat, Encoding.UTF8);
-
-                MessageBox.Show(
-                    "A atualização foi baixada.\n\n" +
-                    "O sistema será fechado, atualizado e aberto novamente.",
-                    "Atualização",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = caminhoBat,
-                    UseShellExecute = true,
-                    WorkingDirectory = pastaTemp,
-                    WindowStyle = ProcessWindowStyle.Hidden
-                });
-
-                Application.Exit();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Não foi possível baixar ou instalar a atualização.\n\n" +
-                    "Detalhes: " + ex.Message,
-                    "Erro na atualização",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
-            }
+            Application.Exit();
         }
 
         private string MontarScriptAtualizacao(
@@ -234,9 +216,13 @@ exit
             return null;
         }
 
-        private string FormatarVersao(Version versao)
+        public string FormatarVersao(Version versao)
         {
-            return $"{versao.Major}.{versao.Minor}.{versao.Build}";
+            int major = versao.Major < 0 ? 0 : versao.Major;
+            int minor = versao.Minor < 0 ? 0 : versao.Minor;
+            int build = versao.Build < 0 ? 0 : versao.Build;
+
+            return $"{major}.{minor}.{build}";
         }
     }
 }
